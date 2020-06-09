@@ -1,18 +1,18 @@
 package userinterface;
 
-import structs.ARTSystemState;
+import structs.ArtSystemState;
 
-public class ARTMvcModel {
-    private final ARTSystemState state;
-    private ARTMvcController fc;
+public class ArtMvcModel {
+    private final ArtSystemState state;
+    private ArtMvcController fc;
 
 
     /**
      * Constructor.
      *
-     * @param state the Bfa system state
+     * @param state the system state
      */
-    public ARTMvcModel(ARTSystemState state) {
+    public ArtMvcModel(ArtSystemState state) {
         this.state = state;
     }
 
@@ -21,7 +21,7 @@ public class ARTMvcModel {
      *
      * @return the system state
      */
-    public ARTSystemState getState() {
+    public ArtSystemState getState() {
         return this.state;
     }
 
@@ -31,7 +31,7 @@ public class ARTMvcModel {
      *
      * @param fc the Bfa controller in the MVC pattern
      */
-    public void setCallback(ARTMvcController fc) {
+    public void setCallback(ArtMvcController fc) {
         this.fc = fc;
     }
 

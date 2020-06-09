@@ -1,11 +1,16 @@
 package userinterface;
 
-public class ARTMvcController {
-    private final ARTMvcView fv; // fv = MVC Filter View
-    private final ARTMvcModel fm; // fm = MVC Filter Model
+public class ArtMvcController {
+    private final ArtMvcView fv; // fv = MVC Filter View
+    private final ArtMvcModel fm; // fm = MVC Filter Model
 
-    /** Constructor. */
-    public ARTMvcController(ARTMvcView fv, ARTMvcModel fm) {
+    /** Constructor.
+     *
+     * @param fv the MVC view
+     * @param fm the MVC model
+     *
+     * */
+    public ArtMvcController(ArtMvcView fv, ArtMvcModel fm) {
         this.fm = fm;
         this.fv = fv;
 

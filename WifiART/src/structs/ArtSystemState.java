@@ -1,13 +1,13 @@
 package structs;
 
-public class ARTSystemState {
+public class ArtSystemState {
 
     // Constants
 
     // Parameters
 
     /** Constructor. */
-    public ARTSystemState() {
+    public ArtSystemState() {
         init();
     }
 

@@ -1,6 +1,7 @@
 package userinterface;
 
-import structs.ARTSystemState;
+import structs.ArtSystemState;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -8,7 +9,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.WindowConstants;
 import java.io.IOException;
 
-public class ARTMvcView extends JFrame {
+public class ArtMvcView extends JFrame {
     // Height Adjustments
     // Pixel height not included in rows for tab panel:
     private static final int TABBED_HEIGHT_OFFSET = 76;
@@ -20,7 +21,7 @@ public class ARTMvcView extends JFrame {
     private static final int FRAME_WIDTH =780;
     private static final int FRAME_HEIGHT = TABBED_HEIGHT_OFFSET + CONTROL_ROWS * ROW_WD;
 
-    /* Tab name declarations  */
+    //Tab name declarations
     private static final String GENERATE_TAB_NAME = "Generate";
     private static final String LCI_TAB_NAME = "LCI (sub)";
     private static final String Z_TAB_NAME = "  Z  ";
@@ -30,8 +31,11 @@ public class ARTMvcView extends JFrame {
     private static final String MAP_TAB_NAME = "Map Image";
 
 
-    /** Constructor. */
-    public ARTMvcView(ARTSystemState state) {
+    /** Constructor.
+     *
+     * @param state the system state
+     * */
+    public ArtMvcView(ArtSystemState state) {
         /* Top level JFRAME */
         this.setTitle("Tabbed Pane Example");
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -91,7 +95,7 @@ public class ARTMvcView extends JFrame {
      * @return the updated system state
      * @throws IOException if the background image cannot be read
      */
-    ARTSystemState getViewState(ARTSystemState state) {
+    ArtSystemState getViewState(ArtSystemState state) {
         return state;
     }
 
@@ -100,7 +104,7 @@ public class ARTMvcView extends JFrame {
      *
      * @param state the current system state
      */
-    public void setViewState(ARTSystemState state) {
+    public void setViewState(ArtSystemState state) {
 
     }
 
