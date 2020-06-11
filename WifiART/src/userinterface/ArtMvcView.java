@@ -26,26 +26,26 @@ public class ArtMvcView extends JFrame {
     private static final int CONTROL_ROWS = 10;
     private static final int WINDOW_POSITION_X = 10;
     private static final int WINDOW_POSITION_Y = 10;
-    private static final int FRAME_WIDTH =780;
+    private static final int FRAME_WIDTH = 780;
     private static final int FRAME_HEIGHT = TABBED_HEIGHT_OFFSET + CONTROL_ROWS * ROW_WD;
 
     // Tab name declarations
     private static final String GENERATE_TAB_NAME = "Generate";
-    private static final String LCI_TAB_NAME = "LCI (sub)";
-    private static final String Z_TAB_NAME = "  Z  ";
+    private static final String LCI_TAB_NAME = "LCI subelement";
+    private static final String Z_TAB_NAME = "Z-Axis";
     private static final String USAGE_TAB_NAME = "Usage";
     private static final String BSSID_TAB_NAME = "BSSID List";
-    private static final String LCR_TAB_NAME = "Loc. Civic";
+    private static final String LCR_TAB_NAME = "Location Civic (Address)";
     private static final String MAP_TAB_NAME = "Map Image";
 
     //Generate Tab labels
     private final JLabel lciSubelementsLabel = new JLabel(" LCI Subelements Included:");
     private final JCheckBox lciCheckbox = new JCheckBox("Location Configuration Information (LCI)");
     private final JCheckBox zCheckbox = new JCheckBox("Z (floor number, height above floor)");
-    private final JCheckBox usageCheckbox = new JCheckBox("Usage Rule / Policy");
-    private final JCheckBox bssidCheckbox = new JCheckBox("BSSID List (co-located BSS's in AP)");
+    private final JCheckBox usageCheckbox = new JCheckBox("Usage Rules / Policy");
+    private final JCheckBox bssidCheckbox = new JCheckBox("BSSID List (co-located BSS's in Access Point)");
     private final JLabel lcrSubelementsLabel = new JLabel(" LCR Subelements Included:                           ");
-    private final JCheckBox lcrCheckbox = new JCheckBox("Location Civic (Address)");
+    private final JCheckBox lcrCheckbox = new JCheckBox("Location Civic Report (Address)");
     private final JCheckBox mapCheckbox = new JCheckBox("MapImage");
     private final JLabel inputFileNameLabel = new JLabel(" Output File: ");
     private final JTextField inputFileNameField = new JTextField();
@@ -76,8 +76,8 @@ public class ArtMvcView extends JFrame {
      * @param state the system state
      * */
     public ArtMvcView(ArtSystemState state) {
-        // Top level JFRAME
-        this.setTitle("Tabbed Pane Example");
+        // Top level JFrame
+        this.setTitle("LCI/LCR Tools");
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         this.setLocation(WINDOW_POSITION_X, WINDOW_POSITION_Y);
         this.setResizable(true);

@@ -1,7 +1,7 @@
 package structs;
 
 /**
- * Represents a LCI/LCR subelement
+ * Represents an LCI/LCR subelement
  */
 public interface Subelement {
     /**
