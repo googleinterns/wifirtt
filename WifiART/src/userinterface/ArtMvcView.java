@@ -315,46 +315,55 @@ public class ArtMvcView extends JFrame {
     private void setupZPanel(JPanel panel) {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
+        //Panel containing the title for this tab.
         JPanel zPanelTitlePanel = new JPanel();
         zPanelTitlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         zPanelTitlePanel.add(zPanelTitle);
         panel.add(zPanelTitlePanel);
 
+        //Panel to set up the Z-Axis values.
         JPanel zValuesPanelPanel = new JPanel();
         zValuesPanelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         JPanel zValuesPanel = new JPanel();
         zValuesPanel.setLayout(new GridLayout(2, 4));
         zValuesPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        //STA Floor Number
         JPanel floorLabelPanel = new JPanel();
         floorLabelPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         floorLabelPanel.add(floorLabel);
-        zValuesPanel.add(floorLabelPanel);
-        zValuesPanel.add(floorField);
-        zValuesPanel.add(new JPanel());
-        zValuesPanel.add(new JPanel());
+        zValuesPanel.add(floorLabelPanel);                       //Row 1, Col 1
+        zValuesPanel.add(floorField);                            //Row 1, Col 2
+        zValuesPanel.add(new JPanel());                          //Row 1, Col 3
+        zValuesPanel.add(new JPanel());                          //Row 1, Col 4
+        //STA Height above floor
         JPanel heightAboveFloorLabelPanel = new JPanel();
         heightAboveFloorLabelPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         heightAboveFloorLabelPanel.add(heightAboveFloorLabel);
         zValuesPanel.add(heightAboveFloorLabelPanel);
         zValuesPanel.add(heightAboveFloorField);
+        //STA Height above floor uncertainty
         JPanel heightAboveFloorUncertaintyLabelPanel = new JPanel();
         heightAboveFloorUncertaintyLabelPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         heightAboveFloorUncertaintyLabelPanel.add(heightAboveFloorUncertaintyLabel);
-        zValuesPanel.add(heightAboveFloorUncertaintyLabelPanel);
-        zValuesPanel.add(heightAboveFloorUncertaintyField);
+        zValuesPanel.add(heightAboveFloorUncertaintyLabelPanel); //Row 2, Col 1
+        zValuesPanel.add(heightAboveFloorUncertaintyField);      //Row 2, Col 2
         zValuesPanelPanel.add(zValuesPanel);
         panel.add(zValuesPanelPanel);
 
+        //Panel to set the Location Movement field, with three radio buttons.
         JPanel locationMovementPanelPanel = new JPanel();
         locationMovementPanelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         JPanel locationMovementPanel = new JPanel();
         locationMovementPanel.setLayout(new BoxLayout(locationMovementPanel, BoxLayout.Y_AXIS));
+        //Include the subtitle for this part of the panel using a titled border.
         locationMovementPanel.setBorder(
-                BorderFactory.createTitledBorder(
-                        BorderFactory.createLineBorder(Color.BLACK), LOCATION_MOVEMENT_LABEL));
+            BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(Color.BLACK), LOCATION_MOVEMENT_LABEL));
+        //Add the three buttons.
         locationMovementPanel.add(fixedLocationMovementRadioButton);
         locationMovementPanel.add(variableLocationMovementRadioButton);
         locationMovementPanel.add(unknownLocationMovementRadioButton);
+        //Group the buttons into a button group so only one at a time may be selected.
         ButtonGroup locationMovementButtonGroup = new ButtonGroup();
         locationMovementButtonGroup.add(fixedLocationMovementRadioButton);
         locationMovementButtonGroup.add(variableLocationMovementRadioButton);
