@@ -22,7 +22,6 @@ import java.util.ArrayList;
  * The system state enclosing the LCI/LCR parameters.
  */
 public class ArtSystemState {
-
     // Parameters
     private ArrayList<Subelement> subelements;
 
