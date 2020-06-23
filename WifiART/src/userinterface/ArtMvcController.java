@@ -17,8 +17,8 @@ limitations under the License.
 package userinterface;
 
 public class ArtMvcController {
-    private final ArtMvcView fv; // fv = MVC Filter View
-    private final ArtMvcModel fm; // fm = MVC Filter Model
+    private final ArtMvcView fv; // fv = MVC View
+    private final ArtMvcModel fm; // fm = MVC Model
 
     /** Constructor.
      *
@@ -34,7 +34,7 @@ public class ArtMvcController {
         this.fv.setViewState(fm.getState());
         this.fm.setCallback(this);
 
-        // Add the listeners to the view
+        // TODO(dmevans) Add the listeners to the View here
     }
 
     /** Events that occur asynchronously in the model call this method e.g. For an animation */
@@ -42,5 +42,5 @@ public class ArtMvcController {
         fv.setViewState(fm.getState());
     }
 
-    // Listener classes:
+    // TODO(dmevans) Define listener classes here
 }
