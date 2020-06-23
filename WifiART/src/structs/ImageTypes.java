@@ -16,13 +16,15 @@ limitations under the License.
 
 package structs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A wrapper class that provides data structures containing Map Image Types.
  */
 public class ImageTypes {
-    private static final String SELECTION_PROMPT = "SELECT IMAGE TYPE";
-    // The index of each map type is equivalent to its value.
-    private static final String[] imageTypes = {
+    // The index of each map type is equivalent to its encoding value.
+    private static final String[] IMAGE_TYPES = {
         "URL Defined",
         "Png",
         "Gif",
@@ -44,16 +46,23 @@ public class ImageTypes {
     };
 
     /**
-     * Returns the list of image types, with a selection prompt at the 0th index.
-     * @return The image types list with index 0 containing a selection prompt.
+     * A List containing the image types.
      */
-    public static String[] getImageTypesWithPlaceholder() {
-        int numberOfImageTypes = imageTypes.length;
-        String[] imageTypesWithPlaceholder = new String[numberOfImageTypes + 1];
-        imageTypesWithPlaceholder[0] = SELECTION_PROMPT;
-        for (int i = 0; i < numberOfImageTypes; i++) {
-            imageTypesWithPlaceholder[i + 1] = imageTypes[i];
+    public static final List<String> IMAGE_TYPES_LIST = getImageTypesList();
+
+    // Private constructor to avoid instance creation.
+    private ImageTypes() {}
+
+    /**
+     * Returns a vdriable-length list containing the image types.
+     * @return
+     */
+    private static List<String> getImageTypesList() {
+        List<String> imageTypesList = new ArrayList<>(IMAGE_TYPES.length);
+        for (String imageType : IMAGE_TYPES) {
+            imageTypesList.add(imageType);
         }
-        return imageTypesWithPlaceholder;
+        return imageTypesList;
     }
+
 }

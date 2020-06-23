@@ -16,13 +16,14 @@ limitations under the License.
 
 package structs;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * A wrapper class that provides data structures containing country info according to ISO-3166.
  */
 public class CountryCodes {
-    private static final String SELECTION_PROMPT = "SELECT A COUNTRY";
     private static final String[][] COUNTRIES_NAMES_AND_CODES = {
         {"Afghanistan", "AF"},
         {"Åland Islands", "AX"},
@@ -275,26 +276,30 @@ public class CountryCodes {
         {"Zimbabwe", "ZW"}
     };
 
-    // An array of country names, with a selection prompt occupying index 0.
-    public static final String[] COUNTRIES_NAMES_WITH_PLACEHOLDER = getCountriesNamesWithPlaceholder();
-    // A HashMap mapping country names to the associated 2-letter codes.
-    public static final HashMap<String, String> COUNTRY_NAMES_TO_CODES_MAP = getCountryNamesToCodesMap();
+    /**
+     * An List of country names.
+     */
+    public static final List<String> COUNTRIES_NAMES_LIST = getCountriesNamesList();
 
     /**
-     * Constructs a list including every country's name, with the
-     * first element being a placeholder prompt.
-     * @return The list of country names, including the selection prompt.
+     * A HashMap mapping country names to the associated 2-letter codes.
      */
-    private static String[] getCountriesNamesWithPlaceholder() {
-        int numberOfCountries = COUNTRIES_NAMES_AND_CODES.length;
-        String[] countriesNames = new String[numberOfCountries + 1];
-        countriesNames[0] = SELECTION_PROMPT;
-        for (int i = 0; i < numberOfCountries; i++) {
-            countriesNames[i + 1] = COUNTRIES_NAMES_AND_CODES[i][0];
-        }
-        return countriesNames;
-    }
+    public static final HashMap<String, String> COUNTRY_NAMES_TO_CODES_MAP = getCountryNamesToCodesMap();
 
+    // Private constructor to avoid instance creation.
+    private CountryCodes() {}
+
+    /**
+     * Constructs a list including every country's name.
+     * @return The list of every country's name.
+     */
+    private static List<String> getCountriesNamesList() {
+        List<String> countriesNamesList = new ArrayList<>(COUNTRIES_NAMES_AND_CODES.length);
+        for (String[] country : COUNTRIES_NAMES_AND_CODES) {
+            countriesNamesList.add(country[0]);
+        }
+        return countriesNamesList;
+    }
 
     /**
      * Constructs a HashMap with country names as keys and country codes as values.

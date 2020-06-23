@@ -17,7 +17,7 @@ limitations under the License.
 package userinterface;
 
 import structs.ArtSystemState;
-import structs.CivicAddressTypes;
+import structs.CivicAddressElements;
 import structs.CountryCodes;
 import structs.ImageTypes;
 import structs.LanguageCodes;
@@ -43,6 +43,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.List;
 
 public class ArtMvcView extends JFrame {
 
@@ -56,12 +57,12 @@ public class ArtMvcView extends JFrame {
     private static final Integer[] LCI_VERSION_LIST = {1};
     private static final String[] ALTITUDE_TYPE_LIST = {"No Altitude Provided", "Meters", "Floors"};
     private static final String[] MAP_DATUM_LIST = {"WGS84", "NAD83 (NAVD88)", "NAD83 (MLLW)"};
-    private static final String[] COUNTRY_LIST = CountryCodes.COUNTRIES_NAMES_WITH_PLACEHOLDER;
+    private static final String SELECT_COUNTRY_PROMPT = "SELECT A COUNTRY";
     private static final int NUMBER_OF_COUNTRIES_VIEWABLE = 16;
     private static final String[] LANGUAGE_LIST = LanguageCodes.LANGUAGES_NAMES;
     private static final int NUMBER_OF_LANGUAGES_VIEWABLE = 16;
-    private static final String[] ADDRESS_ELEMENT_TYPE_LIST = CivicAddressTypes.ADDRESS_ELEMENT_TYPES_WITH_PLACEHOLDER;
-    private static final String[] IMAGE_TYPES = ImageTypes.getImageTypesWithPlaceholder();
+    private static final String SELECT_ADDRESS_ELEMENT_PROMPT = "SELECT TYPE";
+    private static final String SELECT_IMAGE_TYPE_PROMPT = "SELECT IMAGE TYPE";
 
     // Tab name declarations
     private static final String GENERATE_TAB_NAME = "Generate";
@@ -158,13 +159,17 @@ public class ArtMvcView extends JFrame {
     // LCR Tab labels and components
     private final JLabel lcrPanelTitle = new JLabel("Location Civic (Address) Subelement");
     private final JLabel countriesComboboxLabel = new JLabel(" Country: ");
-    private final JComboBox<String> countriesCombobox = new JComboBox<>(COUNTRY_LIST);
+    private List<String> countryList = CountryCodes.COUNTRIES_NAMES_LIST;
+    private final JComboBox<String> countriesCombobox = new JComboBox<>(
+        getArrayWithSelectionPrompt(countryList, SELECT_COUNTRY_PROMPT));
     private final JLabel addAddressElementLabel = new JLabel("Add individual address elements below: ");
     private final JLabel languageComboboxLabel = new JLabel("Language: ");
     private final JLabel addressElementTypeComboboxLabel = new JLabel("Address Element Type: ");
     private final JLabel addressElementFieldLabel = new JLabel("Name: ");
     private final JComboBox<String> languageCombobox = new JComboBox<>(LANGUAGE_LIST);
-    private final JComboBox<String> addressElementTypeCombobox = new JComboBox<>(ADDRESS_ELEMENT_TYPE_LIST);
+    private List<String> addressElementList = CivicAddressElements.ADDRESS_ELEMENT_LIST;
+    private final JComboBox<String> addressElementTypeCombobox = new JComboBox<>(
+        getArrayWithSelectionPrompt(addressElementList, SELECT_ADDRESS_ELEMENT_PROMPT));
     private final JTextField addressElementField = new JTextField();
     private final JButton addAddressElementsButton = new JButton("Add");
     /* TODO(dmevans): Make this JPanel change dynamically to keep a list of the
@@ -174,7 +179,9 @@ public class ArtMvcView extends JFrame {
 
     // Map Image Tab labels and components
     private final JLabel mapPanelTitle = new JLabel("Map Image Subelement");
-    private final JComboBox<String> mapImageTypeCombobox = new JComboBox<>(IMAGE_TYPES);
+    private List<String> imageTypesList = ImageTypes.IMAGE_TYPES_LIST;
+    private final JComboBox<String> mapImageTypeCombobox = new JComboBox<>(
+        getArrayWithSelectionPrompt(imageTypesList, SELECT_IMAGE_TYPE_PROMPT));
     private final JLabel mapUrlFieldLabel = new JLabel(" Enter Map URL: ");
     private final JTextField mapUrlField = new JTextField();
     private final JLabel imagePreviewLabel = new JLabel(" Image Preview: ");
@@ -234,6 +241,7 @@ public class ArtMvcView extends JFrame {
         tabbedPanel.addTab(MAP_TAB_NAME, mapPanel);
     }
 
+    // Setting up the "Generate" panel.
     private void setupGeneratePanel(JPanel panel) {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
@@ -296,6 +304,7 @@ public class ArtMvcView extends JFrame {
         panel.add(outputDirField);
     }
 
+    // Setting up the panel for the LCI subelement.
     private void setupLciPanel(JPanel panel) {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
@@ -362,6 +371,7 @@ public class ArtMvcView extends JFrame {
         lciReservedFieldsPanel.add(dependentStaCheckboxPanel);
     }
 
+    // Setting up the panel for the Z subelement.
     private void setupZPanel(JPanel panel) {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
@@ -423,6 +433,7 @@ public class ArtMvcView extends JFrame {
 
     }
 
+    // Setting up the panel for the Usage Rules/Policy subelement.
     private void setupUsagePanel(JPanel panel) {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JPanel usagePanelTitlePanel = new JPanel();
@@ -457,6 +468,7 @@ public class ArtMvcView extends JFrame {
         panel.add(staLocationPolicyPanelPanel);
     }
 
+    // Setting up the panel for the Co-located BSSID List subelement.
     private void setupBssidPanel(JPanel panel) {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(bssidPanelTitle);
@@ -478,6 +490,7 @@ public class ArtMvcView extends JFrame {
         panel.add(existingBssidScrollPane);
     }
 
+    // Setting up the panel for the Location Civic subelement.
     private void setupLcrPanel(JPanel panel) {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(lcrPanelTitle);
@@ -518,6 +531,7 @@ public class ArtMvcView extends JFrame {
         panel.add(existingAddressElementsScrollPane);
     }
 
+    // Setting up the panel for the Map Image subelement.
     private void setupMapPanel(JPanel panel) {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(mapPanelTitle);
@@ -537,6 +551,19 @@ public class ArtMvcView extends JFrame {
         panel.add(imagePreviewLabelPanel);
         panel.add(imagePreview);
 
+    }
+
+    /**
+     * Given a List of elements and a selection prompt, returns a combined array for use in a JComboBox.
+     * @param list The List containing the elements.
+     * @param selectionPrompt The default option prompting the user to select an option.
+     * @return An array containing the elements, with the selection prompt at index 0.
+     */
+    private String[] getArrayWithSelectionPrompt(List<String> list, String selectionPrompt) {
+        list.add(0, selectionPrompt);
+        String[] resultArray = new String[list.size()];
+        resultArray = list.toArray(resultArray);
+        return resultArray;
     }
 
     /**

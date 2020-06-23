@@ -392,10 +392,18 @@ public class LanguageCodes {
         {"Zuni", "zun"}
     };
 
-    // A list including every language's name.
+    /**
+     * An array including every language's name.
+     */
     public static final String[] LANGUAGES_NAMES = getLanguagesNames();
-    // A HashMap mapping language names to the associated 3-letter codes.
+
+    /**
+     * A HashMap mapping language names to the associated 3-letter codes.
+     */
     public static final HashMap<String, String> LANGUAGE_NAMES_TO_CODES_MAP = getLanguageNamesToCodesMap();
+
+    // Private constructor to avoid instance creation.
+    private LanguageCodes() {}
 
     /**
      * Constructs a list including every language's name.
