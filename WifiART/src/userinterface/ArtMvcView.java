@@ -34,6 +34,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 
+/**
+ * The master view class including GUI elements not specific to any subelement.
+ */
 public class ArtMvcView extends JFrame {
 
     // Dimensions
