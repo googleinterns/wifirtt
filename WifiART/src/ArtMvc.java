@@ -18,6 +18,12 @@ import structs.ArtSystemState;
 import userinterface.ArtMvcController;
 import userinterface.ArtMvcModel;
 import userinterface.ArtMvcView;
+import userinterface.BssidController;
+import userinterface.LciController;
+import userinterface.LcrController;
+import userinterface.MapController;
+import userinterface.UsageController;
+import userinterface.ZController;
 
 public class ArtMvc {
 
@@ -27,10 +33,18 @@ public class ArtMvc {
 
 
         // Setup the Control GUI using the MVC coding pattern
-        ArtMvcView fv = new ArtMvcView(state);
-        ArtMvcModel fm = new ArtMvcModel(state);
-        new ArtMvcController(fv, fm);
-        fv.setVisible(true);
+        ArtMvcView view = new ArtMvcView(state);
+        ArtMvcModel model = new ArtMvcModel(state);
+        new ArtMvcController(view, model);
+
+        new LciController(view.getLciView(), model.getLciModel());
+        new ZController(view.getZView(), model.getZModel());
+        new UsageController(view.getUsageView(), model.getUsageModel());
+        new BssidController(view.getBssidView(), model.getBssidModel());
+        new LcrController(view.getLcrView(), model.getLcrModel());
+        new MapController(view.getMapView(), model.getMapModel());
+
+        view.setVisible(true);
 
     }
 }

@@ -24,52 +24,52 @@ import java.util.List;
  * and the associated Civic Address Type as specified in RFC 4776.
  */
 public class CivicAddressElements {
-    private static final AddressElement[] CIVIC_ADDRESS_TYPE_LIST = {
-        new AddressElement("Additional Code", 32),
-        new AddressElement("Additional Loc. Info", 22),
-        new AddressElement("Block", 5),
-        new AddressElement("Borough", 4),
-        new AddressElement("Borough (Alaska)", 2),
-        new AddressElement("Branch Road Name", 36),
-        new AddressElement("Building (Structure)", 25),
-        new AddressElement("Canton", 1),
-        new AddressElement("Chou (Japan)", 4),
-        new AddressElement("City", 3),
-        new AddressElement("City District", 4),
-        new AddressElement("City Division", 4),
-        new AddressElement("County", 2),
-        new AddressElement("District (India)", 2),
-        new AddressElement("Floor", 27),
-        new AddressElement("Gun (Japan)", 2),
-        new AddressElement("House Number", 19),
-        new AddressElement("House Number Suffix", 20),
-        new AddressElement("Landmark or Vanity Address", 21),
-        new AddressElement("Leading Street Direction", 16),
-        new AddressElement("Name (Residence/Office Occupant)", 23),
-        new AddressElement("Neighborhood", 5),
-        new AddressElement("Parish", 2),
-        new AddressElement("Postal Community Name", 30),
-        new AddressElement("Postal/Zip Code", 24),
-        new AddressElement("Post Office Box (P.O. Box)", 31),
-        new AddressElement("Prefecture", 1),
-        new AddressElement("Primary Road Name", 34),
-        new AddressElement("Province", 1),
-        new AddressElement("Region", 1),
-        new AddressElement("Road Section", 35),
-        new AddressElement("Room", 28),
-        new AddressElement("Seat (Desk, Cubicle, Workstation)", 33),
-        new AddressElement("Shi (Japan)", 3),
-        new AddressElement("State", 1),
-        new AddressElement("Street Suffix or Type", 18),
-        new AddressElement("Sub-branch Road Name", 37),
-        new AddressElement("Street Name Pre-Modifier", 38),
-        new AddressElement("Street Name Post-Modifier", 39),
-        new AddressElement("Town", 3),
-        new AddressElement("Township", 3),
-        new AddressElement("Trailing Street Suffix", 17),
-        new AddressElement("Type of Place", 29),
-        new AddressElement("Unit (Apartment, Suite)", 26),
-        new AddressElement("Ward", 4)
+    private static final AddressElementKey[] CIVIC_ADDRESS_TYPE_LIST = {
+        new AddressElementKey("Additional Code", 32),
+        new AddressElementKey("Additional Loc. Info", 22),
+        new AddressElementKey("Block", 5),
+        new AddressElementKey("Borough", 4),
+        new AddressElementKey("Borough (Alaska)", 2),
+        new AddressElementKey("Branch Road Name", 36),
+        new AddressElementKey("Building (Structure)", 25),
+        new AddressElementKey("Canton", 1),
+        new AddressElementKey("Chou (Japan)", 4),
+        new AddressElementKey("City", 3),
+        new AddressElementKey("City District", 4),
+        new AddressElementKey("City Division", 4),
+        new AddressElementKey("County", 2),
+        new AddressElementKey("District (India)", 2),
+        new AddressElementKey("Floor", 27),
+        new AddressElementKey("Gun (Japan)", 2),
+        new AddressElementKey("House Number", 19),
+        new AddressElementKey("House Number Suffix", 20),
+        new AddressElementKey("Landmark or Vanity Address", 21),
+        new AddressElementKey("Leading Street Direction", 16),
+        new AddressElementKey("Name (Residence/Office Occupant)", 23),
+        new AddressElementKey("Neighborhood", 5),
+        new AddressElementKey("Parish", 2),
+        new AddressElementKey("Postal Community Name", 30),
+        new AddressElementKey("Postal/Zip Code", 24),
+        new AddressElementKey("Post Office Box (P.O. Box)", 31),
+        new AddressElementKey("Prefecture", 1),
+        new AddressElementKey("Primary Road Name", 34),
+        new AddressElementKey("Province", 1),
+        new AddressElementKey("Region", 1),
+        new AddressElementKey("Road Section", 35),
+        new AddressElementKey("Room", 28),
+        new AddressElementKey("Seat (Desk, Cubicle, Workstation)", 33),
+        new AddressElementKey("Shi (Japan)", 3),
+        new AddressElementKey("State", 1),
+        new AddressElementKey("Street Suffix or Type", 18),
+        new AddressElementKey("Sub-branch Road Name", 37),
+        new AddressElementKey("Street Name Pre-Modifier", 38),
+        new AddressElementKey("Street Name Post-Modifier", 39),
+        new AddressElementKey("Town", 3),
+        new AddressElementKey("Township", 3),
+        new AddressElementKey("Trailing Street Suffix", 17),
+        new AddressElementKey("Type of Place", 29),
+        new AddressElementKey("Unit (Apartment, Suite)", 26),
+        new AddressElementKey("Ward", 4)
     };
 
     /**
@@ -80,9 +80,9 @@ public class CivicAddressElements {
     // Private constructor to avoid instance creation.
     private CivicAddressElements() {}
 
-    private static class AddressElement {
+    private static class AddressElementKey {
         /**
-         * The name of the address element.
+         * The name of the address element key.
          */
         public final String name;
 
@@ -93,11 +93,11 @@ public class CivicAddressElements {
         public final int caType;
 
         /**
-         * Constructs an AddressElement containing a name and civic address type number.
-         * @param name The name of the address element type.
+         * Constructs an AddressElementKey containing a name and civic address type number.
+         * @param name The name of the address element key.
          * @param caType The civic address type number associated with this address element type.
          */
-        AddressElement(String name, int caType) {
+        AddressElementKey(String name, int caType) {
             this.name = name;
             this.caType = caType;
         }
@@ -109,7 +109,7 @@ public class CivicAddressElements {
      */
     private static List<String> getAddressElementList() {
         List<String> addressElementList = new ArrayList<>(CIVIC_ADDRESS_TYPE_LIST.length);
-        for (AddressElement addressElement : CIVIC_ADDRESS_TYPE_LIST) {
+        for (AddressElementKey addressElement : CIVIC_ADDRESS_TYPE_LIST) {
             addressElementList.add(addressElement.name);
         }
         return addressElementList;

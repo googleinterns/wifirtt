@@ -18,21 +18,12 @@ package userinterface;
 
 import structs.ArtSystemState;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * The master view class including GUI elements not specific to any subelement.
@@ -63,9 +54,9 @@ public class ArtMvcView extends JFrame {
     private final JLabel lcrSubelementsLabel = new JLabel(" LCR Subelements Included:                           ");
     private final JCheckBox lcrCheckbox = new JCheckBox("Location Civic Report (Address)");
     private final JCheckBox mapCheckbox = new JCheckBox("Map Image");
-    private final JLabel inputFileNameLabel = new JLabel(" Output File: ");
+    private final JLabel inputFileNameLabel = new JLabel(" Input File: ");
     private final JTextField inputFileNameField = new JTextField();
-    private final JLabel inputDirLabel = new JLabel(" Output Dir: ");
+    private final JLabel inputDirLabel = new JLabel(" Input Dir: ");
     private final JTextField inputDirField = new JTextField();
     private final JLabel outputFileNameLabel = new JLabel(" Output File: ");
     private final JTextField outputFileNameField = new JTextField();
@@ -75,12 +66,12 @@ public class ArtMvcView extends JFrame {
     private final JTextArea bufferTextArea = new JTextArea();
 
     // Sub-View JPanels for each subelement
-    private final JPanel lciView = new LciView();
-    private final JPanel zView = new ZView();
-    private final JPanel usageView = new UsageView();
-    private final JPanel bssidView = new BssidView();
-    private final JPanel lcrView = new LcrView();
-    private final JPanel mapView = new MapView();
+    private final LciView lciView = new LciView();
+    private final ZView zView = new ZView();
+    private final UsageView usageView = new UsageView();
+    private final BssidView bssidView = new BssidView();
+    private final LcrView lcrView = new LcrView();
+    private final MapView mapView = new MapView();
 
 
     /** Constructor.
@@ -182,6 +173,92 @@ public class ArtMvcView extends JFrame {
         panel.add(outputDirLabel);
         panel.add(outputDirField);
     }
+
+    public boolean getLciIncluded() {
+        return lciCheckbox.isSelected();
+    }
+    public boolean getZIncluded() {
+        return zCheckbox.isSelected();
+    }
+    public boolean getUsageIncluded() {
+        return usageCheckbox.isSelected();
+    }
+    public boolean getBssidIncluded() {
+        return bssidCheckbox.isSelected();
+    }
+    public boolean getLcrIncluded() {
+        return lcrCheckbox.isSelected();
+    }
+    public boolean getMapIncluded() {
+        return mapCheckbox.isSelected();
+    }
+
+    public String getInputFileName() {
+        return inputFileNameField.getText();
+    }
+    public String getInputDir() {
+        return inputDirField.getText();
+    }
+    public String getOutputFileName() {
+        return outputFileNameField.getText();
+    }
+    public String getOutputDir() {
+        return outputDirField.getText();
+    }
+
+    public void setLciIncludedListener(ActionListener listener) {
+        lciCheckbox.addActionListener(listener);
+    }
+    public void setZIncludedListener(ActionListener listener) {
+        zCheckbox.addActionListener(listener);
+    }
+    public void setUsageIncludedListener(ActionListener listener) {
+        usageCheckbox.addActionListener(listener);
+    }
+    public void setBssidIncludedListener(ActionListener listener) {
+        bssidCheckbox.addActionListener(listener);
+    }
+    public void setLcrIncludedListener(ActionListener listener) {
+        lcrCheckbox.addActionListener(listener);
+    }
+    public void setMapIncludedListener(ActionListener listener) {
+        mapCheckbox.addActionListener(listener);
+    }
+
+    public void setInputFileNameListener(ActionListener listener) {
+        inputFileNameField.addActionListener(listener);
+    }
+    public void setInputDirListener(ActionListener listener) {
+        inputDirField.addActionListener(listener);
+    }
+    public void setOutputFileNameListener(ActionListener listener) {
+        outputFileNameField.addActionListener(listener);
+    }
+    public void setOutputDirListener(ActionListener listener) {
+        outputDirField.addActionListener(listener);
+    }
+
+    // Getters for the sub-views
+    public LciView getLciView() {
+        return lciView;
+    }
+    public ZView getZView() {
+        return zView;
+    }
+    public UsageView getUsageView() {
+        return usageView;
+    }
+    public BssidView getBssidView() {
+        return bssidView;
+    }
+    public LcrView getLcrView() {
+        return lcrView;
+    }
+    public MapView getMapView() {
+        return mapView;
+    }
+
+
 
     /**
      * Display an Error message.

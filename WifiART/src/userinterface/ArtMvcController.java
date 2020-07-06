@@ -16,9 +16,12 @@ limitations under the License.
 
 package userinterface;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class ArtMvcController {
-    private final ArtMvcView fv; // fv = MVC View
-    private final ArtMvcModel fm; // fm = MVC Model
+    private final ArtMvcView view; // fv = MVC View
+    private final ArtMvcModel model; // fm = MVC Model
 
     /** Constructor.
      *
@@ -27,20 +30,42 @@ public class ArtMvcController {
      *
      * */
     public ArtMvcController(ArtMvcView fv, ArtMvcModel fm) {
-        this.fm = fm;
-        this.fv = fv;
+        this.model = fm;
+        this.view = fv;
 
         // Initialize GUI by copying state from model
-        this.fv.setViewState(fm.getState());
-        this.fm.setCallback(this);
+        this.view.setViewState(fm.getState());
+        this.model.setCallback(this);
 
         // TODO(dmevans) Add the listeners to the View here
+        view.setLciIncludedListener(actionEvent ->
+            model.getState().setLciIncluded(view.getLciIncluded()));
+        view.setZIncludedListener(actionEvent ->
+            model.getState().setZIncluded(view.getZIncluded()));
+        view.setUsageIncludedListener(actionEvent ->
+            model.getState().setUsageIncluded(view.getUsageIncluded()));
+        view.setBssidIncludedListener(actionEvent ->
+            model.getState().setBssidIncluded(view.getBssidIncluded()));
+        view.setLcrIncludedListener(actionEvent ->
+            model.getState().setLcrIncluded(view.getLcrIncluded()));
+        view.setBssidIncludedListener(actionEvent ->
+            model.getState().setLcrIncluded(view.getLcrIncluded()));
+
+
+
+        view.setInputFileNameListener(actionEvent ->
+            model.getState().setInputFileName(view.getInputFileName()));
+        view.setInputDirListener(actionEvent ->
+            model.getState().setInputDir(view.getInputDir()));
+        view.setOutputFileNameListener(actionEvent ->
+            model.getState().setOutputFileName(view.getOutputFileName()));
+        view.setOutputDirListener(actionEvent ->
+            model.getState().setOutputDir(view.getOutputDir()));
     }
 
     /** Events that occur asynchronously in the model call this method e.g. For an animation */
     void modelCallback() {
-        fv.setViewState(fm.getState());
+        view.setViewState(model.getState());
     }
 
-    // TODO(dmevans) Define listener classes here
 }
