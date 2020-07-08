@@ -20,7 +20,7 @@ import structs.ArtSystemState;
 
 public class ArtMvcModel {
     private ArtSystemState state;
-    private ArtMvcController fc;
+    private ArtMvcController controller;
 
     private final LciModel lciModel;
     private final ZModel zModel;
@@ -72,39 +72,69 @@ public class ArtMvcModel {
 
 
     // Getters for the sub-models
+
+    /**
+     * Get the model for the LCI subelement.
+     * @return the LCI subelement model
+     */
     public LciModel getLciModel() {
         return lciModel;
     }
+
+    /**
+     * Get the model for the Z subelement.
+     * @return the Z subelement model
+     */
     public ZModel getZModel() {
         return zModel;
     }
+
+    /**
+     * Get the model for the Usage Rules/Policy subelement.
+     * @return the Usage Rules/Policy subelement model
+     */
     public UsageModel getUsageModel() {
         return usageModel;
     }
+
+    /**
+     * Get the model for the BSSID List subelement.
+     * @return the BSSID List subelement model
+     */
     public BssidModel getBssidModel() {
         return bssidModel;
     }
+
+    /**
+     * Get the model for the Location Civic subelement.
+     * @return the Location Civic subelement model
+     */
     public LcrModel getLcrModel() {
         return lcrModel;
     }
+
+    /**
+     * Get the model for the Map Image subelement.
+     * @return the Map Image subelement model
+     */
     public MapModel getMapModel() {
         return mapModel;
     }
 
     /**
-     * The callback into the BfaController used when an asynchronous even occurs e.g. animation timer.
+     * The callback into the ArtMvcController used when an asynchronous even occurs.
      *
-     * @param fc the Bfa controller in the MVC pattern
+     * @param controller the Controller in the MVC pattern
      */
-    public void setCallback(ArtMvcController fc) {
-        this.fc = fc;
+    public void setCallback(ArtMvcController controller) {
+        this.controller = controller;
     }
 
 
-    /** Update the view by executing the call back on the Bfa Controller. */
+    /** Update the view by executing the call back on the controller. */
     private void updateView() {
-        if (fc != null) {
-            fc.modelCallback();
+        if (controller != null) {
+            controller.modelCallback();
         }
     }
 }

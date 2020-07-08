@@ -76,75 +76,185 @@ public class ArtSystemState {
     }
 
     // Getters for the subelement states
+
+    /**
+     * Gets the subelement state for the LCI subelement.
+     * @return the LCI subelement state
+     */
     public LciState getLciState() {
         return lciState;
     }
+
+    /**
+     * Gets the subelement state for the Z subelement.
+     * @return the Z subelement state
+     */
     public ZState getZState() {
         return zState;
     }
+
+    /**
+     * Gets the subelement state for the Usage Rules/Policy subelement.
+     * @return the Usage Rules/Policy subelement state
+     */
     public UsageState getUsageState() {
         return usageState;
     }
+
+    /**
+     * Gets the subelement state for the BSSID List subelement.
+     * @return the BSSID List subelement state
+     */
     public BssidState getBssidState() {
         return bssidState;
     }
+
+    /**
+     * Gets the subelement state for the Location Civic subelement.
+     * @return the Location Civic subelement state
+     */
     public LcrState getLcrState() {
         return lcrState;
     }
+
+    /**
+     * Gets the subelement state for the Map Image subelement.
+     * @return the Map Image subelement state
+     */
     public MapState getMapState() {
         return mapState;
     }
 
     // Setters for the subelement states
+
+    /**
+     * Sets the subelement state for the LCI subelement
+     * @param lciState the LCI subelement state
+     */
     public void setLciState(LciState lciState) {
         this.lciState = lciState;
     }
+
+    /**
+     * Sets the subelement state for the Z subelement
+     * @param zState the Z subelement state
+     */
     public void setZState(ZState zState) {
         this.zState = zState;
     }
+
+    /**
+     * Sets the subelement state for the Usage Rules/Policy subelement
+     * @param usageState the Usage Rules/Policy subelement state
+     */
     public void setUsageState(UsageState usageState) {
         this.usageState = usageState;
     }
+
+    /**
+     * Sets the subelement state for the BSSID List subelement
+     * @param bssidState the BSSID List subelement state
+     */
     public void setBssidState(BssidState bssidState) {
         this.bssidState = bssidState;
     }
+
+    /**
+     * Sets the subelement state for the Location Civic subelement
+     * @param lcrState the Location Civic subelement state
+     */
     public void setLcrState(LcrState lcrState) {
         this.lcrState = lcrState;
     }
+
+    /**
+     * Sets the subelement state for the Map Image subelement
+     * @param mapState the Map Image subelement state
+     */
     public void setMapState(MapState mapState) {
         this.mapState = mapState;
     }
 
 
     // Setters for which subelements are included
+
+    /**
+     * Set whether or not the LCI subelement is included in the output.
+     * @param included the boolean value of the parameter
+     */
     public void setLciIncluded(boolean included) {
         includedSubelements.put(SubelementName.LCI, included);
     }
+
+    /**
+     * Set whether or not the Z subelement is included in the output.
+     * @param included the boolean value of the parameter
+     */
     public void setZIncluded(boolean included) {
         includedSubelements.put(SubelementName.Z, included);
     }
+
+    /**
+     * Set whether or not the Usage Rules/Policy subelement is included in the output.
+     * @param included the boolean value of the parameter
+     */
     public void setUsageIncluded(boolean included) {
         includedSubelements.put(SubelementName.USAGE, included);
     }
+
+    /**
+     * Set whether or not the BSSID List subelement is included in the output.
+     * @param included the boolean value of the parameter
+     */
     public void setBssidIncluded(boolean included) {
         includedSubelements.put(SubelementName.BSSID, included);
     }
+
+    /**
+     * Set whether or not the Location Civic subelement is included in the output.
+     * @param included the boolean value of the parameter
+     */
     public void setLcrIncluded(boolean included) {
         includedSubelements.put(SubelementName.LCR, included);
     }
+
+    /**
+     * Set whether or not the Map Image subelement is included in the output.
+     * @param included the boolean value of the parameter
+     */
     public void setMapIncluded(boolean included) {
         includedSubelements.put(SubelementName.MAP, included);
     }
 
+
+    /**
+     * Set the input file name.
+     * @param inputFileName the input file name
+     */
     public void setInputFileName(String inputFileName) {
         this.inputFileName = inputFileName;
     }
+
+    /**
+     * Set the input file directory.
+     * @param inputDir the input file directory
+     */
     public void setInputDir(String inputDir) {
         this.inputDir = inputDir;
     }
+
+    /**
+     * Set the output file name.
+     * @param outputFileName the output file name
+     */
     public void setOutputFileName(String outputFileName) {
         this.outputFileName = outputFileName;
     }
+
+    /**
+     * Set the output file directory.
+     * @param outputDir the output file directory
+     */
     public void setOutputDir(String outputDir) {
         this.outputDir = outputDir;
     }

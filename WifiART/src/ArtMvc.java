@@ -37,6 +37,7 @@ public class ArtMvc {
         ArtMvcModel model = new ArtMvcModel(state);
         new ArtMvcController(view, model);
 
+        // Setup controllers for the subelements
         new LciController(view.getLciView(), model.getLciModel());
         new ZController(view.getZView(), model.getZModel());
         new UsageController(view.getUsageView(), model.getUsageModel());

@@ -16,12 +16,9 @@ limitations under the License.
 
 package userinterface;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 public class ArtMvcController {
-    private final ArtMvcView view; // fv = MVC View
-    private final ArtMvcModel model; // fm = MVC Model
+    private final ArtMvcView view;   // MVC View
+    private final ArtMvcModel model; // MVC Model
 
     /** Constructor.
      *
@@ -37,7 +34,7 @@ public class ArtMvcController {
         this.view.setViewState(fm.getState());
         this.model.setCallback(this);
 
-        // TODO(dmevans) Add the listeners to the View here
+        // Listeners for the checkboxes determining which subelements are included.
         view.setLciIncludedListener(actionEvent ->
             model.getState().setLciIncluded(view.getLciIncluded()));
         view.setZIncludedListener(actionEvent ->
@@ -48,11 +45,10 @@ public class ArtMvcController {
             model.getState().setBssidIncluded(view.getBssidIncluded()));
         view.setLcrIncludedListener(actionEvent ->
             model.getState().setLcrIncluded(view.getLcrIncluded()));
-        view.setBssidIncludedListener(actionEvent ->
-            model.getState().setLcrIncluded(view.getLcrIncluded()));
+        view.setMapIncludedListener(actionEvent ->
+            model.getState().setMapIncluded(view.getMapIncluded()));
 
-
-
+        // Listeners for the input/output file location.
         view.setInputFileNameListener(actionEvent ->
             model.getState().setInputFileName(view.getInputFileName()));
         view.setInputDirListener(actionEvent ->
