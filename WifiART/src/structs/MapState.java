@@ -19,6 +19,8 @@ package structs;
 public class MapState {
     private String mapUrl;
 
+    // TODO(dmevans) Add getter methods.
+
     /**
      * Set the Map URL.
      * @param mapUrl the map URL.

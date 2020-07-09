@@ -76,4 +76,6 @@ public class LcrState {
     public void editAddressElement(int index, String language, String description, String name) {
         addressElements.set(index, new AddressElement(language, description, name));
     }
+
+    // TODO(dmevans) Add getter methods.
 }

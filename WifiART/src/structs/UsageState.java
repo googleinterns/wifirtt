@@ -18,10 +18,18 @@ package structs;
 
 public class UsageState {
     // Parameters
+
+    // The retransmissionAllowed field is true if retransmission of the LCI information is allowed.
     private boolean retransmissionAllowed;
+    /* The retentionExpires field is true if LCI information is allowed to expire
+       after an amount of time. */
     private boolean retentionExpires;
-    private int expireTime;
+    private int expireTime; // Number of hours after which retention expires.
+
+    // The staLocationPolicy field is true if additional STA location information exists.
     private boolean staLocationPolicy;
+
+    // TODO(dmevans) Add getter methods.
 
     /**
      * Set whether or not retransmission of the LCI information is allowed.

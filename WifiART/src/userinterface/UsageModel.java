@@ -62,6 +62,7 @@ public class UsageModel implements Subelement {
     }
 
 
+    // TODO(dmevans) Implement the encoding in toHexBuffer().
     @Override
     public String toHexBuffer() {
         return null;

@@ -40,6 +40,8 @@ public class ArtSystemState {
     private BssidState bssidState;
     private LcrState lcrState;
     private MapState mapState;
+    /* The includedSubelements map specifies whether or not each subelement is to be included
+       in the output. */
     private HashMap<SubelementName, Boolean> includedSubelements;
     private String inputFileName;
     private String inputDir;

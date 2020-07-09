@@ -25,16 +25,23 @@ public class LciState {
 
     private double altitude;
     private double altitudeUncertainty;
-    private String altitudeUnits;
-    private String altitudeDatum;
+    private String altitudeUnits; // "Meters" or "Floors"
+    private String altitudeDatum; // "WGS84", "NAD83 (NAVD88)", or "NAD83 (MLLW)".
 
+    /* The regLocAgreement parameter is true if the STA is operating within a national
+       policy area or an international agreement area near a national border. */
     private boolean regLocAgreement;
+    /* The regLocDse parameter is true if the enabling STA is enabling the operation
+       of STAs with DSE. */
     private boolean regLocDse;
+    /* The dependentSta parameter is true if the STA is operating with the enablement
+       of the enabling STA whose LCI is being reported. */
     private boolean dependentSta;
 
     public LciState() {
     }
 
+    // TODO(dmevans) Add getter methods.
 
     /**
      * Sets the latitude.
@@ -120,7 +127,8 @@ public class LciState {
     }
 
     /**
-     * Sets the dependentSta parameter, which is true if
+     * Sets the dependentSta parameter, which is true if the STA is operating with the enablement
+     *  of the enabling STA whose LCI is being reported.
      * @param dependentSta
      */
     public void setDependentSta(boolean dependentSta) {

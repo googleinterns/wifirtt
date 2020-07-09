@@ -29,5 +29,7 @@ public class UsageController {
         this.model = model;
         this.view = view;
         this.model.setCallback(this);
+
+        // TODO(dmevans) Add listeners here.
     }
 }

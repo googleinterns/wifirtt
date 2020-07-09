@@ -16,15 +16,17 @@ limitations under the License.
 
 package structs;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class BssidState {
 
-    private List<String> bssidList;
+    private final Set<String> bssidList;
+
+    // TODO(dmevans): Add MaxBSSID Indicator field.
 
     public BssidState() {
-        bssidList = new ArrayList<>();
+        bssidList = new HashSet<>();
     }
 
     /**
@@ -32,24 +34,32 @@ public class BssidState {
      * @param bssid the BSSID to be added
      */
     public void addBssid(String bssid) {
+
+        // TODO(dmevans) Input validation.
+
         bssidList.add(bssid);
     }
 
     /**
      * Removes a BSSID from the list.
-     * @param index the index of the BSSID to be removed
+     * @param bssid the BSSID to be removed
      */
-    public void deleteBssid(int index) {
-        bssidList.remove(index);
+    public void deleteBssid(String bssid) {
+        bssidList.remove(bssid);
     }
 
     /**
      * Replaces a BSSID in the list with a new one.
-     * @param index the index of the BSSID to be replaced.
+     * @param oldBssid the BSSID to be replaced.
      * @param newBssid the new BSSID to replace the old one.
      */
-    public void editBssid(int index, String newBssid) {
-        bssidList.set(index, newBssid);
+    public void editBssid(String oldBssid, String newBssid) {
+        // TODO(dmevans) Input validation.
+
+        bssidList.remove(oldBssid);
+        bssidList.add(newBssid);
     }
+
+    // TODO(dmevans) Add getter methods.
 
 }

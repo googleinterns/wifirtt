@@ -19,9 +19,13 @@ package structs;
 public class ZState {
     // Parameters
     private int floor;
-    private double heightAboveFloor;
+    private double heightAboveFloor; // Height is in meters.
     private double heightAboveFloorUncertainty;
+    /* The locationMovement field specifies whether the STA is expected to change location,
+       not expected to change location, or if this is unknown. */
     private String locationMovement;
+
+    // TODO(dmevans) Add getter methods.
 
     /**
      * Set the floor number.

@@ -60,7 +60,7 @@ public class BssidModel implements Subelement {
         this.fc = fc;
     }
 
-
+    // TODO(dmevans) Implement the encoding in toHexBuffer().
     @Override
     public String toHexBuffer() {
         return null;

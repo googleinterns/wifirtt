@@ -25,6 +25,8 @@ public class BssidView extends JPanel {
      */
     private final JPanel bssidListPanel = new JPanel();
 
+    // TODO(dmevans): Add MaxBSSID Indicator field.
+
     /**
      * Constructs the view for the Co-located BSSID List subelement.
      */
