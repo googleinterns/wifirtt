@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 
 /**
  * A JPanel representing the view for the Usage Rules/Policy subelement.
@@ -65,6 +66,75 @@ public class UsageView extends JPanel {
         staLocationPolicyPanel.add(staLocationPolicyCheckbox);
         staLocationPolicyPanelPanel.add(staLocationPolicyPanel);
         this.add(staLocationPolicyPanelPanel);
+    }
+
+    // Getters
+
+    /**
+     * Get the value of the RetransmissionAllowed parameter from the view.
+     * @return the value of the RetransmissionAllowed parameter.
+     */
+    public boolean getRetransmissionAllowed() {
+        return retransmissionAllowedCheckbox.isSelected();
+    }
+
+    /**
+     * Get the value of the RetentionExpires parameter from the view.
+     * @return the value of the RetentionExpires parameter.
+     */
+    public boolean getRetentionExpires() {
+        return retentionExpiresCheckbox.isSelected();
+    }
+
+    /**
+     * Get the value of the ExpireTime parameter from the view.
+     * @return the value of the ExpireTime parameter.
+     * @throws NumberFormatException If the user did not enter an integer value.
+     */
+    public int getExpireTime() throws NumberFormatException {
+        return Integer.parseInt(expireTimeField.getText());
+    }
+
+    /**
+     * Get the value of the StaLocationPolicy parameter from the view.
+     * @return the value of the StaLocationPolicy parameter.
+     */
+    public boolean getStaLocationPolicy() {
+        return staLocationPolicyCheckbox.isSelected();
+    }
+
+    // Methods for adding listeners
+
+    /**
+     * Add a listener for the RetransmissionAllowed parameter.
+     * @param listener the ActionListener for the RetransmissionAllowed parameter.
+     */
+    public void setRetransmissionAllowedListener(ActionListener listener) {
+        retransmissionAllowedCheckbox.addActionListener(listener);
+    }
+
+    /**
+     * Add a listener for the RetentionExpires parameter.
+     * @param listener the ActionListener for the RetentionExpires parameter.
+     */
+    public void setRetentionExpiresListener(ActionListener listener) {
+        retentionExpiresCheckbox.addActionListener(listener);
+    }
+
+    /**
+     * Add a listener for the ExpireTime parameter.
+     * @param listener the ActionListener for the ExpireTime parameter.
+     */
+    public void setExpireTimeListener(ActionListener listener) {
+        expireTimeField.addActionListener(listener);
+    }
+
+    /**
+     * Add a listener for the StaLocationPolicy parameter.
+     * @param listener the ActionListener for the StaLocationPolicy parameter.
+     */
+    public void setStaLocationPolicyListener(ActionListener listener) {
+        staLocationPolicyCheckbox.addActionListener(listener);
     }
 
 }

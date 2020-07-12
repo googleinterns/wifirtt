@@ -19,17 +19,55 @@ package structs;
 public class UsageState {
     // Parameters
 
-    // The retransmissionAllowed field is true if retransmission of the LCI information is allowed.
+    /**
+     * The retransmissionAllowed field is true if retransmission of the LCI information is allowed.
+     */
     private boolean retransmissionAllowed;
-    /* The retentionExpires field is true if LCI information is allowed to expire
-       after an amount of time. */
-    private boolean retentionExpires;
-    private int expireTime; // Number of hours after which retention expires.
 
-    // The staLocationPolicy field is true if additional STA location information exists.
+    /**
+     * The retentionExpires field is true if LCI information is allowed to expire
+     * after an amount of time.
+     */
+    private boolean retentionExpires;
+
+    /** Number of hours after which retention expires. */
+    private int expireTime;
+
+    /** The staLocationPolicy field is true if additional STA location information exists. */
     private boolean staLocationPolicy;
 
-    // TODO(dmevans) Add getter methods.
+    /**
+     * Get whether or not retransmission of the LCI information is allowed.
+     * @return The boolean value of the parameter
+     */
+    public boolean getRetransmissionAllowed() {
+        return retransmissionAllowed;
+    }
+
+    /**
+     * Get whether or not LCI information is allowed to expire after an amount of time.
+     * @return The boolean value of the parameter.
+     */
+    public boolean getRetentionExpires() {
+        return retentionExpires;
+    }
+
+    /**
+     * Get the amount of time after which LCI information expires.
+     * @return The amount of time, in hours.
+     */
+    public int getExpireTime() {
+        return expireTime;
+    }
+
+    /**
+     * Get whether or not additional STA location information exists.
+     * @return the boolean value of the parameter.
+     */
+    public boolean getStaLocationPolicy() {
+        return staLocationPolicy;
+    }
+
 
     /**
      * Set whether or not retransmission of the LCI information is allowed.
@@ -49,7 +87,7 @@ public class UsageState {
 
     /**
      * Set the amount of time after which LCI information expires.
-     * @param expireTime the expire time (in hours)
+     * @param expireTime the expire time, in hours.
      */
     public void setExpireTime(int expireTime) {
         this.expireTime = expireTime;
@@ -62,4 +100,5 @@ public class UsageState {
     public void setStaLocationPolicy(boolean staLocationPolicy) {
         this.staLocationPolicy = staLocationPolicy;
     }
+
 }

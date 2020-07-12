@@ -30,6 +30,14 @@ public class UsageController {
         this.view = view;
         this.model.setCallback(this);
 
-        // TODO(dmevans) Add listeners here.
+        view.setRetransmissionAllowedListener(actionEvent ->
+            model.getState().setRetransmissionAllowed(view.getRetransmissionAllowed()));
+        view.setRetentionExpiresListener(actionEvent ->
+            model.getState().setRetentionExpires(view.getRetentionExpires()));
+        // TODO(dmevans) Error-handling for non-integer input in the ExpireTime listener.
+        view.setExpireTimeListener(actionEvent ->
+            model.getState().setExpireTime(view.getExpireTime()));
+        view.setStaLocationPolicyListener(actionEvent ->
+            model.getState().setStaLocationPolicy(view.getStaLocationPolicy()));
     }
 }
