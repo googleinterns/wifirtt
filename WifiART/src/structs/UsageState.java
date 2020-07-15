@@ -17,6 +17,7 @@ limitations under the License.
 package structs;
 
 public class UsageState {
+
     // Constants
     private static final int MAX_EXPIRE_TIME = 65535;
     private static final int MIN_EXPIRE_TIME = 0;
@@ -43,6 +44,7 @@ public class UsageState {
 
     /**
      * Get whether or not retransmission of the LCI information is allowed.
+     *
      * @return The boolean value of the parameter
      */
     public boolean getRetransmissionAllowed() {
@@ -51,6 +53,7 @@ public class UsageState {
 
     /**
      * Get whether or not LCI information is allowed to expire after an amount of time.
+     *
      * @return The boolean value of the parameter.
      */
     public boolean getRetentionExpires() {
@@ -59,6 +62,7 @@ public class UsageState {
 
     /**
      * Get the amount of time after which LCI information expires.
+     *
      * @return The amount of time, in hours.
      */
     public int getExpireTime() {
@@ -67,6 +71,7 @@ public class UsageState {
 
     /**
      * Get whether or not additional STA location information exists.
+     *
      * @return the boolean value of the parameter.
      */
     public boolean getStaLocationPolicy() {
@@ -76,6 +81,7 @@ public class UsageState {
 
     /**
      * Set whether or not retransmission of the LCI information is allowed.
+     *
      * @param retransmissionAllowed the boolean value of the parameter.
      */
     public void setRetransmissionAllowed(boolean retransmissionAllowed) {
@@ -84,6 +90,7 @@ public class UsageState {
 
     /**
      * Set whether or not LCI information is allowed to expire after an amount of time.
+     *
      * @param retentionExpires the boolean value of the parameter.
      */
     public void setRetentionExpires(boolean retentionExpires) {
@@ -92,6 +99,7 @@ public class UsageState {
 
     /**
      * Set the amount of time after which LCI information expires.
+     *
      * @param expireTime the expire time, in hours.
      */
     public void setExpireTime(int expireTime) throws NumberFormatException {
@@ -103,6 +111,7 @@ public class UsageState {
 
     /**
      * Set whether or not additional STA location information exists.
+     *
      * @param staLocationPolicy the boolean value of the parameter.
      */
     public void setStaLocationPolicy(boolean staLocationPolicy) {
