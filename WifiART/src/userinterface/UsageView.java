@@ -3,7 +3,9 @@ package userinterface;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.Color;
@@ -72,6 +74,7 @@ public class UsageView extends JPanel {
 
     /**
      * Get the value of the RetransmissionAllowed parameter from the view.
+     *
      * @return the value of the RetransmissionAllowed parameter.
      */
     public boolean getRetransmissionAllowed() {
@@ -80,6 +83,7 @@ public class UsageView extends JPanel {
 
     /**
      * Get the value of the RetentionExpires parameter from the view.
+     *
      * @return the value of the RetentionExpires parameter.
      */
     public boolean getRetentionExpires() {
@@ -88,6 +92,7 @@ public class UsageView extends JPanel {
 
     /**
      * Get the value of the ExpireTime parameter from the view.
+     *
      * @return the value of the ExpireTime parameter.
      * @throws NumberFormatException If the user did not enter an integer value.
      */
@@ -97,6 +102,7 @@ public class UsageView extends JPanel {
 
     /**
      * Get the value of the StaLocationPolicy parameter from the view.
+     *
      * @return the value of the StaLocationPolicy parameter.
      */
     public boolean getStaLocationPolicy() {
@@ -107,6 +113,7 @@ public class UsageView extends JPanel {
 
     /**
      * Add a listener for the RetransmissionAllowed parameter.
+     *
      * @param listener the ActionListener for the RetransmissionAllowed parameter.
      */
     public void setRetransmissionAllowedListener(ActionListener listener) {
@@ -115,6 +122,7 @@ public class UsageView extends JPanel {
 
     /**
      * Add a listener for the RetentionExpires parameter.
+     *
      * @param listener the ActionListener for the RetentionExpires parameter.
      */
     public void setRetentionExpiresListener(ActionListener listener) {
@@ -123,6 +131,7 @@ public class UsageView extends JPanel {
 
     /**
      * Add a listener for the ExpireTime parameter.
+     *
      * @param listener the ActionListener for the ExpireTime parameter.
      */
     public void setExpireTimeListener(ActionListener listener) {
@@ -131,10 +140,20 @@ public class UsageView extends JPanel {
 
     /**
      * Add a listener for the StaLocationPolicy parameter.
+     *
      * @param listener the ActionListener for the StaLocationPolicy parameter.
      */
     public void setStaLocationPolicyListener(ActionListener listener) {
         staLocationPolicyCheckbox.addActionListener(listener);
+    }
+
+    /**
+     * Displays an error in a pop-up window.
+     *
+     * @param message The error message to be displayed.
+     */
+    public void displayError(String message) {
+        JOptionPane.showMessageDialog(new JFrame(), message);
     }
 
 }

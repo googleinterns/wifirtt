@@ -17,6 +17,11 @@ limitations under the License.
 package structs;
 
 public class UsageState {
+    // Constants
+    private static final int MAX_EXPIRE_TIME = 65535;
+    private static final int MIN_EXPIRE_TIME = 0;
+
+
     // Parameters
 
     /**
@@ -89,7 +94,10 @@ public class UsageState {
      * Set the amount of time after which LCI information expires.
      * @param expireTime the expire time, in hours.
      */
-    public void setExpireTime(int expireTime) {
+    public void setExpireTime(int expireTime) throws NumberFormatException {
+        if (expireTime < MIN_EXPIRE_TIME || expireTime > MAX_EXPIRE_TIME) {
+            throw new NumberFormatException();
+        }
         this.expireTime = expireTime;
     }
 

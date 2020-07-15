@@ -17,11 +17,17 @@ limitations under the License.
 package userinterface;
 
 public class UsageController {
+
+    // Error messages
+    private static final String EXPIRE_TIME_NOT_INTEGER_ERROR = "Expire time must be an integer.";
+    private static final String EXPIRE_TIME_OUTSIDE_RANGE_ERROR = "Expire time must be between 0 and 65535";
+
     private final UsageView view;
     private final UsageModel model;
 
     /**
      * Creates the controller for the Usage Rules/Policy subelement.
+     *
      * @param view the Usage Rules/Policy subelement view.
      * @param model the Usage Rules/Policy subelement model.
      */
@@ -34,9 +40,18 @@ public class UsageController {
             model.getState().setRetransmissionAllowed(view.getRetransmissionAllowed()));
         view.setRetentionExpiresListener(actionEvent ->
             model.getState().setRetentionExpires(view.getRetentionExpires()));
-        // TODO(dmevans) Error-handling for non-integer input in the ExpireTime listener.
-        view.setExpireTimeListener(actionEvent ->
-            model.getState().setExpireTime(view.getExpireTime()));
+        view.setExpireTimeListener(actionEvent -> {
+            try {
+                int expireTime = view.getExpireTime();
+                try {
+                    model.getState().setExpireTime(expireTime);
+                } catch (NumberFormatException exception) {
+                    view.displayError(EXPIRE_TIME_OUTSIDE_RANGE_ERROR);
+                }
+            } catch (NumberFormatException exception) {
+                view.displayError(EXPIRE_TIME_NOT_INTEGER_ERROR);
+            }
+        });
         view.setStaLocationPolicyListener(actionEvent ->
             model.getState().setStaLocationPolicy(view.getStaLocationPolicy()));
     }

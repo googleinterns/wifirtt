@@ -37,9 +37,9 @@ public class UsageModel implements Subelement {
     private static final int RETENTION_EXPIRES_RELATIVE_INDEX = 3;
 
     // Masks for turning on individual bits within the Usage Rules/Policy Parameters octet.
-    private static final int RETRANSMISSION_ALLOWED_MASK = 0x80; // First bit
-    private static final int RETENTION_EXPIRES_MASK = 0x40;      // Second bit
-    private static final int STA_LOCATION_POLICY_MASK = 0x20;    // Third bit
+    private static final int RETRANSMISSION_ALLOWED_MASK = 0x01; // bit 0
+    private static final int RETENTION_EXPIRES_MASK = 0x02;      // bit 1
+    private static final int STA_LOCATION_POLICY_MASK = 0x04;    // bit 3
 
 
     private UsageState state;
@@ -83,7 +83,6 @@ public class UsageModel implements Subelement {
     }
 
 
-    // TODO(dmevans) Add unit tests for the toHexBuffer() method.
     @Override
     public String toHexBuffer() {
         byte fieldsLength = USAGE_RULES_POLICY_PARAMETERS_LENGTH;
@@ -109,6 +108,7 @@ public class UsageModel implements Subelement {
     /**
      * Constructs the octet encoding the "Usage Rules/Policy Parameters" field, containing the
      *  RetransmissionAllowed, RetentionExpires, and StaLocationPolicy parameters.
+     *
      * @return The octet encoding for the Usage Rules/Policy Parameters field.
      */
     private byte getUsageRulesPolicyParametersByte() {
@@ -127,6 +127,7 @@ public class UsageModel implements Subelement {
 
     /**
      * Insert an integer into a byte array in little-endian format.
+     *
      * @param arr The byte array being populated
      * @param num The integer to insert into the array
      * @param startIndex The starting index that the integer should appear in the array
