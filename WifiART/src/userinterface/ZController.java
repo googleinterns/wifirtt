@@ -17,11 +17,19 @@ limitations under the License.
 package userinterface;
 
 public class ZController {
+
+    // Error messages
+    private static final String FLOOR_NOT_INTEGER = "Floor number must be an integer.";
+    private static final String HEIGHT_NOT_A_NUMBER = "Height above floor must be a decimal number.";
+    private static final String HEIGHT_UNCERTAINTY_NOT_A_NUMBER = "Height above floor uncertainty must be a decimal number.";
+
+
     private final ZView view;
     private final ZModel model;
 
     /**
      * Creates the controller for the Z subelement.
+     *
      * @param view the Z subelement view
      * @param model the Z subelement model
      */
@@ -30,6 +38,28 @@ public class ZController {
         this.view = view;
         this.model.setCallback(this);
 
-        // TODO(dmevans) Add listeners here.
+        view.addFloorListener(actionEvent -> {
+            try {
+                model.getState().setFloor(view.getFloor());
+            } catch (NumberFormatException exception) {
+                view.displayError(FLOOR_NOT_INTEGER);
+            }
+        });
+        view.addHeightAboveFloorListener(actionEvent -> {
+            try {
+                model.getState().setHeightAboveFloor(view.getHeightAboveFloor());
+            } catch (NumberFormatException exception) {
+                view.displayError(HEIGHT_NOT_A_NUMBER);
+            }
+        });
+        view.addHeightAboveFloorUncertaintyListener(actionEvent -> {
+            try {
+                model.getState().setHeightAboveFloorUncertainty(view.getHeightAboveFloorUncertainty());
+            } catch (NumberFormatException exception) {
+                view.displayError(HEIGHT_UNCERTAINTY_NOT_A_NUMBER);
+            }
+        });
+        view.addLocationMovementListener(actionEvent ->
+            model.getState().setLocationMovement(view.getLocationMovement()));
     }
 }

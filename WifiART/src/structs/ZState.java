@@ -17,18 +17,58 @@ limitations under the License.
 package structs;
 
 public class ZState {
+
     // Parameters
     private int floor;
     private double heightAboveFloor; // Height is in meters.
     private double heightAboveFloorUncertainty;
-    /* The locationMovement field specifies whether the STA is expected to change location,
-       not expected to change location, or if this is unknown. */
+
+    /**
+     * The locationMovement field specifies whether the STA is expected to change location,
+     *  not expected to change location, or if this is unknown.
+     */
     private String locationMovement;
 
-    // TODO(dmevans) Add getter methods.
+
+    /**
+     * Get the floor number.
+     *
+     * @return the floor number.
+     */
+    public int getFloor()  {
+        return floor;
+    }
+
+    /**
+     * Get the height above the floor.
+     *
+     * @return the height above the floor (in meters)
+     */
+    public double getHeightAboveFloor() {
+        return heightAboveFloor;
+    }
+
+    /**
+     * Get the uncertainty for the height above the floor.
+     *
+     * @return the uncertainty for the height (in meters)
+     */
+    public double getHeightAboveFloorUncertainty() {
+        return heightAboveFloorUncertainty;
+    }
+
+    /**
+     * Gets whether or not the STA is expected to change location, or if this is unknown.
+     *
+     * @return the String representing the STA location movement pattern.
+     */
+    public String getLocationMovement() {
+        return locationMovement;
+    }
 
     /**
      * Set the floor number.
+     *
      * @param floor the floor number.
      */
     public void setFloor(int floor) {
@@ -37,6 +77,7 @@ public class ZState {
 
     /**
      * Set the height above the floor.
+     *
      * @param heightAboveFloor the height above the floor (in meters)
      */
     public void setHeightAboveFloor(double heightAboveFloor) {
@@ -45,6 +86,7 @@ public class ZState {
 
     /**
      * Set the uncertainty for the height above the floor.
+     *
      * @param heightAboveFloorUncertainty the uncertainty for the height (in meters)
      */
     public void setHeightAboveFloorUncertainty(double heightAboveFloorUncertainty) {
@@ -53,9 +95,12 @@ public class ZState {
 
     /**
      * Sets whether or not the STA is expected to change location, or if this is unknown.
+     *
      * @param locationMovement the String representing the STA location movement pattern.
      */
     public void setLocationMovement(String locationMovement) {
         this.locationMovement = locationMovement;
     }
+
+
 }
