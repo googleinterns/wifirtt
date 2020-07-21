@@ -27,7 +27,7 @@ public class ZModel implements Subelement {
      * Represents whether or not the height above floor uncertainty encoding uses the uncertainty
      * in 1/4096th-meters.
      */
-    private static final boolean isFractionBitsPresent = true;
+    private boolean isFractionBitsPresent = true;
 
     // Error message
     private static final String EXPECTED_TO_MOVE_IS_NULL =
@@ -221,5 +221,15 @@ public class ZModel implements Subelement {
             arr[startIndex + i] = (byte)(num & 0xff); // Insert the least-significant byte into the array.
             num >>= 8; // Move the next byte into the least-significant position.
         }
+    }
+
+    /**
+     * Determines whether or not the Z subelement should encode according to the updated decoding
+     *  or according to the already existing Android decoding.
+     *
+     * @param isAndndroidVersionNew true if the version used is Android version S or later.
+     */
+    public void setIfAndroidVersionNew(boolean isAndndroidVersionNew) {
+        isFractionBitsPresent = isAndndroidVersionNew;
     }
 }

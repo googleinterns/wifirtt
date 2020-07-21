@@ -43,6 +43,9 @@ public class ExpectedToMove {
      */
     public static final HashMap<String, Integer> FIELD_VALUES_MAP = getFieldValuesMap();
 
+    // Private constructor to avoid instance creation.
+    private ExpectedToMove() {}
+
     /**
      * Constructs a HashMap with the location movement String options as keys
      *  and their associated 2-bit encodings as values.

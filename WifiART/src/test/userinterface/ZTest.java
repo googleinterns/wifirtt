@@ -28,20 +28,42 @@ public class ZTest {
 
     /**
      * Test the encoding with a stationary STA, floor number = 4, height of 2.8m above the floor,
-     *  with height uncertainty of 0.1m.
+     *  with height uncertainty of 0.1m. New Android version.
      */
     @Test
-    void testBuffer() {
+    void testBufferNew() {
         ZState state = new ZState();
         state.setLocationMovement(ExpectedToMove.NOT_EXPECTED_TO_MOVE);
         state.setFloor(4);
         state.setHeightAboveFloor(2.8);
         state.setHeightAboveFloorUncertainty(0.1);
         model.setState(state);
+        model.setIfAndroidVersionNew(true); // New Android version
 
         String buffer = model.toHexBuffer();
-        // In old version, correct buffer = "04060001cd2c000e".
         String correctBuffer = "04060001cd2c0002";
+
+        boolean isBufferValid = buffer.equalsIgnoreCase(correctBuffer);
+
+        assertTrue(isBufferValid);
+    }
+
+    /**
+     * Test the encoding with a stationary STA, floor number = 4, height of 2.8m above the floor,
+     *  with height uncertainty of 0.1m. Old Android version.
+     */
+    @Test
+    void testBufferOld() {
+        ZState state = new ZState();
+        state.setLocationMovement(ExpectedToMove.NOT_EXPECTED_TO_MOVE);
+        state.setFloor(4);
+        state.setHeightAboveFloor(2.8);
+        state.setHeightAboveFloorUncertainty(0.1);
+        model.setState(state);
+        model.setIfAndroidVersionNew(false); // Old Android version
+
+        String buffer = model.toHexBuffer();
+        String correctBuffer = "04060001cd2c000e";
 
         boolean isBufferValid = buffer.equalsIgnoreCase(correctBuffer);
 
