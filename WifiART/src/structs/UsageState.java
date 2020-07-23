@@ -16,11 +16,14 @@ limitations under the License.
 
 package structs;
 
+/**
+ * Contains the parameters for the Usage Rules/Policy subelement.
+ */
 public class UsageState {
 
     // Constants
-    private static final int MAX_EXPIRE_TIME = 65535;
-    private static final int MIN_EXPIRE_TIME = 0;
+    private static final int MAX_EXPIRE_TIME_HOURS = 65535;
+    private static final int MIN_EXPIRE_TIME_HOURS = 0;
 
 
     // Parameters
@@ -37,10 +40,19 @@ public class UsageState {
     private boolean retentionExpires;
 
     /** Number of hours after which retention expires. */
-    private int expireTime;
+    private int expireTimeHours;
 
     /** The staLocationPolicy field is true if additional STA location information exists. */
     private boolean staLocationPolicy;
+
+
+    /**
+     * Constructs a UsageState, without setting values.
+     */
+    public UsageState() {}
+
+
+    // Getter methods for the parameters
 
     /**
      * Get whether or not retransmission of the LCI information is allowed.
@@ -65,8 +77,8 @@ public class UsageState {
      *
      * @return The amount of time, in hours.
      */
-    public int getExpireTime() {
-        return expireTime;
+    public int getExpireTimeHours() {
+        return expireTimeHours;
     }
 
     /**
@@ -78,6 +90,8 @@ public class UsageState {
         return staLocationPolicy;
     }
 
+
+    // Setter methods for the parameters
 
     /**
      * Set whether or not retransmission of the LCI information is allowed.
@@ -100,13 +114,13 @@ public class UsageState {
     /**
      * Set the amount of time after which LCI information expires.
      *
-     * @param expireTime the expire time, in hours.
+     * @param expireTimeHours the expire time, in hours.
      */
-    public void setExpireTime(int expireTime) throws NumberFormatException {
-        if (expireTime < MIN_EXPIRE_TIME || expireTime > MAX_EXPIRE_TIME) {
+    public void setExpireTimeHours(int expireTimeHours) throws NumberFormatException {
+        if (expireTimeHours < MIN_EXPIRE_TIME_HOURS || expireTimeHours > MAX_EXPIRE_TIME_HOURS) {
             throw new NumberFormatException();
         }
-        this.expireTime = expireTime;
+        this.expireTimeHours = expireTimeHours;
     }
 
     /**

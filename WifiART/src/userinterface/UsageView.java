@@ -93,10 +93,10 @@ public class UsageView extends JPanel {
     /**
      * Get the value of the ExpireTime parameter from the view.
      *
-     * @return the value of the ExpireTime parameter.
+     * @return the value of the ExpireTime parameter, in hours.
      * @throws NumberFormatException If the user did not enter an integer value.
      */
-    public int getExpireTime() throws NumberFormatException {
+    public int getExpireTimeHours() throws NumberFormatException {
         return Integer.parseInt(expireTimeField.getText());
     }
 
@@ -116,7 +116,7 @@ public class UsageView extends JPanel {
      *
      * @param listener the ActionListener for the RetransmissionAllowed parameter.
      */
-    public void setRetransmissionAllowedListener(ActionListener listener) {
+    public void addRetransmissionAllowedListener(ActionListener listener) {
         retransmissionAllowedCheckbox.addActionListener(listener);
     }
 
@@ -125,7 +125,7 @@ public class UsageView extends JPanel {
      *
      * @param listener the ActionListener for the RetentionExpires parameter.
      */
-    public void setRetentionExpiresListener(ActionListener listener) {
+    public void addRetentionExpiresListener(ActionListener listener) {
         retentionExpiresCheckbox.addActionListener(listener);
     }
 
@@ -134,7 +134,7 @@ public class UsageView extends JPanel {
      *
      * @param listener the ActionListener for the ExpireTime parameter.
      */
-    public void setExpireTimeListener(ActionListener listener) {
+    public void addExpireTimeListener(ActionListener listener) {
         expireTimeField.addActionListener(listener);
     }
 
@@ -143,7 +143,7 @@ public class UsageView extends JPanel {
      *
      * @param listener the ActionListener for the StaLocationPolicy parameter.
      */
-    public void setStaLocationPolicyListener(ActionListener listener) {
+    public void addStaLocationPolicyListener(ActionListener listener) {
         staLocationPolicyCheckbox.addActionListener(listener);
     }
 

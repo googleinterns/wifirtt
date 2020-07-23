@@ -94,8 +94,8 @@ public class UsageModel implements Subelement {
         buffer[LENGTH_INDEX] = fieldsLength;
         buffer[USAGE_RULES_POLICY_PARAMETERS_INDEX] = getUsageRulesPolicyParametersByte();
         if (state.getRetentionExpires()) {
-            int expireTime = state.getExpireTime();
-            fillLittleEndian(buffer, expireTime, RETENTION_EXPIRES_RELATIVE_INDEX, RETENTION_EXPIRES_RELATIVE_LENGTH);
+            int expireTimeHours = state.getExpireTimeHours();
+            fillLittleEndian(buffer, expireTimeHours, RETENTION_EXPIRES_RELATIVE_INDEX, RETENTION_EXPIRES_RELATIVE_LENGTH);
         }
 
         String result = "";

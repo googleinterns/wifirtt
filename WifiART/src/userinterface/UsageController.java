@@ -36,15 +36,15 @@ public class UsageController {
         this.view = view;
         this.model.setCallback(this);
 
-        view.setRetransmissionAllowedListener(actionEvent ->
+        view.addRetransmissionAllowedListener(actionEvent ->
             model.getState().setRetransmissionAllowed(view.getRetransmissionAllowed()));
-        view.setRetentionExpiresListener(actionEvent ->
+        view.addRetentionExpiresListener(actionEvent ->
             model.getState().setRetentionExpires(view.getRetentionExpires()));
-        view.setExpireTimeListener(actionEvent -> {
+        view.addExpireTimeListener(actionEvent -> {
             try {
-                int expireTime = view.getExpireTime();
+                int expireTimeHours = view.getExpireTimeHours();
                 try {
-                    model.getState().setExpireTime(expireTime);
+                    model.getState().setExpireTimeHours(expireTimeHours);
                 } catch (NumberFormatException exception) {
                     view.displayError(EXPIRE_TIME_OUTSIDE_RANGE_ERROR);
                 }
@@ -52,7 +52,7 @@ public class UsageController {
                 view.displayError(EXPIRE_TIME_NOT_INTEGER_ERROR);
             }
         });
-        view.setStaLocationPolicyListener(actionEvent ->
+        view.addStaLocationPolicyListener(actionEvent ->
             model.getState().setStaLocationPolicy(view.getStaLocationPolicy()));
     }
 }
