@@ -30,6 +30,29 @@ public class LciController {
         this.view = view;
         this.model.setCallback(this);
 
-        // TODO(dmevans) Add listeners here.
+        view.addLatitudeListener(actionEvent ->
+            model.getState().setLatitude(view.getLatitude()));
+        view.addLatitudeUncertaintyListener(actionEvent ->
+            model.getState().setLatitudeUncertainty(view.getLatitudeUncertainty()));
+        view.addLongitudeListener(actionEvent ->
+            model.getState().setLongitude(view.getLongitude()));
+        view.addLongitudeUncertaintyListener(actionEvent ->
+            model.getState().setLongitudeUncertainty(view.getLongitudeUncertainty()));
+        view.addAltitudeListener(actionEvent ->
+            model.getState().setAltitude(view.getAltitude()));
+        view.addAltitudeUncertaintyListener(actionEvent ->
+            model.getState().setAltitudeUncertainty(view.getAltitudeUncertainty()));
+        view.addAltitudeTypeListener(actionEvent ->
+            model.getState().setAltitudeType(view.getAltitudeType()));
+        view.addMapDatumListener(actionEvent ->
+            model.getState().setMapDatum(view.getMapDatum()));
+        view.addRegLocAgreementListener(actionEvent ->
+            model.getState().setRegLocAgreement(view.getRegLocAgreement()));
+        view.addRegLocDseListener(actionEvent ->
+            model.getState().setRegLocDse(view.getRegLocDse()));
+        view.addDependentStaListener(actionEvent ->
+            model.getState().setDependentSta(view.getDependentSta()));
+        view.addLciVersionListener(actionEvent ->
+            model.getState().setLciVersion(view.getLciVersion()));
     }
 }

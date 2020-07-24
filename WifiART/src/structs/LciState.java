@@ -17,7 +17,16 @@ limitations under the License.
 package structs;
 
 public class LciState {
+    // Constants
+    private static final int DEFAULT_LCI_VERSION = 1;
+    private static final AltitudeType DEFAULT_ALTITUDE_TYPE = AltitudeType.NO_KNOWN_ALTITUDE;
+    private static final MapDatum DEFAULT_MAP_DATUM = MapDatum.WGS84;
+
+
     // Parameters
+
+    private int lciVersion;
+
     private double latitude;
     private double latitudeUncertainty;
     private double longitude;
@@ -25,35 +34,174 @@ public class LciState {
 
     private double altitude;
     private double altitudeUncertainty;
-    private String altitudeUnits; // "Meters" or "Floors"
-    private String altitudeDatum; // "WGS84", "NAD83 (NAVD88)", or "NAD83 (MLLW)".
+    private AltitudeType altitudeType; // Meters, Floors, or no altitude provided
+    private MapDatum mapDatum; // WGS84, NAD83 (NAVD88), or NAD83 (MLLW).
 
-    /* The regLocAgreement parameter is true if the STA is operating within a national
-       policy area or an international agreement area near a national border. */
+    /**
+     * The regLocAgreement parameter is true if the STA is operating within a national
+     *  policy area or an international agreement area near a national border.
+     */
     private boolean regLocAgreement;
-    /* The regLocDse parameter is true if the enabling STA is enabling the operation
-       of STAs with DSE. */
+
+    /**
+     * The regLocDse parameter is true if the enabling STA is enabling the operation
+     *  of STAs with DSE.
+     */
     private boolean regLocDse;
-    /* The dependentSta parameter is true if the STA is operating with the enablement
-       of the enabling STA whose LCI is being reported. */
+
+    /**
+     * The dependentSta parameter is true if the STA is operating with the enablement
+     *  of the enabling STA whose LCI is being reported.
+     */
     private boolean dependentSta;
 
+    /**
+     * Constructs an LciState, assigning default values when needed.
+     */
     public LciState() {
+        lciVersion = DEFAULT_LCI_VERSION;
+        altitudeType = DEFAULT_ALTITUDE_TYPE;
+        mapDatum = DEFAULT_MAP_DATUM;
     }
 
-    // TODO(dmevans) Add getter methods.
+
+    // Getters for the parameters.
+
+    /**
+     * Gets the LCI version.
+     *
+     * @return the LCI version being used
+     */
+    public int getLciVersion() {
+        return lciVersion;
+    }
+
+    /**
+     * Gets the latitude.
+     *
+     * @return the latitude, in degrees
+     */
+    public double getLatitude() {
+        return latitude;
+    }
+
+    /**
+     * Gets the latitude uncertainty.
+     *
+     * @return the latitude uncertainty, in degrees
+     */
+    public double getLatitudeUncertainty() {
+        return latitudeUncertainty;
+    }
+
+    /**
+     * Gets the longitude.
+     *
+     * @return the longitude, in degrees
+     */
+    public double getLongitude() {
+        return longitude;
+    }
+
+    /**
+     * Gets the longitude uncertainty.
+     *
+     * @return the longitude uncertainty, in degrees
+     */
+    public double getLongitudeUncertainty() {
+        return longitudeUncertainty;
+    }
+
+    /**
+     * Gets the altitude.
+     *
+     * @return the altitude, in meters or floors
+     */
+    public double getAltitude() {
+        return altitude;
+    }
+
+    /**
+     * Gets the altitude uncertainty.
+     *
+     * @return the altitude uncertainty, in meters or floors
+     */
+    public double getAltitudeUncertainty() {
+        return altitudeUncertainty;
+    }
+
+    /**
+     * Gets the altitude type (meters, floors, or no known altitude).
+     *
+     * @return the altitude type
+     */
+    public AltitudeType getAltitudeType() {
+        return altitudeType;
+    }
+
+    /**
+     * Gets the map datum.
+     *
+     * @return the map datum
+     */
+    public MapDatum getMapDatum() {
+        return mapDatum;
+    }
+
+    /**
+     * Gets the regLocAgreement parameter, which is true if the STA is operating within a national
+     *  policy area or an international agreement area near a national border.
+     *
+     * @return the boolean value of the parameter.
+     */
+    public boolean getRegLocAgreement() {
+        return regLocAgreement;
+    }
+
+    /**
+     * Gets the regLocDse parameter, which is true if the enabling STA is enabling the operation
+     *  of STAs with DSE.
+     *
+     * @return the boolean value of the parameter.
+     */
+    public boolean getRegLocDse() {
+        return regLocDse;
+    }
+
+    /**
+     * Gets the dependentSta parameter, which is true if the STA is operating with the enablement
+     *  of the enabling STA whose LCI is being reported.
+     *
+     * @return the boolean value of the parameter.
+     */
+    public boolean getDependentSta() {
+        return dependentSta;
+    }
+
+
+    // Setters for the parameters
+
+    /**
+     * Sets the LCI version.
+     *
+     * @param lciVersion the LCI version
+     */
+    public void setLciVersion(int lciVersion) {
+        this.lciVersion = lciVersion;
+    }
 
     /**
      * Sets the latitude.
+     *
      * @param latitude the latitude, in degrees
      */
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-
     /**
-     * Sets the latitude uncertainty
+     * Sets the latitude uncertainty.
+     *
      * @param latitudeUncertainty the latitude uncertainty, in degrees
      */
     public void setLatitudeUncertainty(double latitudeUncertainty) {
@@ -61,7 +209,8 @@ public class LciState {
     }
 
     /**
-     * Sets the longitude
+     * Sets the longitude.
+     *
      * @param longitude the longitude, in degrees
      */
     public void setLongitude(double longitude) {
@@ -69,7 +218,8 @@ public class LciState {
     }
 
     /**
-     * Sets the longitude uncertainty
+     * Sets the longitude uncertainty.
+     *
      * @param longitudeUncertainty the longitude uncertainty, in degrees
      */
     public void setLongitudeUncertainty(double longitudeUncertainty) {
@@ -78,6 +228,7 @@ public class LciState {
 
     /**
      * Sets the altitude.
+     *
      * @param altitude the altitude, in meters or floors
      */
     public void setAltitude(double altitude) {
@@ -86,6 +237,7 @@ public class LciState {
 
     /**
      * Sets the altitude uncertainty.
+     *
      * @param altitudeUncertainty the altitude uncertainty, in meters or floors
      */
     public void setAltitudeUncertainty(double altitudeUncertainty) {
@@ -93,24 +245,27 @@ public class LciState {
     }
 
     /**
-     * Sets the altitude units (meters or floors).
-     * @param altitudeUnits the altitude units ("Meters" or "Floors")
+     * Sets the altitude type (meters, floors, or no known altitude).
+     *
+     * @param altitudeType the altitude type (meters, floors, or no known altitude)
      */
-    public void setAltitudeUnits(String altitudeUnits) {
-        this.altitudeUnits = altitudeUnits;
+    public void setAltitudeType(AltitudeType altitudeType) {
+        this.altitudeType = altitudeType;
     }
 
     /**
-     * Sets the altitude datum.
-     * @param altitudeDatum the map datum ("WGS84", "NAD83 (NAVD88)", or "NAD83 (MLLW)")
+     * Sets the map datum.
+     *
+     * @param mapDatum the map datum
      */
-    public void setAltitudeDatum(String altitudeDatum) {
-        this.altitudeDatum = altitudeDatum;
+    public void setMapDatum(MapDatum mapDatum) {
+        this.mapDatum = mapDatum;
     }
 
     /**
      * Sets the regLocAgreement parameter, which is true if the STA is operating within a national
      *  policy area or an international agreement area near a national border.
+     *
      * @param regLocAgreement the boolean value of the parameter.
      */
     public void setRegLocAgreement(boolean regLocAgreement) {
@@ -120,6 +275,7 @@ public class LciState {
     /**
      * Sets the regLocDse parameter, which is true if the enabling STA is enabling the operation
      *  of STAs with DSE.
+     *
      * @param regLocDse the boolean value of the parameter.
      */
     public void setRegLocDse(boolean regLocDse) {
@@ -129,9 +285,12 @@ public class LciState {
     /**
      * Sets the dependentSta parameter, which is true if the STA is operating with the enablement
      *  of the enabling STA whose LCI is being reported.
-     * @param dependentSta
+     *
+     * @param dependentSta the boolean value of the parameter.
      */
     public void setDependentSta(boolean dependentSta) {
         this.dependentSta = dependentSta;
     }
+
+
 }
