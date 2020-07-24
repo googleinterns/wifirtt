@@ -19,6 +19,7 @@ package userinterface;
 import structs.ArtSystemState;
 
 import javax.swing.*;
+import javax.swing.event.ChangeListener;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -64,6 +65,10 @@ public class ArtMvcView extends JFrame {
     private final JTextField outputDirField = new JTextField();
     private final JLabel bufferTextLabel = new JLabel("Hex Output LCI/LCR Buffer: ");
     private final JTextArea bufferTextArea = new JTextArea();
+    private final JButton generateButton = new JButton("Generate updated buffer");
+
+    private final JTabbedPane tabbedPanel = new JTabbedPane();
+
 
     // Sub-View JPanels for each subelement
     private final LciView lciView = new LciView();
@@ -87,7 +92,6 @@ public class ArtMvcView extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // Main Panel Tabbed Pane
-        JTabbedPane tabbedPanel = new JTabbedPane();
         getContentPane().add(tabbedPanel);
 
         // Tab = Generate
@@ -141,6 +145,8 @@ public class ArtMvcView extends JFrame {
         panel.add(bufferTextPanel);
         bufferTextArea.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         panel.add(bufferTextArea);
+
+        panel.add(generateButton);
 
     }
     private void setupLciSubelementChooserPanel(JPanel panel) {
@@ -237,6 +243,9 @@ public class ArtMvcView extends JFrame {
     public void setOutputDirListener(ActionListener listener) {
         outputDirField.addActionListener(listener);
     }
+    public void addGenerateBufferListener(ActionListener listener) {
+        generateButton.addActionListener(listener);
+    }
 
     // Getters for the sub-views
     public LciView getLciView() {
@@ -258,6 +267,19 @@ public class ArtMvcView extends JFrame {
         return mapView;
     }
 
+    public void displayBuffer(String lciBuffer, String lcrBuffer) {
+        String totalText = "";
+        for (int i = 0; i <= lciBuffer.length() - 2; i += 2) {
+            totalText += (lciBuffer.substring(i, i + 2) + " ");
+        }
+        if (!(lcrBuffer.equals(""))) {
+            totalText += "\n";
+        }
+        for (int i = 0; i <= lcrBuffer.length() - 2; i += 2) {
+            totalText += (lcrBuffer.substring(i, i + 2) + " ");
+        }
+        bufferTextArea.setText(totalText);
+    }
 
 
     /**

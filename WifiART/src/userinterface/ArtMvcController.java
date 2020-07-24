@@ -16,6 +16,9 @@ limitations under the License.
 
 package userinterface;
 
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 public class ArtMvcController {
     private final ArtMvcView view;   // MVC View
     private final ArtMvcModel model; // MVC Model
@@ -57,6 +60,26 @@ public class ArtMvcController {
             model.getState().setOutputFileName(view.getOutputFileName()));
         view.setOutputDirListener(actionEvent ->
             model.getState().setOutputDir(view.getOutputDir()));
+
+        // Listener for updating the buffer.
+        view.addGenerateBufferListener(changeEvent -> {
+            updateBuffer();
+        });
+    }
+
+    private void updateBuffer() {
+        try {
+            String lciBuffer = model.getLciBuffer();
+            String lcrBuffer = model.getLcrBuffer();
+            view.displayBuffer(lciBuffer, lcrBuffer);
+            writeBufferToFile(lciBuffer, lcrBuffer);
+        } catch (RuntimeException exception) {
+            view.displayErrorMessage(exception.getMessage());
+        }
+    }
+
+    private void writeBufferToFile(String lciBuffer, String lcrBuffer) {
+        // TODO(dmevans) write the buffer to the file
     }
 
     /** Events that occur asynchronously in the model call this method e.g. For an animation */

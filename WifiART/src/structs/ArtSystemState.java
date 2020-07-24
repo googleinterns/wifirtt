@@ -40,7 +40,7 @@ public class ArtSystemState {
     private BssidState bssidState;
     private LcrState lcrState;
     private MapState mapState;
-    /* The includedSubelements map specifies whether or not each subelement is to be included
+    /** The includedSubelements map specifies whether or not each subelement is to be included
        in the output. */
     private HashMap<SubelementName, Boolean> includedSubelements;
     private String inputFileName;
@@ -126,6 +126,58 @@ public class ArtSystemState {
     public MapState getMapState() {
         return mapState;
     }
+
+
+    // Getters for which subelements are included
+
+    /**
+     * Gets whether or not the LCI subelement is to be included in the output.
+     * @return The boolean value of the parameter.
+     */
+    public boolean isLciIncluded() {
+        return includedSubelements.get(SubelementName.LCI);
+    }
+
+    /**
+     * Gets whether or not the Z subelement is to be included in the output.
+     * @return The boolean value of the parameter.
+     */
+    public boolean isZIncluded() {
+        return includedSubelements.get(SubelementName.Z);
+    }
+
+    /**
+     * Gets whether or not the Usage Rules/Policy subelement is to be included in the output.
+     * @return The boolean value of the parameter.
+     */
+    public boolean isUsageIncluded() {
+        return includedSubelements.get(SubelementName.USAGE);
+    }
+
+    /**
+     * Gets whether or not the BSSID List subelement is to be included in the output.
+     * @return The boolean value of the parameter.
+     */
+    public boolean isBssidIncluded() {
+        return includedSubelements.get(SubelementName.BSSID);
+    }
+
+    /**
+     * Gets whether or not the Location Civic subelement is to be included in the output.
+     * @return The boolean value of the parameter.
+     */
+    public boolean isLcrIncluded() {
+        return includedSubelements.get(SubelementName.LCR);
+    }
+
+    /**
+     * Gets whether or not the Map Image subelement is to be included in the output.
+     * @return The boolean value of the parameter.
+     */
+    public boolean isMapIncluded() {
+        return includedSubelements.get(SubelementName.MAP);
+    }
+
 
     // Setters for the subelement states
 

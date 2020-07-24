@@ -121,6 +121,36 @@ public class ArtMvcModel {
         return mapModel;
     }
 
+    public String getLciBuffer() {
+        String buffer = "";
+        if (state.isLciIncluded()) {
+            buffer += lciModel.toHexBuffer();
+        }
+        if (state.isZIncluded()) {
+            buffer += zModel.toHexBuffer();
+        }
+        if (state.isUsageIncluded()) {
+            buffer += usageModel.toHexBuffer();
+        }
+        if (state.isBssidIncluded()) {
+            buffer += bssidModel.toHexBuffer();
+        }
+        return buffer;
+    }
+
+    public String getLcrBuffer() {
+        String buffer = "";
+        if (state.isLcrIncluded()) {
+            buffer += lcrModel.toHexBuffer();
+        }
+        if (state.isMapIncluded()) {
+            buffer += mapModel.toHexBuffer();
+        }
+        return buffer;
+
+    }
+
+
     /**
      * The callback into the ArtMvcController used when an asynchronous even occurs.
      *
