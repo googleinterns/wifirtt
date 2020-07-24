@@ -33,10 +33,10 @@ public class ZTest {
     @Test
     void testBufferNew() {
         ZState state = new ZState();
-        state.setLocationMovement(ExpectedToMove.NOT_EXPECTED_TO_MOVE);
+        state.setExpectedToMove(ExpectedToMove.NOT_EXPECTED_TO_MOVE);
         state.setFloor(4);
-        state.setHeightAboveFloor(2.8);
-        state.setHeightAboveFloorUncertainty(0.1);
+        state.setHeightAboveFloorMeters(2.8);
+        state.setHeightAboveFloorUncertaintyMeters(0.1);
         model.setState(state);
         model.setIfAndroidVersionNew(true); // New Android version
 
@@ -55,10 +55,10 @@ public class ZTest {
     @Test
     void testBufferOld() {
         ZState state = new ZState();
-        state.setLocationMovement(ExpectedToMove.NOT_EXPECTED_TO_MOVE);
+        state.setExpectedToMove(ExpectedToMove.NOT_EXPECTED_TO_MOVE);
         state.setFloor(4);
-        state.setHeightAboveFloor(2.8);
-        state.setHeightAboveFloorUncertainty(0.1);
+        state.setHeightAboveFloorMeters(2.8);
+        state.setHeightAboveFloorUncertaintyMeters(0.1);
         model.setState(state);
         model.setIfAndroidVersionNew(false); // Old Android version
 

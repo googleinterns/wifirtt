@@ -20,11 +20,11 @@ package structs;
  * Represents an LCI/LCR subelement
  */
 public interface Subelement {
+
     /**
      * Produces the hex-buffer encoding for this LCI/LCR subelement
      *
      * @return The hex-buffer encoding
-     * @throws RuntimeException if the buffer cannot be calculated.
      */
-    String toHexBuffer() throws RuntimeException;
+    String toHexBuffer();
 }

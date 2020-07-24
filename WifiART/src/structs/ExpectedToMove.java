@@ -16,47 +16,33 @@ limitations under the License.
 
 package structs;
 
-import java.util.HashMap;
 
 /**
- * Contains the constants associated with the "Expected To Move" field of the Z subelement.
+ * Represents the values of the "Expected To Move" field of the Z subelement.
  */
-public class ExpectedToMove {
+public enum ExpectedToMove {
+
+    /** Fixed location */
+    NOT_EXPECTED_TO_MOVE(0),
+
+    /** Variable location */
+    EXPECTED_TO_MOVE(1),
+
+    /** Unknown movement pattern */
+    MOVEMENT_UNKNOWN(2);
+
+    private final int value;
+
+    ExpectedToMove(int value) {
+        this.value = value;
+    }
 
     /**
-     * The String descriptor for a fixed location.
-     */
-    public static final String NOT_EXPECTED_TO_MOVE = "STA is not expected to change location.";
-
-    /**
-     * The String descriptor for a variable location.
-     */
-    public static final String EXPECTED_TO_MOVE = "STA is expected to change location.";
-
-    /**
-     * The String descriptor for an unknown movement pattern.
-     */
-    public static final String MOVEMENT_UNKNOWN = "Movement patterns are unknown.";
-
-    /**
-     * A HashMap mapping location movement descriptor Strings to their encoding values.
-     */
-    public static final HashMap<String, Integer> FIELD_VALUES_MAP = getFieldValuesMap();
-
-    // Private constructor to avoid instance creation.
-    private ExpectedToMove() {}
-
-    /**
-     * Constructs a HashMap with the location movement String options as keys
-     *  and their associated 2-bit encodings as values.
+     * Get the integer encoding for the ExpectedToMove parameter.
      *
-     * @return The HashMap mapping location movement descriptor Strings to their encoding values.
+     * @return the integer encoding
      */
-    private static HashMap<String, Integer> getFieldValuesMap() {
-        HashMap<String, Integer> fieldValuesMap = new HashMap<>();
-        fieldValuesMap.put(NOT_EXPECTED_TO_MOVE, 0);
-        fieldValuesMap.put(EXPECTED_TO_MOVE, 1);
-        fieldValuesMap.put(MOVEMENT_UNKNOWN, 2);
-        return fieldValuesMap;
+    public int getEncoding() {
+        return value;
     }
 }

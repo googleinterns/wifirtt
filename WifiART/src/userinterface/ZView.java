@@ -1,8 +1,32 @@
+/*
+Copyright 2020 Google LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 package userinterface;
 
 import structs.ExpectedToMove;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -16,6 +40,12 @@ public class ZView extends JPanel {
     // Labels for titled borders
     private static final String LOCATION_MOVEMENT_LABEL = "Location Movement: ";
 
+    // Radio button labels
+    public static final String NOT_EXPECTED_TO_MOVE_LABEL = "STA is not expected to change location.";
+    public static final String EXPECTED_TO_MOVE_LABEL = "STA is expected to change location.";
+    public static final String MOVEMENT_UNKNOWN_LABEL = "Movement patterns are unknown.";
+
+
     // Labels and Components
     private final JLabel zPanelTitle = new JLabel("Z-Axis Subelement");
     private final JLabel floorLabel = new JLabel("STA Floor Number: ");
@@ -25,9 +55,9 @@ public class ZView extends JPanel {
     private final JLabel heightAboveFloorUncertaintyLabel = new JLabel("<html>STA Height Above "
         + "<br>Floor Uncertainty (m): </html>");
     private final JTextField heightAboveFloorUncertaintyField = new JTextField();
-    private final JRadioButton fixedLocationMovementRadioButton = new JRadioButton(ExpectedToMove.NOT_EXPECTED_TO_MOVE);
-    private final JRadioButton variableLocationMovementRadioButton = new JRadioButton(ExpectedToMove.EXPECTED_TO_MOVE);
-    private final JRadioButton unknownLocationMovementRadioButton = new JRadioButton(ExpectedToMove.MOVEMENT_UNKNOWN);
+    private final JRadioButton fixedLocationMovementRadioButton = new JRadioButton(NOT_EXPECTED_TO_MOVE_LABEL);
+    private final JRadioButton variableLocationMovementRadioButton = new JRadioButton(EXPECTED_TO_MOVE_LABEL);
+    private final JRadioButton unknownLocationMovementRadioButton = new JRadioButton(MOVEMENT_UNKNOWN_LABEL);
 
     /**
      * Constructs the view for the Z subelement.
@@ -120,7 +150,7 @@ public class ZView extends JPanel {
      * @return The height above the floor, in meters.
      * @throws NumberFormatException If the user did not enter a decimal number.
      */
-    public double getHeightAboveFloor() throws NumberFormatException {
+    public double getHeightAboveFloorMeters() throws NumberFormatException {
         return Double.parseDouble(heightAboveFloorField.getText());
     }
 
@@ -130,7 +160,7 @@ public class ZView extends JPanel {
      * @return The height above floor uncertainty, in meters.
      * @throws NumberFormatException If the user did not enter a decimal number.
      */
-    public double getHeightAboveFloorUncertainty() throws NumberFormatException {
+    public double getHeightAboveFloorUncertaintyMeters() throws NumberFormatException {
         return Double.parseDouble(heightAboveFloorUncertaintyField.getText());
     }
 
@@ -139,13 +169,13 @@ public class ZView extends JPanel {
      *
      * @return The String descriptor.
      */
-    public String getLocationMovement() {
+    public ExpectedToMove getExpectedToMove() {
         if (fixedLocationMovementRadioButton.isSelected()) {
-            return fixedLocationMovementRadioButton.getText();
+            return ExpectedToMove.NOT_EXPECTED_TO_MOVE;
         } else if (variableLocationMovementRadioButton.isSelected()) {
-            return variableLocationMovementRadioButton.getText();
+            return ExpectedToMove.EXPECTED_TO_MOVE;
         } else if (unknownLocationMovementRadioButton.isSelected()) {
-            return unknownLocationMovementRadioButton.getText();
+            return ExpectedToMove.MOVEMENT_UNKNOWN;
         }
         return null; // Only null if the user has not chosen an option yet.
     }

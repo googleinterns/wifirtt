@@ -47,19 +47,19 @@ public class ZController {
         });
         view.addHeightAboveFloorListener(actionEvent -> {
             try {
-                model.getState().setHeightAboveFloor(view.getHeightAboveFloor());
+                model.getState().setHeightAboveFloorMeters(view.getHeightAboveFloorMeters());
             } catch (NumberFormatException exception) {
                 view.displayError(HEIGHT_NOT_A_NUMBER);
             }
         });
         view.addHeightAboveFloorUncertaintyListener(actionEvent -> {
             try {
-                model.getState().setHeightAboveFloorUncertainty(view.getHeightAboveFloorUncertainty());
+                model.getState().setHeightAboveFloorUncertaintyMeters(view.getHeightAboveFloorUncertaintyMeters());
             } catch (NumberFormatException exception) {
                 view.displayError(HEIGHT_UNCERTAINTY_NOT_A_NUMBER);
             }
         });
         view.addLocationMovementListener(actionEvent ->
-            model.getState().setLocationMovement(view.getLocationMovement()));
+            model.getState().setExpectedToMove(view.getExpectedToMove()));
     }
 }

@@ -131,19 +131,19 @@ public class ZModel implements Subelement {
         fillLittleEndian(buffer, heightAboveFloorUncertainty, HEIGHT_ABOVE_FLOOR_UNCERTAINTY_INDEX, HEIGHT_ABOVE_FLOOR_UNCERTAINTY_LENGTH);
 
 
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (byte b : buffer) {
-            result += String.format("%02x", b); // Convert the byte to a hex string of 2 characters.
+            result.append(String.format("%02x", b)); // Convert the byte to a hex string of 2 characters.
         }
-        return result;
+        return result.toString();
     }
 
     private int getFloorInfoField() throws NullPointerException {
         int result;
 
-        String locationMovementString = state.getLocationMovement();
+        ExpectedToMove locationMovement = state.getExpectedToMove();
         try {
-            result = ExpectedToMove.FIELD_VALUES_MAP.get(locationMovementString); // Bits 0 and 1
+            result = locationMovement.getEncoding(); // Bits 0 and 1
         } catch (NullPointerException exception) {
             throw new NullPointerException(EXPECTED_TO_MOVE_IS_NULL);
         }
@@ -167,7 +167,7 @@ public class ZModel implements Subelement {
     private int getHeightAboveFloorField() {
         int result = 0;
 
-        double heightAboveFloor = state.getHeightAboveFloor();
+        double heightAboveFloor = state.getHeightAboveFloorMeters();
         // Convert to 1/4096-ths of a meter, rounded.
         long heightAboveFloorEncoding = Math.round(heightAboveFloor * HEIGHT_ABOVE_FLOOR_FRACTION_FACTOR);
         if (heightAboveFloorEncoding > MAX_HEIGHT_ABOVE_FLOOR_MAGNITUDE) {
@@ -186,7 +186,7 @@ public class ZModel implements Subelement {
     private int getHeightAboveFloorUncertaintyField() {
         int result = 0;
 
-        double heightAboveFloorUncertainty = state.getHeightAboveFloorUncertainty();
+        double heightAboveFloorUncertainty = state.getHeightAboveFloorUncertaintyMeters();
         double heightAboveFloorUncertaintyEncoding;
         if (isFractionBitsPresent) {
             // Convert to 1/4096-ths of a meter.
