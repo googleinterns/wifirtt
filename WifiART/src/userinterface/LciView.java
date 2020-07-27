@@ -3,14 +3,7 @@ package userinterface;
 import structs.AltitudeType;
 import structs.MapDatum;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
@@ -145,6 +138,7 @@ public class LciView extends JPanel {
      * @return the LCI version.
      */
     public int getLciVersion() {
+        // parseInt will work here because the JComboBox is populated with an integer array.
         return Integer.parseInt(String.valueOf(lciVersionComboBox.getSelectedItem()));
     }
 
@@ -382,5 +376,13 @@ public class LciView extends JPanel {
         lciVersionComboBox.addActionListener(listener);
     }
 
+    /**
+     * Displays an error in a pop-up window.
+     *
+     * @param message The error message to be displayed.
+     */
+    public void displayError(String message) {
+        JOptionPane.showMessageDialog(new JFrame(), message);
+    }
 
 }

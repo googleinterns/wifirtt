@@ -55,7 +55,7 @@ public class LciModel implements Subelement {
     private static final int LONGITUDE_UNCERTAINTY_INDEX = 0;
     private static final int LONGITUDE_INDEX = 6;
 
-    private static final int ALTITUDE_UNITS_INDEX = 0;
+    private static final int ALTITUDE_TYPE_INDEX = 0;
     private static final int ALTITUDE_UNCERTAINTY_INDEX = 4;
     private static final int ALTITUDE_INDEX = 10;
 
@@ -66,21 +66,31 @@ public class LciModel implements Subelement {
     private static final int VERSION_INDEX = 6;
 
     // Lengths of fields within groups (in bits)
-    private static final int LATITUDE_UNCERTAINTY_LENGTH = 6;
     private static final int LATITUDE_LENGTH = 34;
-
-    private static final int LONGITUDE_UNCERTAINTY_LENGTH = 6;
     private static final int LONGITUDE_LENGTH = 34;
-
-    private static final int ALTITUDE_UNITS_LENGTH = 4;
-    private static final int ALTITUDE_UNCERTAINTY_LENGTH = 6;
     private static final int ALTITUDE_LENGTH = 30;
 
-    private static final int MAP_DATUM_LENGTH = 3;
-    private static final int REG_LOC_AGREEMENT_LENGTH = 1;
-    private static final int REG_LOC_DSE_LENGTH = 1;
-    private static final int DEPENDENT_STA_LENGTH = 1;
-    private static final int VERSION_LENGTH = 2;
+    // Number of fraction bits for fields (bits after the binary point)
+    private static final int LATITUDE_FRACTION_BITS = 25;
+    private static final int LONGITUDE_FRACTION_BITS = 25;
+    private static final int ALTITUDE_FRACTION_BITS = 8;
+
+    // Masks for fields within field groups
+    private static final long LATITUDE_UNCERTAINTY_MASK = 0x000000000000003fL; // Bits 0 - 5
+    private static final long LATITUDE_MASK = 0x000000ffffffffc0L; // Bits 6 - 39
+
+    private static final long LONGITUDE_UNCERTAINTY_MASK = 0x000000000000003fL; // Bits 0 - 5
+    private static final long LONGITUDE_MASK = 0x000000ffffffffc0L; // Bits 6 - 39
+
+    private static final long ALTITUDE_TYPE_MASK = 0x000000000000000fL; // Bits 0 - 3
+    private static final long ALTITUDE_UNCERTAINTY_MASK = 0x00000000000003f0L; // Bits 4 - 9
+    private static final long ALTITUDE_MASK = 0x000000fffffffc00L; // Bits 10 - 39
+
+    private static final int MAP_DATUM_MASK = 0x00000007; // Bits 0 - 2
+    private static final int REG_LOC_AGREEMENT_MASK = 0x00000008; // Bit 3
+    private static final int REG_LOC_DSE_MASK = 0x00000010; // Bit 4
+    private static final int DEPENDENT_STA_MASK = 0x00000020; // Bit 5
+    private static final int VERSION_MASK = 0x000000c0; // Bits 6 - 7
 
 
     private LciState state;
@@ -162,14 +172,14 @@ public class LciModel implements Subelement {
         }
 
         double latitude = state.getLatitude();
-        long latitudeEncoding = Math.round(latitude * 0x0000000002000000L);
+        long latitudeEncoding = Math.round(latitude * (1L << LATITUDE_FRACTION_BITS));
         if (latitude < 0) {
-            latitudeEncoding = 0x0000000400000000L - latitudeEncoding;
+            latitudeEncoding = (1L << LATITUDE_LENGTH) + latitudeEncoding;
         }
 
         long result = 0;
-        result |= ((latitudeUncertaintyEncoding << LATITUDE_UNCERTAINTY_INDEX) & 0x000000000000003fL);
-        result |= ((latitudeEncoding << LATITUDE_INDEX) & 0x000000ffffffffc0L);
+        result |= ((latitudeUncertaintyEncoding << LATITUDE_UNCERTAINTY_INDEX) & LATITUDE_UNCERTAINTY_MASK);
+        result |= ((latitudeEncoding << LATITUDE_INDEX) & LATITUDE_MASK);
         return result;
     }
 
@@ -187,14 +197,14 @@ public class LciModel implements Subelement {
         }
 
         double longitude = state.getLongitude();
-        long longitudeEncoding = Math.round(longitude * 0x0000000002000000L);
+        long longitudeEncoding = Math.round(longitude * (1L << LONGITUDE_FRACTION_BITS));
         if (longitude < 0) {
-            longitudeEncoding = 0x0000000400000000L - longitudeEncoding;
+            longitudeEncoding = (1L << LONGITUDE_LENGTH) + longitudeEncoding;
         }
 
         long result = 0;
-        result |= ((longitudeUncertaintyEncoding << LONGITUDE_UNCERTAINTY_INDEX) & 0x000000000000003fL);
-        result |= ((longitudeEncoding << LONGITUDE_INDEX) & 0x000000ffffffffc0L);
+        result |= ((longitudeUncertaintyEncoding << LONGITUDE_UNCERTAINTY_INDEX) & LONGITUDE_UNCERTAINTY_MASK);
+        result |= ((longitudeEncoding << LONGITUDE_INDEX) & LONGITUDE_MASK);
         return result;
     }
 
@@ -215,15 +225,15 @@ public class LciModel implements Subelement {
         }
 
         double altitude = state.getAltitude();
-        long altitudeEncoding = Math.round(altitude * 0x0000000000000100L);
+        long altitudeEncoding = Math.round(altitude * (1L << ALTITUDE_FRACTION_BITS));
         if (altitude < 0) {
-            altitudeEncoding = 0x0000000040000000L - altitudeEncoding;
+            altitudeEncoding = (1L << ALTITUDE_LENGTH) + altitudeEncoding;
         }
 
         long result = 0;
-        result |= ((altitudeTypeEncoding << ALTITUDE_UNITS_INDEX) & 0x000000000000000fL);
-        result |= ((altitudeUncertaintyEncoding << ALTITUDE_UNCERTAINTY_INDEX) & 0x00000000000003f0L);
-        result |= ((altitudeEncoding << ALTITUDE_INDEX) & 0x000000fffffffc00L);
+        result |= ((altitudeTypeEncoding << ALTITUDE_TYPE_INDEX) & ALTITUDE_TYPE_MASK);
+        result |= ((altitudeUncertaintyEncoding << ALTITUDE_UNCERTAINTY_INDEX) & ALTITUDE_UNCERTAINTY_MASK);
+        result |= ((altitudeEncoding << ALTITUDE_INDEX) & ALTITUDE_MASK);
         return result;
     }
 
@@ -243,11 +253,11 @@ public class LciModel implements Subelement {
         int version = state.getLciVersion();
 
         int result = 0;
-        result |= ((mapDatumEncoding << MAP_DATUM_INDEX) & 0x00000007);
-        result |= ((regLocAgreementEncoding << REG_LOC_AGREEMENT_INDEX) & 0x00000008);
-        result |= ((regLocDseEncoding << REG_LOC_DSE_INDEX) & 0x00000010);
-        result |= ((dependentStaEncoding << DEPENDENT_STA_INDEX) & 0x00000020);
-        result |= ((version << VERSION_INDEX) & 0x000000c0);
+        result |= ((mapDatumEncoding << MAP_DATUM_INDEX) & MAP_DATUM_MASK);
+        result |= ((regLocAgreementEncoding << REG_LOC_AGREEMENT_INDEX) & REG_LOC_AGREEMENT_MASK);
+        result |= ((regLocDseEncoding << REG_LOC_DSE_INDEX) & REG_LOC_DSE_MASK);
+        result |= ((dependentStaEncoding << DEPENDENT_STA_INDEX) & DEPENDENT_STA_MASK);
+        result |= ((version << VERSION_INDEX) & VERSION_MASK);
         return result;
     }
 

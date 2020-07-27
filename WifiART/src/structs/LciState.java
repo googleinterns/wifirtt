@@ -22,6 +22,12 @@ public class LciState {
     private static final AltitudeType DEFAULT_ALTITUDE_TYPE = AltitudeType.NO_KNOWN_ALTITUDE;
     private static final MapDatum DEFAULT_MAP_DATUM = MapDatum.WGS84;
 
+    private static final double MAX_LATITUDE = 90;
+    private static final double MIN_LATITUDE = -90;
+    private static final double MAX_LONGITUDE = 180;
+    private static final double MIN_LONGITUDE = -180;
+    private static final double MAX_ALTITUDE_MAGNITUDE = Math.pow(2, 21);
+
 
     // Parameters
 
@@ -196,6 +202,9 @@ public class LciState {
      * @param latitude the latitude, in degrees
      */
     public void setLatitude(double latitude) {
+        if (latitude < MIN_LATITUDE || latitude > MAX_LATITUDE) {
+            throw new NumberFormatException();
+        }
         this.latitude = latitude;
     }
 
@@ -214,6 +223,9 @@ public class LciState {
      * @param longitude the longitude, in degrees
      */
     public void setLongitude(double longitude) {
+        if (longitude < MIN_LONGITUDE || longitude > MAX_LONGITUDE) {
+            throw new NumberFormatException();
+        }
         this.longitude = longitude;
     }
 
@@ -232,6 +244,9 @@ public class LciState {
      * @param altitude the altitude, in meters or floors
      */
     public void setAltitude(double altitude) {
+        if (altitude < -MAX_ALTITUDE_MAGNITUDE || altitude >= MAX_ALTITUDE_MAGNITUDE) {
+            throw new NumberFormatException();
+        }
         this.altitude = altitude;
     }
 
