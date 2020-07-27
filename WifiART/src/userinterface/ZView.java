@@ -177,7 +177,8 @@ public class ZView extends JPanel {
         } else if (unknownLocationMovementRadioButton.isSelected()) {
             return ExpectedToMove.MOVEMENT_UNKNOWN;
         }
-        return null; // Only null if the user has not chosen an option yet.
+        // If the user hasn't chosen an option yet, which shouldn't be the case, throw an error.
+        throw new NullPointerException();
     }
 
     // Methods for adding listeners

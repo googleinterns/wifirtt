@@ -187,22 +187,24 @@ public class ZModel implements Subelement {
         int result = 0;
 
         double heightAboveFloorUncertainty = state.getHeightAboveFloorUncertaintyMeters();
-        double heightAboveFloorUncertaintyEncoding;
-        if (isFractionBitsPresent) {
-            // Convert to 1/4096-ths of a meter.
-            heightAboveFloorUncertaintyEncoding = heightAboveFloorUncertainty * HEIGHT_ABOVE_FLOOR_FRACTION_FACTOR;
-        } else {
-            heightAboveFloorUncertaintyEncoding = heightAboveFloorUncertainty;
-        }
-        // encoding = 11 - log2(uncertainty)
-        heightAboveFloorUncertaintyEncoding = 11 - Math.log(heightAboveFloorUncertaintyEncoding) / Math.log(2);
+        double heightAboveFloorUncertaintyEncoding = 0;
+        if (heightAboveFloorUncertainty > 0) {
+            if (isFractionBitsPresent) {
+                // Convert to 1/4096-ths of a meter.
+                heightAboveFloorUncertaintyEncoding = heightAboveFloorUncertainty * HEIGHT_ABOVE_FLOOR_FRACTION_FACTOR;
+            } else {
+                heightAboveFloorUncertaintyEncoding = heightAboveFloorUncertainty;
+            }
+            // encoding = 11 - log2(uncertainty)
+            heightAboveFloorUncertaintyEncoding = 11 - Math.log(heightAboveFloorUncertaintyEncoding) / Math.log(2);
 
-        // Convert to integer, rounding down so the bound still applies.
-        result = (int) (heightAboveFloorUncertaintyEncoding);
-        if (result < MIN_HEIGHT_ABOVE_FLOOR_UNCERTAINTY_ENCODING) {
-            result = MIN_HEIGHT_ABOVE_FLOOR_UNCERTAINTY_ENCODING;
-        } else if (result > MAX_HEIGHT_ABOVE_FLOOR_UNCERTAINTY_ENCODING) {
-            result = MAX_HEIGHT_ABOVE_FLOOR_UNCERTAINTY_ENCODING;
+            // Convert to integer, rounding down so the bound still applies.
+            result = (int) (heightAboveFloorUncertaintyEncoding);
+            if (result < MIN_HEIGHT_ABOVE_FLOOR_UNCERTAINTY_ENCODING) {
+                result = MIN_HEIGHT_ABOVE_FLOOR_UNCERTAINTY_ENCODING;
+            } else if (result > MAX_HEIGHT_ABOVE_FLOOR_UNCERTAINTY_ENCODING) {
+                result = MAX_HEIGHT_ABOVE_FLOOR_UNCERTAINTY_ENCODING;
+            }
         }
 
         return result;
