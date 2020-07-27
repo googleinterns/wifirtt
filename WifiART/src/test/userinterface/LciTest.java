@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Tests methods and the encoding for the Usage Rules/Policy subelement.
+ * Tests methods and the encoding for the LCI subelement.
  */
 class LciTest {
 
