@@ -17,6 +17,7 @@ limitations under the License.
 package userinterface;
 
 import structs.ArtSystemState;
+import structs.SubelementName;
 
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
@@ -25,6 +26,7 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 /**
  * The master view class including GUI elements not specific to any subelement.
@@ -66,6 +68,8 @@ public class ArtMvcView extends JFrame {
     private final JLabel bufferTextLabel = new JLabel("Hex Output LCI/LCR Buffer: ");
     private final JTextArea bufferTextArea = new JTextArea();
     private final JButton generateButton = new JButton("Generate updated buffer");
+    private final JCheckBox readableBufferCheckbox = new JCheckBox("Readable format ");
+    private final JCheckBox androidVersionCheckbox = new JCheckBox("Android version S or later");
 
     private final JTabbedPane tabbedPanel = new JTabbedPane();
 
@@ -146,7 +150,12 @@ public class ArtMvcView extends JFrame {
         bufferTextArea.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         panel.add(bufferTextArea);
 
-        panel.add(generateButton);
+        JPanel generateBufferPanel = new JPanel();
+        generateBufferPanel.setLayout(new BoxLayout(generateBufferPanel, BoxLayout.X_AXIS));
+        generateBufferPanel.add(readableBufferCheckbox);
+        generateBufferPanel.add(generateButton);
+        generateBufferPanel.add(androidVersionCheckbox);
+        panel.add(generateBufferPanel);
 
     }
     private void setupLciSubelementChooserPanel(JPanel panel) {
@@ -212,39 +221,74 @@ public class ArtMvcView extends JFrame {
         return outputDirField.getText();
     }
 
-    public void setLciIncludedListener(ActionListener listener) {
-        lciCheckbox.addActionListener(listener);
-    }
-    public void setZIncludedListener(ActionListener listener) {
-        zCheckbox.addActionListener(listener);
-    }
-    public void setUsageIncludedListener(ActionListener listener) {
-        usageCheckbox.addActionListener(listener);
-    }
-    public void setBssidIncludedListener(ActionListener listener) {
-        bssidCheckbox.addActionListener(listener);
-    }
-    public void setLcrIncludedListener(ActionListener listener) {
-        lcrCheckbox.addActionListener(listener);
-    }
-    public void setMapIncludedListener(ActionListener listener) {
-        mapCheckbox.addActionListener(listener);
+    public boolean getReadable() {
+        return readableBufferCheckbox.isSelected();
     }
 
-    public void setInputFileNameListener(ActionListener listener) {
+    public boolean isAndroidVersionNew() {
+        return androidVersionCheckbox.isSelected();
+    }
+
+    public SubelementName getSelectedTab() {
+        int index = tabbedPanel.getSelectedIndex();
+        switch (index) {
+            case 1:
+                return SubelementName.LCI;
+            case 2:
+                return SubelementName.Z;
+            case 3:
+                return SubelementName.USAGE;
+            case 4:
+                return SubelementName.BSSID;
+            case 5:
+                return SubelementName.LCR;
+            case 6:
+                return SubelementName.MAP;
+        }
+        return null; // Return null if no subelement tab is selected.
+    }
+
+    public void addLciIncludedListener(ActionListener listener) {
+        lciCheckbox.addActionListener(listener);
+    }
+    public void addZIncludedListener(ActionListener listener) {
+        zCheckbox.addActionListener(listener);
+    }
+    public void addUsageIncludedListener(ActionListener listener) {
+        usageCheckbox.addActionListener(listener);
+    }
+    public void addBssidIncludedListener(ActionListener listener) {
+        bssidCheckbox.addActionListener(listener);
+    }
+    public void addLcrIncludedListener(ActionListener listener) {
+        lcrCheckbox.addActionListener(listener);
+    }
+    public void addMapIncludedListener(ActionListener listener) {
+        mapCheckbox.addActionListener(listener);
+    }
+    public void addInputFileNameListener(ActionListener listener) {
         inputFileNameField.addActionListener(listener);
     }
-    public void setInputDirListener(ActionListener listener) {
+    public void addInputDirListener(ActionListener listener) {
         inputDirField.addActionListener(listener);
     }
-    public void setOutputFileNameListener(ActionListener listener) {
+    public void addOutputFileNameListener(ActionListener listener) {
         outputFileNameField.addActionListener(listener);
     }
-    public void setOutputDirListener(ActionListener listener) {
+    public void addOutputDirListener(ActionListener listener) {
         outputDirField.addActionListener(listener);
+    }
+    public void addReadableListener(ActionListener listener) {
+        readableBufferCheckbox.addActionListener(listener);
+    }
+    public void addAndroidVersionListener(ActionListener listener) {
+        androidVersionCheckbox.addActionListener(listener);
     }
     public void addGenerateBufferListener(ActionListener listener) {
         generateButton.addActionListener(listener);
+    }
+    public void addTabbedPaneListener(ChangeListener listener) {
+        tabbedPanel.addChangeListener(listener);
     }
 
     // Getters for the sub-views
@@ -267,18 +311,33 @@ public class ArtMvcView extends JFrame {
         return mapView;
     }
 
-    public void displayBuffer(String lciBuffer, String lcrBuffer) {
-        String totalText = "";
-        for (int i = 0; i <= lciBuffer.length() - 2; i += 2) {
-            totalText += (lciBuffer.substring(i, i + 2) + " ");
+    public void displayBuffer(List<String> lciBuffer, List<String> lcrBuffer, boolean readable) {
+        StringBuilder totalText = new StringBuilder();
+        String betweenSubelements = "";
+        String betweenBytes = "";
+        if (readable) {
+            // Readable buffer display has a line break between subelements.
+            betweenSubelements = "\n";
+            // Readable buffer display has a space between bytes.
+            betweenBytes = " ";
         }
-        if (!(lcrBuffer.equals(""))) {
-            totalText += "\n";
+
+        for (String subelementBuffer : lciBuffer) {
+            for (int i = 0; i <= subelementBuffer.length() - 2; i += 2) {
+                totalText.append(subelementBuffer, i, i + 2).append(betweenBytes);
+            }
+            totalText.append(betweenSubelements);
         }
-        for (int i = 0; i <= lcrBuffer.length() - 2; i += 2) {
-            totalText += (lcrBuffer.substring(i, i + 2) + " ");
+        if (!(lcrBuffer.isEmpty())) {
+            totalText.append("\n");
         }
-        bufferTextArea.setText(totalText);
+        for (String subelementBuffer : lcrBuffer) {
+            for (int i = 0; i <= subelementBuffer.length() - 2; i += 2) {
+                totalText.append(subelementBuffer, i, i + 2).append(" ");
+            }
+            totalText.append(betweenSubelements);
+        }
+        bufferTextArea.setText(totalText.toString());
     }
 
 

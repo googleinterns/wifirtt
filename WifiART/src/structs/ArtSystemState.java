@@ -23,16 +23,6 @@ import java.util.HashMap;
  */
 public class ArtSystemState {
 
-    // Enum identifying the different subelements.
-    private enum SubelementName {
-        LCI,
-        Z,
-        USAGE,
-        BSSID,
-        LCR,
-        MAP
-    }
-
     // Parameters
     private LciState lciState;
     private ZState zState;
@@ -47,6 +37,9 @@ public class ArtSystemState {
     private String inputDir;
     private String outputFileName;
     private String outputDir;
+
+    private boolean readable;
+    private boolean androidversionNew;
 
     /** Constructor. */
     public ArtSystemState() {
@@ -81,6 +74,7 @@ public class ArtSystemState {
 
     /**
      * Gets the subelement state for the LCI subelement.
+     *
      * @return the LCI subelement state
      */
     public LciState getLciState() {
@@ -89,6 +83,7 @@ public class ArtSystemState {
 
     /**
      * Gets the subelement state for the Z subelement.
+     *
      * @return the Z subelement state
      */
     public ZState getZState() {
@@ -97,6 +92,7 @@ public class ArtSystemState {
 
     /**
      * Gets the subelement state for the Usage Rules/Policy subelement.
+     *
      * @return the Usage Rules/Policy subelement state
      */
     public UsageState getUsageState() {
@@ -105,6 +101,7 @@ public class ArtSystemState {
 
     /**
      * Gets the subelement state for the BSSID List subelement.
+     *
      * @return the BSSID List subelement state
      */
     public BssidState getBssidState() {
@@ -113,6 +110,7 @@ public class ArtSystemState {
 
     /**
      * Gets the subelement state for the Location Civic subelement.
+     *
      * @return the Location Civic subelement state
      */
     public LcrState getLcrState() {
@@ -121,6 +119,7 @@ public class ArtSystemState {
 
     /**
      * Gets the subelement state for the Map Image subelement.
+     *
      * @return the Map Image subelement state
      */
     public MapState getMapState() {
@@ -131,7 +130,18 @@ public class ArtSystemState {
     // Getters for which subelements are included
 
     /**
+     * Gets whether or not a given subelement is to be included in the output.
+     *
+     * @param subelementName the subelement being inquired about
+     * @return whether or not the given subelement should be included in the output.
+     */
+    public boolean isSubelementIncluded(SubelementName subelementName) {
+        return includedSubelements.get(subelementName);
+    }
+
+    /**
      * Gets whether or not the LCI subelement is to be included in the output.
+     *
      * @return The boolean value of the parameter.
      */
     public boolean isLciIncluded() {
@@ -140,6 +150,7 @@ public class ArtSystemState {
 
     /**
      * Gets whether or not the Z subelement is to be included in the output.
+     *
      * @return The boolean value of the parameter.
      */
     public boolean isZIncluded() {
@@ -148,6 +159,7 @@ public class ArtSystemState {
 
     /**
      * Gets whether or not the Usage Rules/Policy subelement is to be included in the output.
+     *
      * @return The boolean value of the parameter.
      */
     public boolean isUsageIncluded() {
@@ -156,6 +168,7 @@ public class ArtSystemState {
 
     /**
      * Gets whether or not the BSSID List subelement is to be included in the output.
+     *
      * @return The boolean value of the parameter.
      */
     public boolean isBssidIncluded() {
@@ -164,6 +177,7 @@ public class ArtSystemState {
 
     /**
      * Gets whether or not the Location Civic subelement is to be included in the output.
+     *
      * @return The boolean value of the parameter.
      */
     public boolean isLcrIncluded() {
@@ -172,17 +186,27 @@ public class ArtSystemState {
 
     /**
      * Gets whether or not the Map Image subelement is to be included in the output.
+     *
      * @return The boolean value of the parameter.
      */
     public boolean isMapIncluded() {
         return includedSubelements.get(SubelementName.MAP);
     }
 
+    /**
+     * Gets whether or not the output should be displayed in a readable format.
+     *
+     * @return Whether or not the buffer display should be readable.
+     */
+    public boolean getReadable() {
+        return readable;
+    }
 
     // Setters for the subelement states
 
     /**
      * Sets the subelement state for the LCI subelement
+     *
      * @param lciState the LCI subelement state
      */
     public void setLciState(LciState lciState) {
@@ -191,6 +215,7 @@ public class ArtSystemState {
 
     /**
      * Sets the subelement state for the Z subelement
+     *
      * @param zState the Z subelement state
      */
     public void setZState(ZState zState) {
@@ -199,6 +224,7 @@ public class ArtSystemState {
 
     /**
      * Sets the subelement state for the Usage Rules/Policy subelement
+     *
      * @param usageState the Usage Rules/Policy subelement state
      */
     public void setUsageState(UsageState usageState) {
@@ -207,6 +233,7 @@ public class ArtSystemState {
 
     /**
      * Sets the subelement state for the BSSID List subelement
+     *
      * @param bssidState the BSSID List subelement state
      */
     public void setBssidState(BssidState bssidState) {
@@ -215,6 +242,7 @@ public class ArtSystemState {
 
     /**
      * Sets the subelement state for the Location Civic subelement
+     *
      * @param lcrState the Location Civic subelement state
      */
     public void setLcrState(LcrState lcrState) {
@@ -223,6 +251,7 @@ public class ArtSystemState {
 
     /**
      * Sets the subelement state for the Map Image subelement
+     *
      * @param mapState the Map Image subelement state
      */
     public void setMapState(MapState mapState) {
@@ -234,6 +263,7 @@ public class ArtSystemState {
 
     /**
      * Set whether or not the LCI subelement is included in the output.
+     *
      * @param included the boolean value of the parameter
      */
     public void setLciIncluded(boolean included) {
@@ -242,6 +272,7 @@ public class ArtSystemState {
 
     /**
      * Set whether or not the Z subelement is included in the output.
+     *
      * @param included the boolean value of the parameter
      */
     public void setZIncluded(boolean included) {
@@ -250,6 +281,7 @@ public class ArtSystemState {
 
     /**
      * Set whether or not the Usage Rules/Policy subelement is included in the output.
+     *
      * @param included the boolean value of the parameter
      */
     public void setUsageIncluded(boolean included) {
@@ -258,6 +290,7 @@ public class ArtSystemState {
 
     /**
      * Set whether or not the BSSID List subelement is included in the output.
+     *
      * @param included the boolean value of the parameter
      */
     public void setBssidIncluded(boolean included) {
@@ -266,6 +299,7 @@ public class ArtSystemState {
 
     /**
      * Set whether or not the Location Civic subelement is included in the output.
+     *
      * @param included the boolean value of the parameter
      */
     public void setLcrIncluded(boolean included) {
@@ -274,15 +308,16 @@ public class ArtSystemState {
 
     /**
      * Set whether or not the Map Image subelement is included in the output.
+     *
      * @param included the boolean value of the parameter
      */
     public void setMapIncluded(boolean included) {
         includedSubelements.put(SubelementName.MAP, included);
     }
 
-
     /**
      * Set the input file name.
+     *
      * @param inputFileName the input file name
      */
     public void setInputFileName(String inputFileName) {
@@ -291,6 +326,7 @@ public class ArtSystemState {
 
     /**
      * Set the input file directory.
+     *
      * @param inputDir the input file directory
      */
     public void setInputDir(String inputDir) {
@@ -299,6 +335,7 @@ public class ArtSystemState {
 
     /**
      * Set the output file name.
+     *
      * @param outputFileName the output file name
      */
     public void setOutputFileName(String outputFileName) {
@@ -307,9 +344,29 @@ public class ArtSystemState {
 
     /**
      * Set the output file directory.
+     *
      * @param outputDir the output file directory
      */
     public void setOutputDir(String outputDir) {
         this.outputDir = outputDir;
     }
+
+    /**
+     * Set whether or not the output should be displayed in a readable format.
+     *
+     * @param readable whether or not the buffer should be readable.
+     */
+    public void setReadable(boolean readable) {
+        this.readable = readable;
+    }
+
+    /**
+     * Set whether or not the android version is S or later.
+     *
+     * @param androidVersionNew whether or not the new Android version is used.
+     */
+    public void setAndroidVersionNew(boolean androidVersionNew) {
+        this.androidversionNew = androidVersionNew;
+    }
+
 }

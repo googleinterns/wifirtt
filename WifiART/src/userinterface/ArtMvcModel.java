@@ -18,10 +18,14 @@ package userinterface;
 
 import structs.ArtSystemState;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ArtMvcModel {
     private ArtSystemState state;
     private ArtMvcController controller;
 
+    // Models for the subelements
     private final LciModel lciModel;
     private final ZModel zModel;
     private final UsageModel usageModel;
@@ -29,6 +33,13 @@ public class ArtMvcModel {
     private final LcrModel lcrModel;
     private final MapModel mapModel;
 
+    // Buffer strings for the subelements
+    private String lciSubelementBuffer;
+    private String zSubelementBuffer;
+    private String usageSubelementBuffer;
+    private String bssidSubelementBuffer;
+    private String lcrSubelementBuffer;
+    private String mapSubelementBuffer;
 
 
     /**
@@ -58,7 +69,7 @@ public class ArtMvcModel {
     /**
      * Sets the state contained in the model.
      *
-     * @return the system state
+     * @param state the system state
      */
     public void setState(ArtSystemState state) {
         this.state = state;
@@ -75,6 +86,7 @@ public class ArtMvcModel {
 
     /**
      * Get the model for the LCI subelement.
+     *
      * @return the LCI subelement model
      */
     public LciModel getLciModel() {
@@ -83,6 +95,7 @@ public class ArtMvcModel {
 
     /**
      * Get the model for the Z subelement.
+     *
      * @return the Z subelement model
      */
     public ZModel getZModel() {
@@ -91,6 +104,7 @@ public class ArtMvcModel {
 
     /**
      * Get the model for the Usage Rules/Policy subelement.
+     *
      * @return the Usage Rules/Policy subelement model
      */
     public UsageModel getUsageModel() {
@@ -99,6 +113,7 @@ public class ArtMvcModel {
 
     /**
      * Get the model for the BSSID List subelement.
+     *
      * @return the BSSID List subelement model
      */
     public BssidModel getBssidModel() {
@@ -107,6 +122,7 @@ public class ArtMvcModel {
 
     /**
      * Get the model for the Location Civic subelement.
+     *
      * @return the Location Civic subelement model
      */
     public LcrModel getLcrModel() {
@@ -115,39 +131,76 @@ public class ArtMvcModel {
 
     /**
      * Get the model for the Map Image subelement.
+     *
      * @return the Map Image subelement model
      */
     public MapModel getMapModel() {
         return mapModel;
     }
 
-    public String getLciBuffer() {
-        String buffer = "";
+    public void updateLciSubelementBuffer() {
         if (state.isLciIncluded()) {
-            buffer += lciModel.toHexBuffer();
+            lciSubelementBuffer = lciModel.toHexBuffer();
+        }
+    }
+    public void updateZSubelementBuffer() {
+        if (state.isZIncluded()) {
+            zSubelementBuffer = zModel.toHexBuffer();
+        }
+    }
+    public void updateUsageSubelementBuffer() {
+        if (state.isUsageIncluded()) {
+            usageSubelementBuffer = usageModel.toHexBuffer();
+        }
+    }
+    public void updateBssidSubelementBuffer() {
+        if (state.isBssidIncluded()) {
+            bssidSubelementBuffer = bssidModel.toHexBuffer();
+        }
+    }
+    public void updateLcrSubelementBuffer() {
+        if (state.isLcrIncluded()) {
+            lcrSubelementBuffer = lcrModel.toHexBuffer();
+        }
+    }
+    public void updateMapSubelementBuffer() {
+        if (state.isMapIncluded()) {
+            mapSubelementBuffer = mapModel.toHexBuffer();
+        }
+    }
+
+    public List<String> getLciBuffer() {
+        List<String> buffer = new ArrayList<>();
+        if (state.isLciIncluded()) {
+            updateLciSubelementBuffer();
+            buffer.add(lciSubelementBuffer);
         }
         if (state.isZIncluded()) {
-            buffer += zModel.toHexBuffer();
+            updateZSubelementBuffer();
+            buffer.add(zSubelementBuffer);
         }
         if (state.isUsageIncluded()) {
-            buffer += usageModel.toHexBuffer();
+            updateUsageSubelementBuffer();
+            buffer.add(usageSubelementBuffer);
         }
         if (state.isBssidIncluded()) {
-            buffer += bssidModel.toHexBuffer();
+            updateBssidSubelementBuffer();
+            buffer.add(bssidSubelementBuffer);
         }
         return buffer;
     }
 
-    public String getLcrBuffer() {
-        String buffer = "";
+    public List<String> getLcrBuffer() {
+        List<String> buffer = new ArrayList<>();
         if (state.isLcrIncluded()) {
-            buffer += lcrModel.toHexBuffer();
+            updateLcrSubelementBuffer();
+            buffer.add(lcrSubelementBuffer);
         }
         if (state.isMapIncluded()) {
-            buffer += mapModel.toHexBuffer();
+            updateMapSubelementBuffer();
+            buffer.add(mapSubelementBuffer);
         }
         return buffer;
-
     }
 
 
