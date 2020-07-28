@@ -16,13 +16,43 @@ limitations under the License.
 
 package structs;
 
+/**
+ * The state representation for the Map Image subelement.
+ */
 public class MapState {
+
+    private String mapType;
     private String mapUrl;
 
-    // TODO(dmevans) Add getter methods.
+    /**
+     * Get the Map Type.
+     *
+     * @return mapType the map type.
+     */
+    public String getMapType() {
+        return mapType;
+    }
+
+    /**
+     * Get the Map URL.
+     * @return mapUrl the map URL.
+     */
+    public String getMapUrl() {
+        return mapUrl;
+    }
+
+    /**
+     * Set the Map Type.
+     *
+     * @param mapType the map type.
+     */
+    public void setMapType(String mapType) {
+        this.mapType = mapType;
+    }
 
     /**
      * Set the Map URL.
+     *
      * @param mapUrl the map URL.
      */
     public void setMapUrl(String mapUrl) {
