@@ -21,7 +21,6 @@ import structs.ExpectedToMove;
 import structs.ZState;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests methods and encodings for the Z subelement.
@@ -36,7 +35,6 @@ public class ZTest {
     private static final double MIN_HEIGHT_ABOVE_FLOOR_UNCERTAINTY_METERS_OLD = Math.pow(2, -13);
     private static final double MAX_HEIGHT_ABOVE_FLOOR_UNCERTAINTY_METERS_NEW = Math.pow(2, -2);
     private static final double MIN_HEIGHT_ABOVE_FLOOR_UNCERTAINTY_METERS_NEW = Math.pow(2, -25);
-
 
     // Default state with zero values, movement unknown
     private static final ZState STATE_DEFAULT = buildZState(
@@ -111,9 +109,7 @@ public class ZTest {
     );
     private static final String BUFFER_WITH_VARIABLE_LOCATION = "0406010000000000";
 
-
     private final ZModel model = new ZModel(new ZState());
-
 
     /**
      * Constructs a ZState with pre-determined parameter values.
@@ -136,8 +132,10 @@ public class ZTest {
         return state;
     }
 
+    // Tests for setting the values.
+
     /**
-     * Test setting the the Floor parameter to the maximum value.
+     * Test setting the Floor parameter to the maximum value.
      */
     @Test
     void testSetMaxFloor() {
@@ -149,7 +147,7 @@ public class ZTest {
     }
 
     /**
-     * Test setting the the Floor parameter to the minimum value.
+     * Test setting the Floor parameter to the minimum value.
      */
     @Test
     void testSetMinFloor() {
@@ -161,7 +159,7 @@ public class ZTest {
     }
 
     /**
-     * Test setting the the Height Above Floor parameter to the maximum value.
+     * Test setting the Height Above Floor parameter to the maximum value.
      */
     @Test
     void testSetMaxHeightAboveFloor() {
@@ -173,7 +171,7 @@ public class ZTest {
     }
 
     /**
-     * Test setting the the Height Above Floor parameter to the minimum value.
+     * Test setting the Height Above Floor parameter to the minimum value.
      */
     @Test
     void testSetMinHeightAboveFloor() {
@@ -185,7 +183,7 @@ public class ZTest {
     }
 
     /**
-     * Test setting the the Height Above Floor Uncertainty parameter to the maximum value.
+     * Test setting the Height Above Floor Uncertainty parameter to the maximum value.
      */
     @Test
     void testSetMaxHeightAboveFloorUncertainty() {
@@ -197,7 +195,7 @@ public class ZTest {
     }
 
     /**
-     * Test setting the the Height Above Floor Uncertainty parameter to the minimum value.
+     * Test setting the Height Above Floor Uncertainty parameter to the minimum value.
      */
     @Test
     void testSetMinHeightAboveFloorUncertainty() {
@@ -244,6 +242,7 @@ public class ZTest {
         assertEquals(ExpectedToMove.MOVEMENT_UNKNOWN, state.getExpectedToMove());
     }
 
+    // Tests for the encoding.
 
     /**
      * Test the encoding with a default state. Old Android version.

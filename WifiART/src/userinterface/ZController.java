@@ -23,7 +23,6 @@ public class ZController {
     private static final String HEIGHT_NOT_A_NUMBER = "Height above floor must be a decimal number.";
     private static final String HEIGHT_UNCERTAINTY_NOT_A_NUMBER = "Height above floor uncertainty must be a decimal number.";
 
-
     private final ZView view;
     private final ZModel model;
 

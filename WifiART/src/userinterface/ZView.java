@@ -230,4 +230,3 @@ public class ZView extends JPanel {
         JOptionPane.showMessageDialog(new JFrame(), message);
     }
 }
-

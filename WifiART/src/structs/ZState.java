@@ -29,7 +29,6 @@ public class ZState {
      */
     private ExpectedToMove expectedToMove;
 
-
     /**
      * Get the floor number.
      *
@@ -101,6 +100,5 @@ public class ZState {
     public void setExpectedToMove(ExpectedToMove expectedToMove) {
         this.expectedToMove = expectedToMove;
     }
-
 
 }
