@@ -20,8 +20,20 @@ package structs;
  * An enum representing the map datum options for the LCI subelement.
  */
 public enum MapDatum {
+
+    /** WGS84 datum: World Geodetic System of 1984. */
     WGS84(1),
+
+    /**
+     * NAD83 (NAVD88) datum: horizontal datum is the North American Datum of 1983 (NAD83),
+     *  vertical datum is the North American Vertical datum of 1988 (NAVD88).
+     */
     NAD83_NAVD88(2),
+
+    /**
+     * NAD83 (MLLW) datum: horizontal datum is the North American Datum of 1983 (NAD83),
+     *  vertical datum is the Mean Lower Low Water (MLLW) datum.
+     */
     NAD83_MLLW(3);
 
     private final int value;

@@ -44,14 +44,14 @@ public class LciState {
     private MapDatum mapDatum; // WGS84, NAD83 (NAVD88), or NAD83 (MLLW).
 
     /**
-     * The regLocAgreement parameter is true if the STA is operating within a national
-     *  policy area or an international agreement area near a national border.
+     * The Registered Location (RegLoc) Agreement parameter is true if the STA is operating within
+     *  a national policy area or an international agreement area near a national border.
      */
     private boolean regLocAgreement;
 
     /**
-     * The regLocDse parameter is true if the enabling STA is enabling the operation
-     *  of STAs with DSE.
+     * The Registered Location Dependent STA Enablement (RegLoc DSE) parameter is true if the
+     *  enabling STA is enabling the operation of STAs with DSE.
      */
     private boolean regLocDse;
 
@@ -155,8 +155,9 @@ public class LciState {
     }
 
     /**
-     * Gets the regLocAgreement parameter, which is true if the STA is operating within a national
-     *  policy area or an international agreement area near a national border.
+     * Gets the Registered Location (RegLoc) Agreement parameter, which is true if the STA is
+     *  operating within a national policy area or an international agreement area near a national
+     *  border.
      *
      * @return the boolean value of the parameter.
      */
@@ -165,8 +166,8 @@ public class LciState {
     }
 
     /**
-     * Gets the regLocDse parameter, which is true if the enabling STA is enabling the operation
-     *  of STAs with DSE.
+     * Gets the Registered Location Dependent STA Enablement (RegLoc DSE) parameter, which is true
+     *  if the enabling STA is enabling the operation of STAs with DSE.
      *
      * @return the boolean value of the parameter.
      */
@@ -278,8 +279,9 @@ public class LciState {
     }
 
     /**
-     * Sets the regLocAgreement parameter, which is true if the STA is operating within a national
-     *  policy area or an international agreement area near a national border.
+     * Sets the Registered Location (RegLoc) Agreement parameter, which is true if the STA is
+     *  operating within a national policy area or an international agreement area near a national
+     *  border.
      *
      * @param regLocAgreement the boolean value of the parameter.
      */
@@ -288,8 +290,8 @@ public class LciState {
     }
 
     /**
-     * Sets the regLocDse parameter, which is true if the enabling STA is enabling the operation
-     *  of STAs with DSE.
+     * Sets the Registered Location Dependent STA Enablement (RegLoc DSE) parameter, which is true
+     *  if the enabling STA is enabling the operation of STAs with DSE.
      *
      * @param regLocDse the boolean value of the parameter.
      */

@@ -239,7 +239,7 @@ public class LciView extends JPanel {
     }
 
     /**
-     * Gets the RegLoc Agreement parameter.
+     * Gets the Registered Location (RegLoc) Agreement parameter.
      *
      * @return the boolean value of the parameter.
      */
@@ -248,7 +248,7 @@ public class LciView extends JPanel {
     }
 
     /**
-     * Gets the RegLoc DSE parameter.
+     * Gets the Registered Location Dependent STA Enablement (RegLoc DSE) parameter.
      *
      * @return the boolean value of the parameter.
      */
@@ -341,7 +341,7 @@ public class LciView extends JPanel {
     }
 
     /**
-     * Adds a listener for the RegLoc Agreement parameter.
+     * Adds a listener for the Registered Location (RegLoc) Agreement parameter.
      *
      * @param listener the ActionListener for the parameter.
      */
@@ -350,7 +350,7 @@ public class LciView extends JPanel {
     }
 
     /**
-     * Adds a listener for the RegLoc DSE parameter.
+     * Adds a listener for the Registered Location Dependent STA Enablement (RegLoc DSE) parameter.
      *
      * @param listener the ActionListener for the parameter.
      */

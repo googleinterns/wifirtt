@@ -20,8 +20,13 @@ package structs;
  * An enum representing the altitude type options for the LCI subelement.
  */
 public enum AltitudeType {
+    /** Altitude not provided. */
     NO_KNOWN_ALTITUDE(0),
+
+    /** Altitude is in meters. */
     ALTITUDE_IN_METERS(1),
+
+    /** Altitude is in floors. */
     ALTITUDE_IN_FLOORS(2);
 
     private final int value;
