@@ -31,5 +31,13 @@ public class BssidController {
         this.model.setCallback(this);
 
         // TODO(dmevans) Add listeners here.
+
+        view.addBssidAddListener(actionEvent -> {
+            StringBuilder bssidBuilder = new StringBuilder(view.getAddedBssid());
+            view.addBssid(
+                bssidBuilder,
+                editModeEvent -> view.toggleEditMode(bssidBuilder),
+                editEvent -> view.editBssid(bssidBuilder, view.getEditedBssid(bssidBuilder)));
+        });
     }
 }
