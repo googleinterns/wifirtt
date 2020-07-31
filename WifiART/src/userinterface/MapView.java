@@ -118,6 +118,8 @@ public class MapView extends JPanel {
         this.remove(imagePreviewScrollPane);
         imagePreviewScrollPane = new JScrollPane(new JLabel(new ImageIcon(image)));
         this.add(imagePreviewScrollPane);
+        this.revalidate();
+        this.repaint();
     }
 
     /**
