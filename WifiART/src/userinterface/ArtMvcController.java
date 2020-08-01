@@ -26,14 +26,9 @@ public class ArtMvcController {
     private final ArtMvcModel model; // MVC Model
 
     private SubelementName lastVisitedSubelement;
-    private String lciBuffer;
-    private String zBuffer;
-    private String usageBuffer;
-    private String bssidBuffer;
-    private String lcrBuffer;
-    private String mapBuffer;
 
-    /** Constructor.
+    /**
+     * Constructor.
      *
      * @param fv the MVC view
      * @param fm the MVC model
@@ -80,6 +75,7 @@ public class ArtMvcController {
         view.addGenerateBufferListener(actionEvent ->
             updateTotalBuffer());
 
+        // Listener for keeping track of which tab was last visited.
         view.addTabbedPaneListener(changeEvent -> {
             if (lastVisitedSubelement != null) {
                 updateSubelementBuffer(lastVisitedSubelement);
@@ -89,6 +85,11 @@ public class ArtMvcController {
 
     }
 
+    /**
+     * Recalculate and revalidate a particular subelement's buffer.
+     *
+     * @param subelementName The name of the subelement being updated.
+     */
     private void updateSubelementBuffer(SubelementName subelementName) {
         if (subelementName == null) {
             return;
@@ -114,7 +115,6 @@ public class ArtMvcController {
                     model.updateMapSubelementBuffer();
                     break;
             }
-
         } catch (RuntimeException exception) {
             view.displayErrorMessage(exception.getMessage());
         }

@@ -138,37 +138,63 @@ public class ArtMvcModel {
         return mapModel;
     }
 
+    /**
+     * Recalculates and revalidates the LCI subelement buffer.
+     */
     public void updateLciSubelementBuffer() {
         if (state.isLciIncluded()) {
             lciSubelementBuffer = lciModel.toHexBuffer();
         }
     }
+
+    /**
+     * Recalculates and revalidates the Z subelement buffer.
+     */
     public void updateZSubelementBuffer() {
         if (state.isZIncluded()) {
             zSubelementBuffer = zModel.toHexBuffer();
         }
     }
+
+    /**
+     * Recalculates and revalidates the Usage Rules/Policy subelement buffer.
+     */
     public void updateUsageSubelementBuffer() {
         if (state.isUsageIncluded()) {
             usageSubelementBuffer = usageModel.toHexBuffer();
         }
     }
+
+    /**
+     * Recalculates and revalidates the BSSID List subelement buffer.
+     */
     public void updateBssidSubelementBuffer() {
         if (state.isBssidIncluded()) {
             bssidSubelementBuffer = bssidModel.toHexBuffer();
         }
     }
+
+    /**
+     * Recalculates and revalidates the Location Civic subelement buffer.
+     */
     public void updateLcrSubelementBuffer() {
         if (state.isLcrIncluded()) {
             lcrSubelementBuffer = lcrModel.toHexBuffer();
         }
     }
+
+    /**
+     * Recalculates and revalidates the Map Image subelement buffer.
+     */
     public void updateMapSubelementBuffer() {
         if (state.isMapIncluded()) {
             mapSubelementBuffer = mapModel.toHexBuffer();
         }
     }
 
+    /**
+     * Gets a list of the buffers for included LCI subelements.
+     */
     public List<String> getLciBuffer() {
         List<String> buffer = new ArrayList<>();
         if (state.isLciIncluded()) {
@@ -190,6 +216,9 @@ public class ArtMvcModel {
         return buffer;
     }
 
+    /**
+     * Gets a list of the buffers for included LCR subelements.
+     */
     public List<String> getLcrBuffer() {
         List<String> buffer = new ArrayList<>();
         if (state.isLcrIncluded()) {

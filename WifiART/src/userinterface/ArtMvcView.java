@@ -189,46 +189,119 @@ public class ArtMvcView extends JFrame {
         panel.add(outputDirField);
     }
 
+    /**
+     * Get whether or not the LCI subelement is to be included in the output
+     *
+     * @return whether or not the LCI subelement is included.
+     */
     public boolean getLciIncluded() {
         return lciCheckbox.isSelected();
     }
+
+    /**
+     * Get whether or not the Z subelement is to be included in the output
+     *
+     * @return whether or not the Z subelement is included.
+     */
     public boolean getZIncluded() {
         return zCheckbox.isSelected();
     }
+
+    /**
+     * Get whether or not the Usage Rules/Policy subelement is to be included in the output
+     *
+     * @return whether or not the Usage Rules/Policy subelement is included.
+     */
     public boolean getUsageIncluded() {
         return usageCheckbox.isSelected();
     }
+
+    /**
+     * Get whether or not the BSSID List subelement is to be included in the output
+     *
+     * @return whether or not the BSSID List subelement is included.
+     */
     public boolean getBssidIncluded() {
         return bssidCheckbox.isSelected();
     }
+
+    /**
+     * Get whether or not the Location Civic subelement is to be included in the output
+     *
+     * @return whether or not the Location Civic subelement is included.
+     */
     public boolean getLcrIncluded() {
         return lcrCheckbox.isSelected();
     }
+
+    /**
+     * Get whether or not the Map Image subelement is to be included in the output
+     *
+     * @return whether or not the Map Image subelement is included.
+     */
     public boolean getMapIncluded() {
         return mapCheckbox.isSelected();
     }
 
+    /**
+     * Get the name of the input file.
+     *
+     * @return the name of the input file
+     */
     public String getInputFileName() {
         return inputFileNameField.getText();
     }
+
+    /**
+     * Get the input file directory.
+     *
+     * @return the input file directory
+     */
     public String getInputDir() {
         return inputDirField.getText();
     }
+
+    /**
+     * Get the name of the output file.
+     *
+     * @return the name of the output file
+     */
     public String getOutputFileName() {
         return outputFileNameField.getText();
     }
+
+    /**
+     * Get the output file directory.
+     *
+     * @return the output file directory
+     */
     public String getOutputDir() {
         return outputDirField.getText();
     }
 
+    /**
+     * Get whether or not the buffer should be displayed in a readable format.
+     *
+     * @return whether or not the buffer should be displayed in a readable format.
+     */
     public boolean getReadable() {
         return readableBufferCheckbox.isSelected();
     }
 
+    /**
+     * Get whether or not the encoding should match the new Android version.
+     *
+     * @return whether or not the encoding should match the new Android version.
+     */
     public boolean isAndroidVersionNew() {
         return androidVersionCheckbox.isSelected();
     }
 
+    /**
+     * Gets which tab is currently selected.
+     *
+     * @return the tab currently selected
+     */
     public SubelementName getSelectedTab() {
         int index = tabbedPanel.getSelectedIndex();
         switch (index) {
@@ -248,69 +321,195 @@ public class ArtMvcView extends JFrame {
         return null; // Return null if no subelement tab is selected.
     }
 
+    /**
+     * Add a listener for including the LCI subelement.
+     *
+     * @param listener the listener for the parameter.
+     */
     public void addLciIncludedListener(ActionListener listener) {
         lciCheckbox.addActionListener(listener);
     }
+
+    /**
+     * Add a listener for including the Z subelement.
+     *
+     * @param listener the listener for the parameter.
+     */
     public void addZIncludedListener(ActionListener listener) {
         zCheckbox.addActionListener(listener);
     }
+
+    /**
+     * Add a listener for including the Usage Rules/Policy subelement.
+     *
+     * @param listener the listener for the parameter.
+     */
     public void addUsageIncludedListener(ActionListener listener) {
         usageCheckbox.addActionListener(listener);
     }
+
+    /**
+     * Add a listener for including the BSSID List subelement.
+     *
+     * @param listener the listener for the parameter.
+     */
     public void addBssidIncludedListener(ActionListener listener) {
         bssidCheckbox.addActionListener(listener);
     }
+
+    /**
+     * Add a listener for including the Location Civic subelement.
+     *
+     * @param listener the listener for the parameter.
+     */
     public void addLcrIncludedListener(ActionListener listener) {
         lcrCheckbox.addActionListener(listener);
     }
+
+    /**
+     * Add a listener for including the Map Image subelement.
+     *
+     * @param listener the listener for the parameter.
+     */
     public void addMapIncludedListener(ActionListener listener) {
         mapCheckbox.addActionListener(listener);
     }
+
+    /**
+     * Add a listener for the input file name.
+     *
+     * @param listener the listener for the parameter.
+     */
     public void addInputFileNameListener(ActionListener listener) {
         inputFileNameField.addActionListener(listener);
     }
+
+    /**
+     * Add a listener for the input file directory.
+     *
+     * @param listener the listener for the parameter.
+     */
     public void addInputDirListener(ActionListener listener) {
         inputDirField.addActionListener(listener);
     }
+
+    /**
+     * Add a listener for the output file name.
+     *
+     * @param listener the listener for the parameter.
+     */
     public void addOutputFileNameListener(ActionListener listener) {
         outputFileNameField.addActionListener(listener);
     }
+
+    /**
+     * Add a listener for the output file directory.
+     *
+     * @param listener the listener for the parameter.
+     */
     public void addOutputDirListener(ActionListener listener) {
         outputDirField.addActionListener(listener);
     }
+
+    /**
+     * Add a listener for whether or not the buffer display should be in a readable form.
+     *
+     * @param listener the listener for the parameter.
+     */
     public void addReadableListener(ActionListener listener) {
         readableBufferCheckbox.addActionListener(listener);
     }
+
+    /**
+     * Add a listener for whether or not the newer Android version is being used.
+     *
+     * @param listener the listener for the parameter.
+     */
     public void addAndroidVersionListener(ActionListener listener) {
         androidVersionCheckbox.addActionListener(listener);
     }
+
+    /**
+     * Add a listener for generating the buffer.
+     *
+     * @param listener the listener for generating the buffer.
+     */
     public void addGenerateBufferListener(ActionListener listener) {
         generateButton.addActionListener(listener);
     }
+
+    /**
+     * Add a listener that is triggered by switching tabs.
+     *
+     * @param listener the listener to be triggered when switching tabs.
+     */
     public void addTabbedPaneListener(ChangeListener listener) {
         tabbedPanel.addChangeListener(listener);
     }
 
     // Getters for the sub-views
+
+    /**
+     * Gets the view for the LCI subelement.
+     *
+     * @return the LCI subelement view.
+     */
     public LciView getLciView() {
         return lciView;
     }
+
+    /**
+     * Gets the view for the Z subelement.
+     *
+     * @return the Z subelement view.
+     */
     public ZView getZView() {
         return zView;
     }
+
+    /**
+     * Gets the view for the Usage Rules/Policy subelement.
+     *
+     * @return the Usage Rules/Policy subelement view.
+     */
     public UsageView getUsageView() {
         return usageView;
     }
+
+    /**
+     * Gets the view for the BSSID List subelement.
+     *
+     * @return the BSSID List subelement view.
+     */
     public BssidView getBssidView() {
         return bssidView;
     }
+
+    /**
+     * Gets the view for the Location Civic subelement.
+     *
+     * @return the Location Civic subelement view.
+     */
     public LcrView getLcrView() {
         return lcrView;
     }
+
+    /**
+     * Gets the view for the Map Image subelement.
+     *
+     * @return the Map Image subelement view.
+     */
     public MapView getMapView() {
         return mapView;
     }
 
+    /**
+     * Displays the buffer in the window.
+     *
+     * @param lciBuffer the list of included LCI subelement buffers
+     * @param lcrBuffer the list of included LCR subelement buffers
+     * @param readable whether or not the output should be in a readable form
+     */
     public void displayBuffer(List<String> lciBuffer, List<String> lcrBuffer, boolean readable) {
         StringBuilder totalText = new StringBuilder();
         String betweenSubelements = "";
