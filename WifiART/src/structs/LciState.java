@@ -28,7 +28,6 @@ public class LciState {
     private static final double MIN_LONGITUDE = -180;
     private static final double MAX_ALTITUDE_MAGNITUDE = Math.pow(2, 21);
 
-
     // Parameters
 
     private int lciVersion;

@@ -3,7 +3,16 @@ package userinterface;
 import structs.AltitudeType;
 import structs.MapDatum;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
@@ -109,7 +118,6 @@ public class LciView extends JPanel {
         JPanel lciReservedFieldsPanel = new JPanel();
         setupLciReservedFieldsPanel(lciReservedFieldsPanel);
         this.add(lciReservedFieldsPanel);
-
     }
 
     private void setupLciReservedFieldsPanel(JPanel lciReservedFieldsPanel) {
