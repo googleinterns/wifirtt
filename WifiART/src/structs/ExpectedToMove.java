@@ -16,15 +16,33 @@ limitations under the License.
 
 package structs;
 
+
 /**
- * Represents an LCI/LCR subelement
+ * Represents the values of the "Expected To Move" field of the Z subelement.
  */
-public interface Subelement {
+public enum ExpectedToMove {
+
+    /** Fixed location */
+    NOT_EXPECTED_TO_MOVE(0),
+
+    /** Variable location */
+    EXPECTED_TO_MOVE(1),
+
+    /** Unknown movement pattern */
+    MOVEMENT_UNKNOWN(2);
+
+    private final int value;
+
+    ExpectedToMove(int value) {
+        this.value = value;
+    }
 
     /**
-     * Produces the hex-buffer encoding for this LCI/LCR subelement
+     * Get the integer encoding for the ExpectedToMove parameter.
      *
-     * @return The hex-buffer encoding
+     * @return the integer encoding
      */
-    String toHexBuffer();
+    public int getEncoding() {
+        return value;
+    }
 }

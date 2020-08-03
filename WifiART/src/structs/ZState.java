@@ -17,18 +17,57 @@ limitations under the License.
 package structs;
 
 public class ZState {
+
     // Parameters
     private int floor;
-    private double heightAboveFloor; // Height is in meters.
-    private double heightAboveFloorUncertainty;
-    /* The locationMovement field specifies whether the STA is expected to change location,
-       not expected to change location, or if this is unknown. */
-    private String locationMovement;
+    private double heightAboveFloorMeters;
+    private double heightAboveFloorUncertaintyMeters;
 
-    // TODO(dmevans) Add getter methods.
+    /**
+     * The expectedToMove field specifies whether the STA is expected to change location,
+     *  not expected to change location, or if this is unknown.
+     */
+    private ExpectedToMove expectedToMove;
+
+    /**
+     * Get the floor number.
+     *
+     * @return the floor number.
+     */
+    public int getFloor()  {
+        return floor;
+    }
+
+    /**
+     * Get the height above the floor.
+     *
+     * @return the height above the floor (in meters)
+     */
+    public double getHeightAboveFloorMeters() {
+        return heightAboveFloorMeters;
+    }
+
+    /**
+     * Get the uncertainty for the height above the floor.
+     *
+     * @return the uncertainty for the height (in meters)
+     */
+    public double getHeightAboveFloorUncertaintyMeters() {
+        return heightAboveFloorUncertaintyMeters;
+    }
+
+    /**
+     * Gets whether or not the STA is expected to change location, or if this is unknown.
+     *
+     * @return the enum representing the STA location movement pattern.
+     */
+    public ExpectedToMove getExpectedToMove() {
+        return expectedToMove;
+    }
 
     /**
      * Set the floor number.
+     *
      * @param floor the floor number.
      */
     public void setFloor(int floor) {
@@ -37,25 +76,29 @@ public class ZState {
 
     /**
      * Set the height above the floor.
-     * @param heightAboveFloor the height above the floor (in meters)
+     *
+     * @param heightAboveFloorMeters the height above the floor (in meters)
      */
-    public void setHeightAboveFloor(double heightAboveFloor) {
-        this.heightAboveFloor = heightAboveFloor;
+    public void setHeightAboveFloorMeters(double heightAboveFloorMeters) {
+        this.heightAboveFloorMeters = heightAboveFloorMeters;
     }
 
     /**
      * Set the uncertainty for the height above the floor.
-     * @param heightAboveFloorUncertainty the uncertainty for the height (in meters)
+     *
+     * @param heightAboveFloorUncertaintyMeters the uncertainty for the height (in meters)
      */
-    public void setHeightAboveFloorUncertainty(double heightAboveFloorUncertainty) {
-        this.heightAboveFloorUncertainty = heightAboveFloorUncertainty;
+    public void setHeightAboveFloorUncertaintyMeters(double heightAboveFloorUncertaintyMeters) {
+        this.heightAboveFloorUncertaintyMeters = heightAboveFloorUncertaintyMeters;
     }
 
     /**
      * Sets whether or not the STA is expected to change location, or if this is unknown.
-     * @param locationMovement the String representing the STA location movement pattern.
+     *
+     * @param expectedToMove the enum representing the STA location movement pattern.
      */
-    public void setLocationMovement(String locationMovement) {
-        this.locationMovement = locationMovement;
+    public void setExpectedToMove(ExpectedToMove expectedToMove) {
+        this.expectedToMove = expectedToMove;
     }
+
 }
