@@ -1,7 +1,17 @@
 package userinterface;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
@@ -16,7 +26,7 @@ public class BssidView extends JPanel {
     private final JLabel bssidPanelTitle = new JLabel("BSSID List Subelement");
     private final JLabel maxBssidIndicatorLabel = new JLabel("Max possible number of BSSs which can share the same antenna connector: ");
     private final JTextField maxBssidIndicatorField = new JTextField();
-    private final JLabel bssidAddLabel = new JLabel("Add a new BSSID: ");
+    private final JLabel bssidAddLabel = new JLabel("Add a new BSSID (e.g. \"1F:2F:3F:4F:5F:6F\"): ");
     private final JTextField bssidAddField = new JTextField();
     private final JButton bssidAddButton = new JButton(" Add ");
     private final JLabel bssidListInstructionsLabel = new JLabel("List of added BSSIDs (Select a BSSID to edit and press return to save changes): ");
@@ -64,65 +74,142 @@ public class BssidView extends JPanel {
 
     }
 
-    public void addBssid(StringBuilder bssidBuilder, ActionListener editListener, ActionListener newBssidListener) {
-        BssidListElement bssidListElement = new BssidListElement(bssidBuilder, editListener, newBssidListener);
+    /**
+     * Get the maximum number of BSSs which can share the same antenna connector.
+     *
+     * @return the maximum number of BSSs which can share the same antenna connector.
+     * @throws NumberFormatException if a non-integer value was provided.
+     */
+    public int getMaxBssidIndicator() throws NumberFormatException {
+        return Integer.parseInt(maxBssidIndicatorField.getText());
+    }
+
+    /**
+     * Add a BSSID to the list.
+     *
+     * @param bssidBuilder the StringBuilder for the BSSID String.
+     * @param editModeListener the listener for entering edit mode for the BSSID.
+     * @param newBssidListener the listener for changing the BSSID String to a new BSSID.
+     * @param removeBssidListener the lsitener for removing the BSSID.
+     */
+    public void addBssid(StringBuilder bssidBuilder, ActionListener editModeListener,
+                         ActionListener newBssidListener, ActionListener removeBssidListener) {
+        BssidListElement bssidListElement = new BssidListElement(bssidBuilder, editModeListener,
+            newBssidListener, removeBssidListener);
         bssidList.put(bssidBuilder, bssidListElement);
-        System.out.println("here");
         bssidListPanel.add(bssidListElement);
         bssidListPanel.revalidate();
         bssidListPanel.repaint();
     }
+
+    /**
+     * Remove a BSSID.
+     *
+     * @param bssidBuilder the StringBuilder for the BSSID String
+     */
     public void removeBssid(StringBuilder bssidBuilder) {
         BssidListElement bssidListElement = bssidList.remove(bssidBuilder);
         bssidListPanel.remove(bssidListElement);
-    }
-    public void editBssid(StringBuilder bssidBuilder, String newBssid) {
-        bssidList.get(bssidBuilder).changeBssid(newBssid);
+        bssidListPanel.revalidate();
+        bssidListPanel.repaint();
     }
 
+    /**
+     * Edit a BSSID.
+     *
+     * @param bssidBuilder the StringBuilder for the BSSID.
+     */
+    public void editBssid(StringBuilder bssidBuilder) {
+        BssidListElement bssidListElement = bssidList.get(bssidBuilder);
+        bssidListElement.changeBssid(bssidListElement.getEditedBssid());
+        bssidListElement.toggleEditMode(); // Leave edit mode
+    }
+
+    /**
+     * Toggle edit mode for a BSSID.
+     *
+     * @param bssidBuilder the StringBuilder for the BSSID.
+     */
     public void toggleEditMode(StringBuilder bssidBuilder) {
         bssidList.get(bssidBuilder).toggleEditMode();
+    }
+
+    /**
+     * Get the BSSID String to be added to the list.
+     *
+     * @return the BSSID String to be added to the list.
+     */
+    public String getAddedBssid() {
+        return bssidAddField.getText();
     }
 
     public String getEditedBssid(StringBuilder bssidBuilder) {
         return bssidList.get(bssidBuilder).getEditedBssid();
     }
 
-    public String getAddedBssid() {
-        return bssidAddField.getText();
-    }
-
+    /**
+     * Add a listener for adding a new BSSID to the list.
+     *
+     * @param listener the listener for adding a new BSSID to the list.
+     */
     public void addBssidAddListener(ActionListener listener) {
         bssidAddButton.addActionListener(listener);
     }
 
-
+    /**
+     * Add a listener for the Max BSSID Indicator field.
+     *
+     * @param listener the listener for the Max BSSID Indicator field.
+     */
+    public void addMaxBssidIndicatorListener(ActionListener listener) {
+        maxBssidIndicatorField.addActionListener(listener);
+    }
 
     private static class BssidListElement extends JPanel {
         private boolean editMode;
-        final StringBuilder bssid;
-        final JCheckBox selectionCheckbox;
-        final JTextField bssidField;
-        final JLabel bssidLabel;
-        final JButton removeBssidButton = new JButton("Delete");
+        private final StringBuilder bssid;
+        private final JCheckBox selectionCheckbox;
+        private final JTextField bssidField;
+        private final JLabel bssidLabel;
+        private final JButton removeBssidButton = new JButton("Delete");
 
-        BssidListElement(StringBuilder bssidBuilder, ActionListener editModeListener, ActionListener newBssidListener) {
+        /**
+         * Constructs a BssidListElement JPanel to add to the BSSID list in the GUI.
+         *
+         * @param bssidBuilder the StringBuilder for the BSSID
+         * @param editModeListener the listener for toggling edit mode for the BSSID
+         * @param newBssidListener the listener for changing the BSSID to a new BSSID
+         * @param removeBssidListener the listener for removing the BSSID from the list.
+         */
+        BssidListElement(StringBuilder bssidBuilder, ActionListener editModeListener,
+                         ActionListener newBssidListener, ActionListener removeBssidListener) {
             this.bssid = bssidBuilder;
             selectionCheckbox = new JCheckBox();
             selectionCheckbox.addActionListener(editModeListener);
             bssidLabel = new JLabel(bssidBuilder.toString());
             bssidField = new JTextField(bssidBuilder.toString(), BSSID_LIST_FIELD_WIDTH);
             bssidField.addActionListener(newBssidListener);
+            removeBssidButton.addActionListener(removeBssidListener);
 
             this.editMode = false;
             this.setLayout(new FlowLayout(FlowLayout.LEFT));
             this.add(selectionCheckbox);
             this.add(bssidLabel);
         }
+
+        /**
+         * Change the BSSID to a new BSSID.
+         *
+         * @param newBssid the new BSSID
+         */
         void changeBssid(String newBssid) {
             this.bssid.replace(0, this.bssid.length(), newBssid);
             this.bssidLabel.setText(newBssid);
         }
+
+        /**
+         * Enter or exit edit mode.
+         */
         void toggleEditMode() {
             if (editMode) {
                 exitEditMode();
@@ -144,14 +231,29 @@ public class BssidView extends JPanel {
             this.remove(bssidField);
             this.remove(removeBssidButton);
             this.add(bssidLabel);
+            this.selectionCheckbox.setSelected(false);
             this.revalidate();
             this.repaint();
             this.editMode = false;
         }
 
+        /**
+         * Get the new BSSID that the user entered to replace the existing one.
+         *
+         * @return the new edited BSSID.
+         */
         String getEditedBssid() {
             return bssidField.getText();
         }
+    }
+
+    /**
+     * Displays an error in a pop-up window.
+     *
+     * @param message The error message to be displayed.
+     */
+    public void displayError(String message) {
+        JOptionPane.showMessageDialog(new JFrame(), message);
     }
 
 }
