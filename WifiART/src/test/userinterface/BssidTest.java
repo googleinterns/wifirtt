@@ -19,6 +19,8 @@ package userinterface;
 import org.junit.jupiter.api.Test;
 import structs.BssidState;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -34,18 +36,7 @@ class BssidTest {
     private static final int MAX_FOR_MAX_BSSID_INDICATOR = 255;
     private static final int MIN_FOR_MAX_BSSID_INDICATOR = 0;
     private static final String[] EXAMPLE_BSSID_LIST = {"01:02:03:04:05:06", "F1:F2:F3:F4:F5:F6"};
-    private static final String[] MAX_LENGTH_BSSID_LIST = {
-        "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff", "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff",
-        "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff", "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff",
-        "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff", "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff",
-        "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff", "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff",
-        "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff", "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff",
-        "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff", "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff",
-        "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff", "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff",
-        "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff", "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff",
-        "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff", "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff",
-        "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff", "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff",
-        "FF:FF:FF:FF:FF:FF", "ff:ff:ff:ff:ff:ff"};
+    private static final String[] MAX_LENGTH_BSSID_LIST = getNCopiesArray(MAX_SIZE_OF_BSSID_LIST, "FF:FF:FF:ff:ff:ff");
     private static final String[] MIN_LENGTH_BSSID_LIST = new String[0];
 
     // States and expected buffers for testing
@@ -68,13 +59,7 @@ class BssidTest {
     private static final BssidState STATE_WITH_MAXIMUM_VALUES = buildBssidState(
         MAX_FOR_MAX_BSSID_INDICATOR,
         MAX_LENGTH_BSSID_LIST);
-    private static final String BUFFER_WITH_MAXIMUM_VALUES = "07fdffffffffffffffffffffffffffffffff"
-        + "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
-        + "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
-        + "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
-        + "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
-        + "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
-        + "ffffffffffffffffffffffffffffffffff";
+    private static final String BUFFER_WITH_MAXIMUM_VALUES = "07fdff" + "ffffffffffff".repeat(MAX_SIZE_OF_BSSID_LIST);
 
     private final BssidModel model = new BssidModel(new BssidState());
 
@@ -91,6 +76,12 @@ class BssidTest {
             state.addBssid(bssidString);
         }
         return state;
+    }
+
+    private static String[] getNCopiesArray(int n, String string) {
+        String[] result = new String[n];
+        Arrays.fill(result, string);
+        return result;
     }
 
     /**

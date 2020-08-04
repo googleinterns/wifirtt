@@ -18,17 +18,18 @@ package structs;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * The state representation for the BSSID List subelement.
  */
 public class BssidState {
 
-    private static final int BSSID_LENGTH = 6;
-    private static final int BSSID_STRING_LENGTH = 17;
+    private static final int BSSID_LENGTH = 6; // length in bytes
     private static final int MAX_BSSID_LIST_SIZE = 42;
     private static final int MAX_FOR_MAX_BSSID_INDICATOR = 255;
     private static final int MIN_FOR_MAX_BSSID_INDICATOR = 0;
+    private static final Pattern BSSID_PATTERN = Pattern.compile("^([0-9A-Fa-f]{2}[:]){5}([0-9A-Fa-f]{2})$");
 
     private final Set<byte[]> bssidList;
     private int maxBssidIndicator;
@@ -48,22 +49,11 @@ public class BssidState {
         if (bssidList.size() == MAX_BSSID_LIST_SIZE) {
             throw new IndexOutOfBoundsException();
         }
-        if (bssidString.length() != BSSID_STRING_LENGTH) {
+        if (!(BSSID_PATTERN.matcher(bssidString).matches())) {
             throw new IllegalArgumentException();
         }
-        // Third character of every three characters must be a colon.
-        for (int i = 2; i < BSSID_STRING_LENGTH; i += 3) {
-            if (bssidString.charAt(i) != ':') {
-                throw new IllegalArgumentException();
-            }
-        }
-        try {
-            byte[] bssid = getBssidFromString(bssidString);
-            bssidList.add(bssid);
-        } catch (NumberFormatException exception) {
-            // Throw an exception if bytes could not be read from the String.
-            throw new IllegalArgumentException();
-        }
+        byte[] bssid = getBssidFromString(bssidString);
+        bssidList.add(bssid);
     }
 
     /**
@@ -119,12 +109,11 @@ public class BssidState {
         return maxBssidIndicator;
     }
 
-    private byte[] getBssidFromString(String bssid) throws NumberFormatException {
+    private byte[] getBssidFromString(String bssid) {
         String bssidLower = bssid.toLowerCase(); // Avoid capitalization issues
         byte[] result = new byte[BSSID_LENGTH];
         for (int i = 0; i < BSSID_LENGTH; i++) {
             // Parse the first 2 chars of every triplet as a hex byte (avoiding colons).
-            System.out.println(bssidLower.substring(i * 3, i * 3 + 2));
             result[i] = (byte) (Integer.parseInt(bssidLower.substring(i * 3, i * 3 + 2), 16));
         }
         return result;
