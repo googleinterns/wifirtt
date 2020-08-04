@@ -16,28 +16,32 @@ limitations under the License.
 
 package structs;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class LcrState {
 
-    private List<AddressElement> addressElements;
+    private String country;
+    private HashMap<StringBuilder, AddressElement> addressElements;
 
-    private class AddressElement {
-        private final String addressElementLanguage;
-        private final String addressElementDescription;
-        private final String addressElementName;
+    class AddressElement {
+        private final StringBuilder addressElementName;
+        private final StringBuilder addressElementLanguage;
+        private final StringBuilder addressElementDescription;
 
         /**
          * Creates a new AddressElement with a description, name, and associated language.
+         *
+         * @param name The name of the address element.
          * @param language The language associated with the address element.
          * @param description The description of the address element.
-         * @param name The name of the address element.
          */
-        AddressElement(String language, String description, String name) {
+        AddressElement(StringBuilder name, StringBuilder language, StringBuilder description) {
+            addressElementName = name;
             addressElementLanguage = language;
             addressElementDescription = description;
-            addressElementName = name;
         }
     }
 
@@ -45,36 +49,36 @@ public class LcrState {
      * Contructs a LcrState to represent the value of the Location Civic subelement.
      */
     public LcrState() {
-        addressElements = new ArrayList<>();
+        addressElements = new HashMap<>();
+    }
+
+    /**
+     * Set which country the access point is located in.
+     *
+     * @param country The country where the access point is located
+     */
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     /**
      * Add an address element to the address.
+     *
+     * @param name The StringBuilder for the name of the address element.
      * @param language The language associated with this address element
-     * @param description The description of the address element
-     * @param name The name of the address element.
+     * @param addressType The StringBuilder for the address type (state, city, etc.) for the address element
      */
-    public void addAddressElement(String language, String description, String name) {
-        addressElements.add(new AddressElement(language, description, name));
+    public void addAddressElement(StringBuilder name, StringBuilder language, StringBuilder addressType) {
+        addressElements.put(name, new AddressElement(name, language, addressType));
     }
 
     /**
      * Remove an address element from the address.
-     * @param index The index of the address element to be removed.
+     *
+     * @param addressElementName The StringBuilder for the name of the address element to be removed.
      */
-    public void removeAddressElement(int index) {
-        addressElements.remove(index);
-    }
-
-    /**
-     * Replace an address element with a new one.
-     * @param index The index of the address element to be replaced.
-     * @param language The language associated with the new address element.
-     * @param description The description of the new address element (e.g. "City").
-     * @param name The name of the new address element.
-     */
-    public void editAddressElement(int index, String language, String description, String name) {
-        addressElements.set(index, new AddressElement(language, description, name));
+    public void removeAddressElement(StringBuilder addressElementName) {
+        addressElements.remove(addressElementName);
     }
 
     // TODO(dmevans) Add getter methods.

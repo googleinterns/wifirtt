@@ -105,7 +105,8 @@ public class CivicAddressElements {
 
     /**
      * Returns the list of names of all possible civic address elements.
-     * @return The list of address element names.
+     *
+     * @return The list of address element types.
      */
     private static List<String> getAddressElementList() {
         List<String> addressElementList = new ArrayList<>(CIVIC_ADDRESS_TYPE_LIST.length);
