@@ -284,16 +284,16 @@ public class ArtMvcView extends JFrame {
      *
      * @return whether or not the buffer should be displayed in a readable format.
      */
-    public boolean getReadable() {
+    public boolean isReadable() {
         return readableBufferCheckbox.isSelected();
     }
 
     /**
-     * Get whether or not the encoding should match the new Android version.
+     * Get whether or not the encoding should match Android version S or later.
      *
-     * @return whether or not the encoding should match the new Android version.
+     * @return whether or not the encoding should match Android version S or later.
      */
-    public boolean isAndroidVersionNew() {
+    public boolean isAndroidVersionAtLeastS() {
         return androidVersionCheckbox.isSelected();
     }
 
@@ -421,9 +421,9 @@ public class ArtMvcView extends JFrame {
     }
 
     /**
-     * Add a listener for whether or not the newer Android version is being used.
+     * Add a listener for whether or not Android version S or later is being used.
      *
-     * @param listener the listener for the parameter.
+     * @param listener the ActionListener for the parameter.
      */
     public void addAndroidVersionListener(ActionListener listener) {
         androidVersionCheckbox.addActionListener(listener);
@@ -506,11 +506,11 @@ public class ArtMvcView extends JFrame {
     /**
      * Displays the buffer in the window.
      *
-     * @param lciBuffer the list of included LCI subelement buffers
-     * @param lcrBuffer the list of included LCR subelement buffers
+     * @param lciSubelementBuffersList the included LCI subelement buffers
+     * @param lcrSubelementBuffersList the included LCR subelement buffers
      * @param readable whether or not the output should be in a readable form
      */
-    public void displayBuffer(List<String> lciBuffer, List<String> lcrBuffer, boolean readable) {
+    public void displayBuffer(List<String> lciSubelementBuffersList, List<String> lcrSubelementBuffersList, boolean readable) {
         StringBuilder totalText = new StringBuilder();
         String betweenSubelements = "";
         String betweenBytes = "";
@@ -521,16 +521,16 @@ public class ArtMvcView extends JFrame {
             betweenBytes = " ";
         }
 
-        for (String subelementBuffer : lciBuffer) {
+        for (String subelementBuffer : lciSubelementBuffersList) {
             for (int i = 0; i <= subelementBuffer.length() - 2; i += 2) {
                 totalText.append(subelementBuffer, i, i + 2).append(betweenBytes);
             }
             totalText.append(betweenSubelements);
         }
-        if (!(lcrBuffer.isEmpty())) {
+        if (!(lcrSubelementBuffersList.isEmpty())) {
             totalText.append("\n");
         }
-        for (String subelementBuffer : lcrBuffer) {
+        for (String subelementBuffer : lcrSubelementBuffersList) {
             for (int i = 0; i <= subelementBuffer.length() - 2; i += 2) {
                 totalText.append(subelementBuffer, i, i + 2).append(" ");
             }

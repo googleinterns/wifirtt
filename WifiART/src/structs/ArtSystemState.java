@@ -40,7 +40,7 @@ public class ArtSystemState {
     private String outputDir;
 
     private boolean readable;
-    private boolean androidversionNew;
+    private boolean androidVersionAtLeastS;
 
     /** Constructor. */
     public ArtSystemState() {
@@ -199,7 +199,7 @@ public class ArtSystemState {
      *
      * @return Whether or not the buffer display should be readable.
      */
-    public boolean getReadable() {
+    public boolean isReadable() {
         return readable;
     }
 
@@ -258,7 +258,6 @@ public class ArtSystemState {
     public void setMapState(MapState mapState) {
         this.mapState = mapState;
     }
-
 
     // Setters for which subelements are included
 
@@ -364,10 +363,10 @@ public class ArtSystemState {
     /**
      * Set whether or not the android version is S or later.
      *
-     * @param androidVersionNew whether or not the new Android version is used.
+     * @param androidVersionAtLeastS whether or not Android version is used is at least S.
      */
-    public void setAndroidVersionNew(boolean androidVersionNew) {
-        this.androidversionNew = androidVersionNew;
+    public void setAndroidVersionAtLeastS(boolean androidVersionAtLeastS) {
+        this.androidVersionAtLeastS = androidVersionAtLeastS;
     }
 
 }

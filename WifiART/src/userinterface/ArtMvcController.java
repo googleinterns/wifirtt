@@ -67,11 +67,11 @@ public class ArtMvcController {
 
         // Listeners for updating the buffer.
         view.addReadableListener(actionEvent -> {
-            model.getState().setReadable(view.getReadable());
+            model.getState().setReadable(view.isReadable());
             updateTotalBuffer();
         });
         view.addAndroidVersionListener(actionEvent ->
-            model.getState().setAndroidVersionNew(view.isAndroidVersionNew()));
+            model.getState().setAndroidVersionAtLeastS(view.isAndroidVersionAtLeastS()));
         view.addGenerateBufferListener(actionEvent ->
             updateTotalBuffer());
 
@@ -122,10 +122,10 @@ public class ArtMvcController {
 
     private void updateTotalBuffer() {
         try {
-            List<String> lciBuffer = model.getLciBuffer();
-            List<String> lcrBuffer = model.getLcrBuffer();
-            view.displayBuffer(lciBuffer, lcrBuffer, model.getState().getReadable());
-            writeBufferToFile(lciBuffer, lcrBuffer);
+            List<String> lciSubelementBuffersList = model.getLciSubelementBuffersList();
+            List<String> lcrSubelementBuffersList = model.getLcrSubelementBuffersList();
+            view.displayBuffer(lciSubelementBuffersList, lcrSubelementBuffersList, model.getState().isReadable());
+            writeBufferToFile(lciSubelementBuffersList, lcrSubelementBuffersList);
         } catch (RuntimeException exception) {
             view.displayErrorMessage(exception.getMessage());
         }

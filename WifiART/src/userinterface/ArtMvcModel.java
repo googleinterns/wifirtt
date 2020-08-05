@@ -195,7 +195,7 @@ public class ArtMvcModel {
     /**
      * Gets a list of the buffers for included LCI subelements.
      */
-    public List<String> getLciBuffer() {
+    public List<String> getLciSubelementBuffersList() {
         List<String> buffer = new ArrayList<>();
         if (state.isLciIncluded()) {
             updateLciSubelementBuffer();
@@ -219,7 +219,7 @@ public class ArtMvcModel {
     /**
      * Gets a list of the buffers for included LCR subelements.
      */
-    public List<String> getLcrBuffer() {
+    public List<String> getLcrSubelementBuffersList() {
         List<String> buffer = new ArrayList<>();
         if (state.isLcrIncluded()) {
             updateLcrSubelementBuffer();
