@@ -16,20 +16,37 @@ limitations under the License.
 
 package userinterface;
 
+import java.io.IOException;
+
+/**
+ * The Controller class for the Map Image subelement.
+ */
 public class MapController {
+    private static final String READ_IMAGE_ERROR = "Could not read the image from the URL.";
+
     private final MapView view;
     private final MapModel model;
 
     /**
      * Creates the controller for the Map Image subelement.
+     *
      * @param view the Map Image subelement view
-     * @param model The Map Image subelement model
+     * @param model the Map Image subelement model
      */
     public MapController(MapView view, MapModel model) {
         this.model = model;
         this.view = view;
         this.model.setCallback(this);
 
-        // TODO(dmevans) Add listeners here.
+        view.addMapTypeListener(actionEvent ->
+            model.getState().setMapType(view.getMapType()));
+        view.addMapUrlListener(actionEvent -> {
+            model.getState().setMapUrl(view.getMapUrl());
+            try {
+                view.displayMapPreviewImage(model.getState().getMapUrl());
+            } catch (IOException exception) {
+                view.displayError(READ_IMAGE_ERROR);
+            }
+        });
     }
 }
