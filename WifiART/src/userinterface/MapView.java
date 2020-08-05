@@ -71,36 +71,36 @@ public class MapView extends JPanel {
     }
 
     /**
-     * Get the selected Map Image Type.
+     * Get the selected value of the Map Type parameter (the map image file type).
      *
-     * @return the Map Image Type.
+     * @return The user-chosen String value for the Map Type parameter.
      */
     public String getMapType() {
         return mapImageTypeCombobox.getSelectedItem().toString();
     }
 
     /**
-     * Get the user-inputted value of the Map URL parameter.
+     * Get the user-inputted value of the Map URL parameter (the URL location of the map image).
      *
-     * @return the Map URL.
+     * @return The user-inputted URL String value for the Map URL parameter.
      */
     public String getMapUrl() {
         return mapUrlField.getText();
     }
 
     /**
-     * Add a listener for the Map Type parameter (the image type).
+     * Add a listener for the Map Type parameter (the image file type).
      *
-     * @param listener the listener for the parameter.
+     * @param listener the ActionListener for the Map Type parameter.
      */
     public void addMapTypeListener(ActionListener listener) {
         mapImageTypeCombobox.addActionListener(listener);
     }
 
     /**
-     * Add a listener for the Map URL parameter.
+     * Add a listener for the Map URL parameter (the URL location of the map image file).
      *
-     * @param listener the listener for the parameter.
+     * @param listener the listener for the Map URL parameter.
      */
     public void addMapUrlListener(ActionListener listener) {
         mapUrlField.addActionListener(listener);
@@ -109,7 +109,7 @@ public class MapView extends JPanel {
     /**
      * Displays a preview of the map image in the GUI.
      *
-     * @param urlString The URL for the image.
+     * @param urlString The URL location for the image file.
      * @throws IOException If the image could not be read from the URL.
      */
     public void displayMapPreviewImage(String urlString) throws IOException {

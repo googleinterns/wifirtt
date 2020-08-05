@@ -28,73 +28,62 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 public class MapTest {
 
+    // The URL Defined option is the first defined option for the image file type encoding.
     private static final String URL_DEFINED = ImageTypes.IMAGE_TYPES_LIST.get(0);
-    private static final String ICO = ImageTypes.IMAGE_TYPES_LIST.get(17);
-    private static final String EXAMPLE_URL = "http://map.google.com/b40.jpg";
+    // ICO is an image format for Windows icons, currently the last defined format for this encoding.
+    private static final String ICO_IMAGE_FORMAT = ImageTypes.IMAGE_TYPES_LIST.get(17);
+    private static final String EXAMPLE_MAP_IMAGE_FILE_URL = "http://map.google.com/b40.jpg";
 
-    // Default state with Map Type = URL defined, URL = null
+    // Default state with Map Type = URL defined, Map URL = null
     private static final MapState STATE_DEFAULT = buildMapState(
         URL_DEFINED,
         ""
     );
     private static final String BUFFER_DEFAULT = "050100";
 
-    // An example state.
+    // An example state, with values within the normal range.
     private static final MapState STATE_EXAMPLE = buildMapState(
         URL_DEFINED,
-        EXAMPLE_URL
+        EXAMPLE_MAP_IMAGE_FILE_URL
     );
     private static final String BUFFER_EXAMPLE =
         "051e00687474703a2f2f6d61702e676f6f676c652e636f6d2f6234302e6a7067";
 
-    // A URL with 255
+    // A URL with 254 characters, which is the maximum length.
     private static final MapState STATE_WITH_MAX_LENGTH_URL = buildMapState(
         STATE_DEFAULT.getMapType(),
-        "http://aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-            + "aaaa"
+        "http://" + "a".repeat(247)
     );
     private static final String BUFFER_WITH_MAX_LENGTH_URL =
-        "05ff00687474703a2f2f616161616161616161616161616161616161616161616161616161616161616161"
-            + "616161616161616161616161616161616161616161616161616161616161616161616161616161616161"
-            + "616161616161616161616161616161616161616161616161616161616161616161616161616161616161"
-            + "616161616161616161616161616161616161616161616161616161616161616161616161616161616161"
-            + "616161616161616161616161616161616161616161616161616161616161616161616161616161616161"
-            + "616161616161616161616161616161616161616161616161616161616161616161616161616161616161"
-            + "61616161";
+        "05ff00687474703a2f2f" + "61".repeat(247);
 
-    // A URL with 255 characters, which is above the maximum.
+    // A URL with 255 characters, which is above the maximum length.
     private static final MapState STATE_WITH_TOO_BIG_URL = buildMapState(
         STATE_DEFAULT.getMapType(),
-        "http://aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-            + "aaaaa"
+        "http://"+ "a".repeat(248)
     );
 
-    // ICO is the map type with the largest encoding value.
+    // Setting the Map Type (map image file type) to ICO, which has the largest encoding value.
     private static final MapState STATE_ICO = buildMapState(
-        ICO,
+        ICO_IMAGE_FORMAT,
         STATE_DEFAULT.getMapUrl()
     );
     private static final String BUFFER_ICO = "050111";
 
-    // Map type is not one of the available options.
+    // Setting a Map Type (map image file type) that is not one of the available options.
     private static final MapState STATE_WITH_BAD_INPUT_MAP_TYPE = buildMapState(
         "Not a map type",
         STATE_DEFAULT.getMapUrl()
     );
-
 
     private final MapModel model = new MapModel(new MapState());
 
     /**
      * Constructs a MapState with predetermined values.
      *
-     * @param mapType the image type String
-     * @param mapUrl the url String
-     * @return A MapState with the given image type and url.
+     * @param mapType The map image file type String
+     * @param mapUrl The map image URL String
+     * @return A MapState with the given image type and URL.
      */
     private static MapState buildMapState(String mapType, String mapUrl) {
         MapState state = new MapState();
@@ -104,7 +93,7 @@ public class MapTest {
     }
 
     /**
-     * Test setting the map type to its first value (URL defined).
+     * Test setting the map image file type to its first value (URL defined).
      */
     @Test
     void testSetMapTypeUrlDefined() {
@@ -116,17 +105,16 @@ public class MapTest {
     }
 
     /**
-     * Test setting the map type to its last value (ICO).
+     * Test setting the map image file type to its last value (ICO).
      */
     @Test
     void testSetMapTypeIco() {
         MapState state = new MapState();
 
-        state.setMapType(ICO);
+        state.setMapType(ICO_IMAGE_FORMAT);
 
-        assertEquals(ICO, state.getMapType());
+        assertEquals(ICO_IMAGE_FORMAT, state.getMapType());
     }
-
 
     /**
      * Test setting the map URL to an example value.
@@ -135,9 +123,9 @@ public class MapTest {
     void testSetMapUrl() {
         MapState state = new MapState();
 
-        state.setMapUrl(EXAMPLE_URL);
+        state.setMapUrl(EXAMPLE_MAP_IMAGE_FILE_URL);
 
-        assertEquals(EXAMPLE_URL, state.getMapUrl());
+        assertEquals(EXAMPLE_MAP_IMAGE_FILE_URL, state.getMapUrl());
     }
 
     /**
@@ -187,7 +175,7 @@ public class MapTest {
     }
 
     /**
-     * Test the encoding when the map type is ICO.
+     * Test the encoding when the map image file type is ICO.
      */
     @Test
     void testBufferIco() {

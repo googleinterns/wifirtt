@@ -25,38 +25,38 @@ public class MapState {
     private String mapUrl;
 
     /**
-     * Get the Map Type.
+     * Get the Map Type parameter, which represents image file format for the map image.
      *
-     * @return mapType the map type.
+     * @return The String value of the Map Type parameter.
      */
     public String getMapType() {
         return mapType;
     }
 
     /**
-     * Get the Map URL.
-     * @return mapUrl the map URL.
+     * Get the Map URL parameter, which represents the URL location of the map image file.
+     *
+     * @return The String value of the Map URL parameter.
      */
     public String getMapUrl() {
         return mapUrl;
     }
 
     /**
-     * Set the Map Type.
+     * Set the Map Type parameter, which represents image file format for the map image.
      *
-     * @param mapType the map type.
+     * @param mapType The image file format for the map image.
      */
     public void setMapType(String mapType) {
         this.mapType = mapType;
     }
 
     /**
-     * Set the Map URL.
+     * Set the Map URL parameter, which represents the URL location of the map image file.
      *
-     * @param mapUrl the map URL.
+     * @param mapUrl the URL location of the map image file.
      */
     public void setMapUrl(String mapUrl) {
         this.mapUrl = mapUrl;
     }
-
 }
