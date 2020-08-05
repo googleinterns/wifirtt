@@ -19,12 +19,23 @@ package userinterface;
 import structs.ArtSystemState;
 import structs.SubelementName;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 import javax.swing.event.ChangeListener;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
@@ -47,6 +58,15 @@ public class ArtMvcView extends JFrame {
     private static final String BSSID_TAB_NAME = "BSSID List";
     private static final String LCR_TAB_NAME = "Location Civic (Address)";
     private static final String MAP_TAB_NAME = "Map Image";
+    private static final SubelementName[] SUBELEMENT_NAMES_PER_TAB = {
+        null,
+        SubelementName.LCI,
+        SubelementName.Z,
+        SubelementName.USAGE,
+        SubelementName.BSSID,
+        SubelementName.LCR,
+        SubelementName.MAP
+    };
 
     // Generate Tab labels and components
     private final JLabel lciSubelementsLabel = new JLabel(" LCI Subelements Included:");
@@ -190,54 +210,54 @@ public class ArtMvcView extends JFrame {
     }
 
     /**
-     * Get whether or not the LCI subelement is to be included in the output
+     * Get whether or not the LCI subelement is to be included in the output.
      *
-     * @return whether or not the LCI subelement is included.
+     * @return whether or not the LCI subelement is included
      */
     public boolean getLciIncluded() {
         return lciCheckbox.isSelected();
     }
 
     /**
-     * Get whether or not the Z subelement is to be included in the output
+     * Get whether or not the Z subelement is to be included in the output.
      *
-     * @return whether or not the Z subelement is included.
+     * @return whether or not the Z subelement is included
      */
     public boolean getZIncluded() {
         return zCheckbox.isSelected();
     }
 
     /**
-     * Get whether or not the Usage Rules/Policy subelement is to be included in the output
+     * Get whether or not the Usage Rules/Policy subelement is to be included in the output.
      *
-     * @return whether or not the Usage Rules/Policy subelement is included.
+     * @return whether or not the Usage Rules/Policy subelement is included
      */
     public boolean getUsageIncluded() {
         return usageCheckbox.isSelected();
     }
 
     /**
-     * Get whether or not the BSSID List subelement is to be included in the output
+     * Get whether or not the BSSID List subelement is to be included in the output.
      *
-     * @return whether or not the BSSID List subelement is included.
+     * @return whether or not the BSSID List subelement is included
      */
     public boolean getBssidIncluded() {
         return bssidCheckbox.isSelected();
     }
 
     /**
-     * Get whether or not the Location Civic subelement is to be included in the output
+     * Get whether or not the Location Civic subelement is to be included in the output.
      *
-     * @return whether or not the Location Civic subelement is included.
+     * @return whether or not the Location Civic subelement is included
      */
     public boolean getLcrIncluded() {
         return lcrCheckbox.isSelected();
     }
 
     /**
-     * Get whether or not the Map Image subelement is to be included in the output
+     * Get whether or not the Map Image subelement is to be included in the output.
      *
-     * @return whether or not the Map Image subelement is included.
+     * @return whether or not the Map Image subelement is included
      */
     public boolean getMapIncluded() {
         return mapCheckbox.isSelected();
@@ -282,7 +302,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Get whether or not the buffer should be displayed in a readable format.
      *
-     * @return whether or not the buffer should be displayed in a readable format.
+     * @return whether or not the buffer should be displayed in a readable format
      */
     public boolean isReadable() {
         return readableBufferCheckbox.isSelected();
@@ -291,40 +311,26 @@ public class ArtMvcView extends JFrame {
     /**
      * Get whether or not the encoding should match Android version S or later.
      *
-     * @return whether or not the encoding should match Android version S or later.
+     * @return whether or not the encoding should match Android version S or later
      */
     public boolean isAndroidVersionAtLeastS() {
         return androidVersionCheckbox.isSelected();
     }
 
     /**
-     * Gets which tab is currently selected.
+     * Gets which subelement's tab is currently selected.
      *
-     * @return the tab currently selected
+     * @return the SubelementName for the tab currently selected
      */
     public SubelementName getSelectedTab() {
-        int index = tabbedPanel.getSelectedIndex();
-        switch (index) {
-            case 1:
-                return SubelementName.LCI;
-            case 2:
-                return SubelementName.Z;
-            case 3:
-                return SubelementName.USAGE;
-            case 4:
-                return SubelementName.BSSID;
-            case 5:
-                return SubelementName.LCR;
-            case 6:
-                return SubelementName.MAP;
-        }
-        return null; // Return null if no subelement tab is selected.
+        int tabIndex = tabbedPanel.getSelectedIndex();
+        return SUBELEMENT_NAMES_PER_TAB[tabIndex]; // Null if no subelement tab is selected.
     }
 
     /**
      * Add a listener for including the LCI subelement.
      *
-     * @param listener the listener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addLciIncludedListener(ActionListener listener) {
         lciCheckbox.addActionListener(listener);
@@ -333,7 +339,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Add a listener for including the Z subelement.
      *
-     * @param listener the listener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addZIncludedListener(ActionListener listener) {
         zCheckbox.addActionListener(listener);
@@ -342,7 +348,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Add a listener for including the Usage Rules/Policy subelement.
      *
-     * @param listener the listener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addUsageIncludedListener(ActionListener listener) {
         usageCheckbox.addActionListener(listener);
@@ -351,7 +357,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Add a listener for including the BSSID List subelement.
      *
-     * @param listener the listener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addBssidIncludedListener(ActionListener listener) {
         bssidCheckbox.addActionListener(listener);
@@ -360,7 +366,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Add a listener for including the Location Civic subelement.
      *
-     * @param listener the listener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addLcrIncludedListener(ActionListener listener) {
         lcrCheckbox.addActionListener(listener);
@@ -369,7 +375,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Add a listener for including the Map Image subelement.
      *
-     * @param listener the listener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addMapIncludedListener(ActionListener listener) {
         mapCheckbox.addActionListener(listener);
@@ -378,7 +384,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Add a listener for the input file name.
      *
-     * @param listener the listener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addInputFileNameListener(ActionListener listener) {
         inputFileNameField.addActionListener(listener);
@@ -387,7 +393,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Add a listener for the input file directory.
      *
-     * @param listener the listener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addInputDirListener(ActionListener listener) {
         inputDirField.addActionListener(listener);
@@ -396,7 +402,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Add a listener for the output file name.
      *
-     * @param listener the listener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addOutputFileNameListener(ActionListener listener) {
         outputFileNameField.addActionListener(listener);
@@ -405,7 +411,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Add a listener for the output file directory.
      *
-     * @param listener the listener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addOutputDirListener(ActionListener listener) {
         outputDirField.addActionListener(listener);
@@ -414,7 +420,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Add a listener for whether or not the buffer display should be in a readable form.
      *
-     * @param listener the listener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addReadableListener(ActionListener listener) {
         readableBufferCheckbox.addActionListener(listener);
@@ -423,7 +429,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Add a listener for whether or not Android version S or later is being used.
      *
-     * @param listener the ActionListener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addAndroidVersionListener(ActionListener listener) {
         androidVersionCheckbox.addActionListener(listener);
@@ -432,7 +438,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Add a listener for generating the buffer.
      *
-     * @param listener the listener for generating the buffer.
+     * @param listener the ActionListener for generating the buffer
      */
     public void addGenerateBufferListener(ActionListener listener) {
         generateButton.addActionListener(listener);
@@ -441,7 +447,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Add a listener that is triggered by switching tabs.
      *
-     * @param listener the listener to be triggered when switching tabs.
+     * @param listener the ChangeListener to be triggered when switching tabs
      */
     public void addTabbedPaneListener(ChangeListener listener) {
         tabbedPanel.addChangeListener(listener);
@@ -452,7 +458,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Gets the view for the LCI subelement.
      *
-     * @return the LCI subelement view.
+     * @return the LCI subelement view
      */
     public LciView getLciView() {
         return lciView;
@@ -461,7 +467,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Gets the view for the Z subelement.
      *
-     * @return the Z subelement view.
+     * @return the Z subelement view
      */
     public ZView getZView() {
         return zView;
@@ -470,7 +476,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Gets the view for the Usage Rules/Policy subelement.
      *
-     * @return the Usage Rules/Policy subelement view.
+     * @return the Usage Rules/Policy subelement view
      */
     public UsageView getUsageView() {
         return usageView;
@@ -479,7 +485,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Gets the view for the BSSID List subelement.
      *
-     * @return the BSSID List subelement view.
+     * @return the BSSID List subelement view
      */
     public BssidView getBssidView() {
         return bssidView;
@@ -488,7 +494,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Gets the view for the Location Civic subelement.
      *
-     * @return the Location Civic subelement view.
+     * @return the Location Civic subelement view
      */
     public LcrView getLcrView() {
         return lcrView;
@@ -497,7 +503,7 @@ public class ArtMvcView extends JFrame {
     /**
      * Gets the view for the Map Image subelement.
      *
-     * @return the Map Image subelement view.
+     * @return the Map Image subelement view
      */
     public MapView getMapView() {
         return mapView;

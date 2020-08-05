@@ -134,7 +134,7 @@ public class ArtSystemState {
      * Gets whether or not a given subelement is to be included in the output.
      *
      * @param subelementName the subelement being inquired about
-     * @return whether or not the given subelement should be included in the output.
+     * @return whether or not the given subelement should be included in the output
      */
     public boolean isSubelementIncluded(SubelementName subelementName) {
         return includedSubelements.get(subelementName);
@@ -143,7 +143,7 @@ public class ArtSystemState {
     /**
      * Gets whether or not the LCI subelement is to be included in the output.
      *
-     * @return The boolean value of the parameter.
+     * @return the boolean value of the parameter
      */
     public boolean isLciIncluded() {
         return includedSubelements.get(SubelementName.LCI);
@@ -152,7 +152,7 @@ public class ArtSystemState {
     /**
      * Gets whether or not the Z subelement is to be included in the output.
      *
-     * @return The boolean value of the parameter.
+     * @return the boolean value of the parameter
      */
     public boolean isZIncluded() {
         return includedSubelements.get(SubelementName.Z);
@@ -161,7 +161,7 @@ public class ArtSystemState {
     /**
      * Gets whether or not the Usage Rules/Policy subelement is to be included in the output.
      *
-     * @return The boolean value of the parameter.
+     * @return the boolean value of the parameter
      */
     public boolean isUsageIncluded() {
         return includedSubelements.get(SubelementName.USAGE);
@@ -170,7 +170,7 @@ public class ArtSystemState {
     /**
      * Gets whether or not the BSSID List subelement is to be included in the output.
      *
-     * @return The boolean value of the parameter.
+     * @return the boolean value of the parameter
      */
     public boolean isBssidIncluded() {
         return includedSubelements.get(SubelementName.BSSID);
@@ -179,7 +179,7 @@ public class ArtSystemState {
     /**
      * Gets whether or not the Location Civic subelement is to be included in the output.
      *
-     * @return The boolean value of the parameter.
+     * @return the boolean value of the parameter
      */
     public boolean isLcrIncluded() {
         return includedSubelements.get(SubelementName.LCR);
@@ -188,7 +188,7 @@ public class ArtSystemState {
     /**
      * Gets whether or not the Map Image subelement is to be included in the output.
      *
-     * @return The boolean value of the parameter.
+     * @return the boolean value of the parameter
      */
     public boolean isMapIncluded() {
         return includedSubelements.get(SubelementName.MAP);
@@ -197,7 +197,7 @@ public class ArtSystemState {
     /**
      * Gets whether or not the output should be displayed in a readable format.
      *
-     * @return Whether or not the buffer display should be readable.
+     * @return whether or not the buffer display should be readable
      */
     public boolean isReadable() {
         return readable;
@@ -206,7 +206,7 @@ public class ArtSystemState {
     // Setters for the subelement states
 
     /**
-     * Sets the subelement state for the LCI subelement
+     * Sets the subelement state for the LCI subelement.
      *
      * @param lciState the LCI subelement state
      */
@@ -215,7 +215,7 @@ public class ArtSystemState {
     }
 
     /**
-     * Sets the subelement state for the Z subelement
+     * Sets the subelement state for the Z subelement.
      *
      * @param zState the Z subelement state
      */
@@ -224,7 +224,7 @@ public class ArtSystemState {
     }
 
     /**
-     * Sets the subelement state for the Usage Rules/Policy subelement
+     * Sets the subelement state for the Usage Rules/Policy subelement.
      *
      * @param usageState the Usage Rules/Policy subelement state
      */
@@ -233,7 +233,7 @@ public class ArtSystemState {
     }
 
     /**
-     * Sets the subelement state for the BSSID List subelement
+     * Sets the subelement state for the BSSID List subelement.
      *
      * @param bssidState the BSSID List subelement state
      */
@@ -242,7 +242,7 @@ public class ArtSystemState {
     }
 
     /**
-     * Sets the subelement state for the Location Civic subelement
+     * Sets the subelement state for the Location Civic subelement.
      *
      * @param lcrState the Location Civic subelement state
      */
@@ -251,7 +251,7 @@ public class ArtSystemState {
     }
 
     /**
-     * Sets the subelement state for the Map Image subelement
+     * Sets the subelement state for the Map Image subelement.
      *
      * @param mapState the Map Image subelement state
      */
@@ -354,7 +354,7 @@ public class ArtSystemState {
     /**
      * Set whether or not the output should be displayed in a readable format.
      *
-     * @param readable whether or not the buffer should be readable.
+     * @param readable whether or not the buffer should be readable
      */
     public void setReadable(boolean readable) {
         this.readable = readable;
@@ -363,7 +363,7 @@ public class ArtSystemState {
     /**
      * Set whether or not the android version is S or later.
      *
-     * @param androidVersionAtLeastS whether or not Android version is used is at least S.
+     * @param androidVersionAtLeastS whether or not Android version is used is at least S
      */
     public void setAndroidVersionAtLeastS(boolean androidVersionAtLeastS) {
         this.androidVersionAtLeastS = androidVersionAtLeastS;

@@ -88,7 +88,7 @@ public class ArtMvcController {
     /**
      * Recalculate and revalidate a particular subelement's buffer.
      *
-     * @param subelementName The name of the subelement being updated.
+     * @param subelementName the name of the subelement being updated
      */
     private void updateSubelementBuffer(SubelementName subelementName) {
         if (subelementName == null) {
