@@ -31,7 +31,7 @@ public class MapController {
      * Creates the controller for the Map Image subelement.
      *
      * @param view the Map Image subelement view
-     * @param model The Map Image subelement model
+     * @param model the Map Image subelement model
      */
     public MapController(MapView view, MapModel model) {
         this.model = model;

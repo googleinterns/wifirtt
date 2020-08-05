@@ -45,7 +45,7 @@ public class MapModel implements Subelement {
     private static final int MAP_URL_INDEX = 3;
 
     private MapState state;
-    private MapController fc;
+    private MapController controller;
 
     /**
      * Constructor.
@@ -76,12 +76,12 @@ public class MapModel implements Subelement {
 
 
     /**
-     * The callback into the Map Image controller used when an asynchronous even occurs.
+     * The callback into the Map Image subelement controller used when an asynchronous even occurs.
      *
-     * @param fc the Map Image controller in the MVC pattern
+     * @param controller the Map Image subelement controller in the MVC pattern
      */
-    public void setCallback(MapController fc) {
-        this.fc = fc;
+    public void setCallback(MapController controller) {
+        this.controller = controller;
     }
 
     @Override

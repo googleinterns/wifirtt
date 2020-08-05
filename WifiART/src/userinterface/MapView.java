@@ -73,7 +73,7 @@ public class MapView extends JPanel {
     /**
      * Get the selected value of the Map Type parameter (the map image file type).
      *
-     * @return The user-chosen String value for the Map Type parameter.
+     * @return the user-chosen String value for the Map Type parameter
      */
     public String getMapType() {
         return mapImageTypeCombobox.getSelectedItem().toString();
@@ -82,7 +82,7 @@ public class MapView extends JPanel {
     /**
      * Get the user-inputted value of the Map URL parameter (the URL location of the map image).
      *
-     * @return The user-inputted URL String value for the Map URL parameter.
+     * @return the user-inputted URL String value for the Map URL parameter
      */
     public String getMapUrl() {
         return mapUrlField.getText();
@@ -91,7 +91,7 @@ public class MapView extends JPanel {
     /**
      * Add a listener for the Map Type parameter (the image file type).
      *
-     * @param listener the ActionListener for the Map Type parameter.
+     * @param listener the ActionListener for the Map Type parameter
      */
     public void addMapTypeListener(ActionListener listener) {
         mapImageTypeCombobox.addActionListener(listener);
@@ -100,7 +100,7 @@ public class MapView extends JPanel {
     /**
      * Add a listener for the Map URL parameter (the URL location of the map image file).
      *
-     * @param listener the listener for the Map URL parameter.
+     * @param listener the listener for the Map URL parameter
      */
     public void addMapUrlListener(ActionListener listener) {
         mapUrlField.addActionListener(listener);
@@ -109,8 +109,8 @@ public class MapView extends JPanel {
     /**
      * Displays a preview of the map image in the GUI.
      *
-     * @param urlString The URL location for the image file.
-     * @throws IOException If the image could not be read from the URL.
+     * @param urlString the URL location for the image file
+     * @throws IOException if the image could not be read from the URL
      */
     public void displayMapPreviewImage(String urlString) throws IOException {
         URL url = new URL(urlString);
@@ -125,7 +125,7 @@ public class MapView extends JPanel {
     /**
      * Displays an error in a pop-up window.
      *
-     * @param message The error message to be displayed.
+     * @param message the error message String to be displayed
      */
     public void displayError(String message) {
         JOptionPane.showMessageDialog(new JFrame(), message);

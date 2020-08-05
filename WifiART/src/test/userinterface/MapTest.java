@@ -81,9 +81,9 @@ public class MapTest {
     /**
      * Constructs a MapState with predetermined values.
      *
-     * @param mapType The map image file type String
-     * @param mapUrl The map image URL String
-     * @return A MapState with the given image type and URL.
+     * @param mapType the map image file type String
+     * @param mapUrl the map image URL String
+     * @return a MapState with the given image type and URL
      */
     private static MapState buildMapState(String mapType, String mapUrl) {
         MapState state = new MapState();

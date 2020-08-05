@@ -60,7 +60,7 @@ public class ImageTypes {
     /**
      * Returns a HashMap mapping the image types to their index/encoding.
      *
-     * @return the map mapping image types to their encoding.
+     * @return the map mapping image types to their encoding
      */
     private static HashMap<String, Byte> getImageTypesMap() {
         HashMap<String, Byte> imageTypesMap = new HashMap<>();
@@ -73,7 +73,7 @@ public class ImageTypes {
     /**
      * Returns a variable-length list containing the image types.
      *
-     * @return the list of image types
+     * @return the list of Strings representing the image file types
      */
     private static List<String> getImageTypesList() {
         List<String> imageTypesList = new ArrayList<>(IMAGE_TYPES.length);
@@ -86,12 +86,11 @@ public class ImageTypes {
     /**
      * Get the integer encoding for a given image type String.
      *
-     * @param imageType the image type.
-     * @return the integer encoding for the image type.
-     * @throws NullPointerException if the image type is not one of the options.
+     * @param imageType the String representing the image file format
+     * @return the integer encoding for the image file type
+     * @throws NullPointerException if the image type is not one of the options
      */
     public static byte getImageTypeEncoding(String imageType) throws NullPointerException {
         return IMAGE_TYPES_MAP.get(imageType);
     }
-
 }
