@@ -54,34 +54,32 @@ public class BssidModel implements Subelement {
     }
 
     /**
-     * Get the current Bssid subelement state from the model.
+     * Get the current BSSID subelement state from the model.
      *
-     * @return the Bssid subelement state
+     * @return the BSSID subelement state
      */
     public BssidState getState() {
         return this.state;
     }
 
     /**
-     * Set the Bssid subelement state in the model.
+     * Set the BSSID subelement state in the model.
      *
-     * @param state the Bssid subelement state
+     * @param state the BSSID subelement state
      */
     public void setState(BssidState state) {
         this.state = state;
     }
 
-
     /**
-     * The callback into the Bssid controller used when an asynchronous even occurs.
+     * The callback into the BSSID controller used when an asynchronous even occurs.
      *
-     * @param fc the Bssid controller in the MVC pattern
+     * @param fc the BSSID controller in the MVC pattern
      */
     public void setCallback(BssidController fc) {
         this.fc = fc;
     }
 
-    // TODO(dmevans) Implement the encoding in toHexBuffer().
     @Override
     public String toHexBuffer() {
         int maxBssidIndicator = state.getMaxBssidIndicator();
@@ -103,5 +101,4 @@ public class BssidModel implements Subelement {
         }
         return result.toString();
     }
-
 }

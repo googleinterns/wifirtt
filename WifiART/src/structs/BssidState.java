@@ -68,8 +68,8 @@ public class BssidState {
     /**
      * Replaces a BSSID in the list with a new one.
      *
-     * @param oldBssid the BSSID to be replaced.
-     * @param newBssid the new BSSID to replace the old one.
+     * @param oldBssid the BSSID to be replaced
+     * @param newBssid the new BSSID to replace the old one
      * @throws IllegalArgumentException if the new BSSID is incorrectly formatted
      */
     public void editBssid(String oldBssid, String newBssid) throws IllegalArgumentException {
@@ -80,8 +80,8 @@ public class BssidState {
     /**
      * Sets the maximum number of BSSs which can share the same antenna connector.
      *
-     * @param maxBssidIndicator the maximum number of BSSs which can share the same antenna connector.
-     * @throws NumberFormatException if the value is outside the acceptable range.
+     * @param maxBssidIndicator the maximum number of BSSs which can share the same antenna connector
+     * @throws NumberFormatException if the value is outside the acceptable range
      */
     public void setMaxBssidIndicator(int maxBssidIndicator) throws NumberFormatException {
         if (maxBssidIndicator > MAX_FOR_MAX_BSSID_INDICATOR
@@ -94,7 +94,7 @@ public class BssidState {
     /**
      * Get the list of BSSIDs.
      *
-     * @return the list of BSSIDs.
+     * @return the list of BSSIDs, represented as 6-byte arrays
      */
     public Set<byte[]> getBssidList() {
         return bssidList;
@@ -103,14 +103,14 @@ public class BssidState {
     /**
      * Get the maximum number of BSSs which can share the same antenna connector.
      *
-     * @return the maximum number of BSSs which can share the same antenna connector.
+     * @return the maximum number of BSSs which can share the same antenna connector
      */
     public int getMaxBssidIndicator() {
         return maxBssidIndicator;
     }
 
     private byte[] getBssidFromString(String bssid) {
-        String bssidLower = bssid.toLowerCase(); // Avoid capitalization issues
+        String bssidLower = bssid.toLowerCase(); // Avoid capitalization issues.
         byte[] result = new byte[BSSID_LENGTH];
         for (int i = 0; i < BSSID_LENGTH; i++) {
             // Parse the first 2 chars of every triplet as a hex byte (avoiding colons).

@@ -77,8 +77,8 @@ public class BssidView extends JPanel {
     /**
      * Get the maximum number of BSSs which can share the same antenna connector.
      *
-     * @return the maximum number of BSSs which can share the same antenna connector.
-     * @throws NumberFormatException if a non-integer value was provided.
+     * @return the maximum number of BSSs which can share the same antenna connector
+     * @throws NumberFormatException if a non-integer value was provided
      */
     public int getMaxBssidIndicator() throws NumberFormatException {
         return Integer.parseInt(maxBssidIndicatorField.getText());
@@ -87,10 +87,10 @@ public class BssidView extends JPanel {
     /**
      * Add a BSSID to the list.
      *
-     * @param bssidBuilder the StringBuilder for the BSSID String.
-     * @param editModeListener the listener for entering edit mode for the BSSID.
-     * @param newBssidListener the listener for changing the BSSID String to a new BSSID.
-     * @param removeBssidListener the lsitener for removing the BSSID.
+     * @param bssidBuilder the StringBuilder for the BSSID String
+     * @param editModeListener the listener for entering edit mode for the BSSID
+     * @param newBssidListener the listener for changing the BSSID String to a new BSSID
+     * @param removeBssidListener the listener for removing the BSSID from the list
      */
     public void addBssid(StringBuilder bssidBuilder, ActionListener editModeListener,
                          ActionListener newBssidListener, ActionListener removeBssidListener) {
@@ -103,7 +103,7 @@ public class BssidView extends JPanel {
     }
 
     /**
-     * Remove a BSSID.
+     * Remove a BSSID from the list.
      *
      * @param bssidBuilder the StringBuilder for the BSSID String
      */
@@ -115,9 +115,9 @@ public class BssidView extends JPanel {
     }
 
     /**
-     * Edit a BSSID.
+     * Edit a BSSID, replacing the BSSID String with a new one provided by the user.
      *
-     * @param bssidBuilder the StringBuilder for the BSSID.
+     * @param bssidBuilder the StringBuilder for the BSSID String
      */
     public void editBssid(StringBuilder bssidBuilder) {
         BssidListElement bssidListElement = bssidList.get(bssidBuilder);
@@ -128,16 +128,16 @@ public class BssidView extends JPanel {
     /**
      * Toggle edit mode for a BSSID.
      *
-     * @param bssidBuilder the StringBuilder for the BSSID.
+     * @param bssidBuilder the StringBuilder for the BSSID String
      */
     public void toggleEditMode(StringBuilder bssidBuilder) {
         bssidList.get(bssidBuilder).toggleEditMode();
     }
 
     /**
-     * Get the BSSID String to be added to the list.
+     * Get the user-inputted BSSID String to be added to the list.
      *
-     * @return the BSSID String to be added to the list.
+     * @return the BSSID String to be added to the list
      */
     public String getAddedBssid() {
         return bssidAddField.getText();
@@ -150,7 +150,7 @@ public class BssidView extends JPanel {
     /**
      * Add a listener for adding a new BSSID to the list.
      *
-     * @param listener the listener for adding a new BSSID to the list.
+     * @param listener the listener for adding a new BSSID to the list
      */
     public void addBssidAddListener(ActionListener listener) {
         bssidAddButton.addActionListener(listener);
@@ -159,7 +159,7 @@ public class BssidView extends JPanel {
     /**
      * Add a listener for the Max BSSID Indicator field.
      *
-     * @param listener the listener for the Max BSSID Indicator field.
+     * @param listener the listener for the Max BSSID Indicator field
      */
     public void addMaxBssidIndicatorListener(ActionListener listener) {
         maxBssidIndicatorField.addActionListener(listener);
@@ -176,10 +176,10 @@ public class BssidView extends JPanel {
         /**
          * Constructs a BssidListElement JPanel to add to the BSSID list in the GUI.
          *
-         * @param bssidBuilder the StringBuilder for the BSSID
+         * @param bssidBuilder the StringBuilder for the BSSID String
          * @param editModeListener the listener for toggling edit mode for the BSSID
          * @param newBssidListener the listener for changing the BSSID to a new BSSID
-         * @param removeBssidListener the listener for removing the BSSID from the list.
+         * @param removeBssidListener the listener for removing the BSSID from the list
          */
         BssidListElement(StringBuilder bssidBuilder, ActionListener editModeListener,
                          ActionListener newBssidListener, ActionListener removeBssidListener) {
@@ -198,9 +198,9 @@ public class BssidView extends JPanel {
         }
 
         /**
-         * Change the BSSID to a new BSSID.
+         * Change the BSSID String to a new BSSID.
          *
-         * @param newBssid the new BSSID
+         * @param newBssid the new BSSID String
          */
         void changeBssid(String newBssid) {
             this.bssid.replace(0, this.bssid.length(), newBssid);
@@ -240,7 +240,7 @@ public class BssidView extends JPanel {
         /**
          * Get the new BSSID that the user entered to replace the existing one.
          *
-         * @return the new edited BSSID.
+         * @return the new edited BSSID String
          */
         String getEditedBssid() {
             return bssidField.getText();
@@ -250,7 +250,7 @@ public class BssidView extends JPanel {
     /**
      * Displays an error in a pop-up window.
      *
-     * @param message The error message to be displayed.
+     * @param message the error message to be displayed
      */
     public void displayError(String message) {
         JOptionPane.showMessageDialog(new JFrame(), message);
