@@ -19,7 +19,27 @@ package userinterface;
 import structs.BssidState;
 import structs.Subelement;
 
+import java.util.Set;
+
+/**
+ * The Model for the BSSID List subelement.
+ */
 public class BssidModel implements Subelement {
+
+    // Constants
+    private static final byte SUBELEMENT_ID = 7;
+
+    // Lengths (in bytes)
+    private static final int SUBELEMENT_ID_LENGTH = 1;
+    private static final int LENGTH_FIELD_LENGTH = 1;
+    private static final int MAX_BSSID_INDICATOR_LENGTH = 1;
+    private static final int BSSID_LENGTH = 6;
+
+    // Indices (in bytes)
+    private static final int SUBELEMENT_ID_INDEX = 0;
+    private static final int LENGTH_INDEX = 1;
+    private static final int MAX_BSSID_INDICATOR_INDEX = 2;
+    private static final int BSSID_LIST_INDEX = 3;
 
     private BssidState state;
     private BssidController fc;
@@ -34,35 +54,51 @@ public class BssidModel implements Subelement {
     }
 
     /**
-     * Get the current Bssid subelement state from the model.
+     * Get the current BSSID subelement state from the model.
      *
-     * @return the Bssid subelement state
+     * @return the BSSID subelement state
      */
     public BssidState getState() {
         return this.state;
     }
 
     /**
-     * Set the Bssid subelement state in the model.
-     * @param state the Bssid subelement state
+     * Set the BSSID subelement state in the model.
+     *
+     * @param state the BSSID subelement state
      */
     public void setState(BssidState state) {
         this.state = state;
     }
 
-
     /**
-     * The callback into the Bssid controller used when an asynchronous even occurs.
+     * The callback into the BSSID controller used when an asynchronous even occurs.
      *
-     * @param fc the Bssid controller in the MVC pattern
+     * @param fc the BSSID controller in the MVC pattern
      */
     public void setCallback(BssidController fc) {
         this.fc = fc;
     }
 
-    // TODO(dmevans) Implement the encoding in toHexBuffer().
     @Override
     public String toHexBuffer() {
-        return null;
+        int maxBssidIndicator = state.getMaxBssidIndicator();
+        Set<byte[]> bssidList = state.getBssidList();
+        int fieldsLength = MAX_BSSID_INDICATOR_LENGTH + bssidList.size() * BSSID_LENGTH;
+        byte[] buffer = new byte[SUBELEMENT_ID_LENGTH + LENGTH_FIELD_LENGTH + fieldsLength];
+        buffer[SUBELEMENT_ID_INDEX] = SUBELEMENT_ID;
+        buffer[LENGTH_INDEX] = (byte) fieldsLength;
+        buffer[MAX_BSSID_INDICATOR_INDEX] = (byte) maxBssidIndicator;
+        int index = BSSID_LIST_INDEX;
+        for (byte[] bssid : bssidList) {
+            System.arraycopy(bssid, 0, buffer, index, BSSID_LENGTH);
+            index += BSSID_LENGTH;
+        }
+
+        StringBuilder result = new StringBuilder();
+        for (byte b : buffer) {
+            result.append(String.format("%02x", b)); // Convert the byte to a hex string of 2 characters.
+        }
+        return result.toString();
     }
 }
