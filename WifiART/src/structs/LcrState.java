@@ -16,20 +16,17 @@ limitations under the License.
 
 package structs;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class LcrState {
 
     private String country;
     private HashMap<StringBuilder, AddressElement> addressElements;
 
-    class AddressElement {
-        private final StringBuilder addressElementName;
-        private final StringBuilder addressElementLanguage;
-        private final StringBuilder addressElementDescription;
+    public static class AddressElement {
+        public final StringBuilder addressElementName;
+        public final StringBuilder addressElementLanguage;
+        public final StringBuilder addressElementDescription;
 
         /**
          * Creates a new AddressElement with a description, name, and associated language.
@@ -82,4 +79,17 @@ public class LcrState {
     }
 
     // TODO(dmevans) Add getter methods.
+
+    /**
+     * Get the country where the address is located.
+     *
+     * @return the String name of the country
+     */
+    public String getCountry() {
+        return country;
+    }
+
+    public HashMap<StringBuilder, AddressElement> getAddressElementsList() {
+        return addressElements;
+    }
 }

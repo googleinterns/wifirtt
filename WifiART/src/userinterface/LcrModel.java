@@ -16,10 +16,33 @@ limitations under the License.
 
 package userinterface;
 
+import structs.CountryCodes;
 import structs.LcrState;
 import structs.Subelement;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+
 public class LcrModel implements Subelement {
+    private static final byte SUBELEMENT_ID = 0;
+
+    // Indices (in bytes)
+    private static final int SUBELEMENT_ID_INDEX = 0;
+    private static final int LENGTH_INDEX = 1;
+    private static final int COUNTRY_CODE_INDEX = 2;
+    private static final int ADDRESS_ELEMENT_LIST_INDEX = 3;
+
+    // Lengths (in bytes)
+    private static final int SUBELEMENT_ID_LENGTH = 1;
+    private static final int LENGTH_FIELD_LENGTH = 1;
+    private static final int COUNTRY_CODE_LENGTH = 2;
+
+    // Indices and lengths within address elements
+    private static final int ADDRESS_ELEMENT_ID_INDEX = 0;
+    private static final int ADDRESS_ELEMENT_LENGTH_INDEX = 1;
+    private static final int ADDRESS_ELEMENT_NAME_INDEX = 2;
 
     private LcrState state;
     private LcrController fc;
@@ -64,6 +87,25 @@ public class LcrModel implements Subelement {
     // TODO(dmevans) Implement the encoding in toHexBuffer().
     @Override
     public String toHexBuffer() {
+        String country = state.getCountry();
+
+        HashMap<String, HashSet<LcrState.AddressElement>> addressElementsPerLanguage = new HashMap<>();
+        HashMap<StringBuilder, LcrState.AddressElement> addressElementsList = state.getAddressElementsList();
+        for (StringBuilder addressElementName : addressElementsList.keySet()) {
+            LcrState.AddressElement addressElement = addressElementsList.get(key);
+            String language = addressElement.addressElementLanguage.toString();
+            if (!(addressElementsPerLanguage.containsKey(language))) {
+                addressElementsPerLanguage.put(language, new HashSet<>());
+            }
+            addressElementsPerLanguage.get(language).add(addressElement);
+            totalLength += (2 + addressElementName.toString().length());
+        }
+
+        List<Byte> byteBuffer = new ArrayList<>(ADDRESS_ELEMENT_LIST_INDEX);
+        byteBuffer.set(SUBELEMENT_ID_INDEX, SUBELEMENT_ID);
+        byteBuffer.set(COUNTRY_CODE_INDEX, CountryCodes.COUNTRY_NAMES_TO_CODES_MAP.get(country))
+
+
         return null;
     }
 }
