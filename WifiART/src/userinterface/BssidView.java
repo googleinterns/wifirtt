@@ -21,6 +21,8 @@ import java.util.HashMap;
 public class BssidView extends JPanel {
     // Constants
     private static final int BSSID_LIST_FIELD_WIDTH = 20;
+    private static final int BSSID_LIST_PANEL_WIDTH = 1000;
+    private static final int BSSID_LIST_PANEL_HEIGHT = 300;
 
     // Labels and Components
     private final JLabel bssidPanelTitle = new JLabel("BSSID List Subelement");
@@ -68,7 +70,7 @@ public class BssidView extends JPanel {
         this.add(bssidListInstructionsLabelPanel);
 
         bssidListPanel.setLayout(new BoxLayout(bssidListPanel, BoxLayout.Y_AXIS));
-        bssidListPanel.setPreferredSize(new Dimension(1000, 300));
+        bssidListPanel.setPreferredSize(new Dimension(BSSID_LIST_PANEL_WIDTH, BSSID_LIST_PANEL_HEIGHT));
         JScrollPane existingBssidScrollPane = new JScrollPane(bssidListPanel);
         this.add(existingBssidScrollPane);
 
@@ -143,6 +145,12 @@ public class BssidView extends JPanel {
         return bssidAddField.getText();
     }
 
+    /**
+     * Get the user-inputted BSSID String to replace another BSSID in the list.
+     *
+     * @param bssidBuilder the StringBuilder for the BSSID in the list
+     * @return the BSSID String to replace the existing one
+     */
     public String getEditedBssid(StringBuilder bssidBuilder) {
         return bssidList.get(bssidBuilder).getEditedBssid();
     }
@@ -165,6 +173,10 @@ public class BssidView extends JPanel {
         maxBssidIndicatorField.addActionListener(listener);
     }
 
+    /**
+     * JPanel representing one item in the BSSID list, with GUI components for editing the BSSID
+     *  and removing the BSSID from the list.
+     */
     private static class BssidListElement extends JPanel {
         private boolean editMode;
         private final StringBuilder bssid;
