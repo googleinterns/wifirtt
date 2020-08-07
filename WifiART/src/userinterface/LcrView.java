@@ -1,6 +1,6 @@
 package userinterface;
 
-import structs.CivicAddressElements;
+import structs.CivicAddressElementKeys;
 import structs.CountryCodes;
 import structs.LanguageCodes;
 
@@ -25,7 +25,11 @@ public class LcrView extends JPanel {
     private static final String ENGLISH_LANGUAGE_LABEL = "English";
     private static final String SELECT_ADDRESS_ELEMENT_TYPE_PROMPT = "SELECT TYPE";
     private static final String[] ADDRESS_ELEMENT_LIST =
-        getArrayWithSelectionPrompt(CivicAddressElements.ADDRESS_ELEMENT_LIST, SELECT_ADDRESS_ELEMENT_TYPE_PROMPT);
+        getArrayWithSelectionPrompt(CivicAddressElementKeys.ADDRESS_ELEMENT_LIST, SELECT_ADDRESS_ELEMENT_TYPE_PROMPT);
+
+    // Dimensions
+    private static final int LCR_TAB_TITLE_WIDTH = 800;
+    private static final int LCR_TAB_TITLE_HEIGHT = 10;
     private static final int PREFERRED_ADDRESS_ELEMENTS_LIST_HEIGHT = 800;
 
     // Labels and Components
@@ -58,7 +62,7 @@ public class LcrView extends JPanel {
 
         JPanel lcrPanelTitlePanel = new JPanel();
         lcrPanelTitlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        lcrPanelTitlePanel.setPreferredSize(new Dimension(800, 10));
+        lcrPanelTitlePanel.setPreferredSize(new Dimension(LCR_TAB_TITLE_WIDTH, LCR_TAB_TITLE_HEIGHT));
         lcrPanelTitlePanel.add(lcrPanelTitle);
         this.add(lcrPanelTitlePanel);
 
@@ -108,9 +112,9 @@ public class LcrView extends JPanel {
     /**
      * Given a List of elements and a selection prompt, returns a combined array for use in a JComboBox.
      *
-     * @param list The List containing the elements.
-     * @param selectionPrompt The default option prompting the user to select an option.
-     * @return An array containing the elements, with the selection prompt at index 0.
+     * @param list the List containing the elements for the array
+     * @param selectionPrompt the default option prompting the user to select an option
+     * @return an array containing the elements, with the selection prompt at index 0
      */
     private static String[] getArrayWithSelectionPrompt(List<String> list, String selectionPrompt) {
         list.add(0, selectionPrompt);
@@ -122,8 +126,8 @@ public class LcrView extends JPanel {
     /**
      * Get the country where the access point is located.
      *
-     * @return The country where the access point is located.
-     * @throws IllegalArgumentException If no valid country was chosen.
+     * @return the country where the access point is located
+     * @throws IllegalArgumentException if no valid country was chosen
      */
     public String getCountry() throws IllegalArgumentException {
         String country = countriesCombobox.getSelectedItem().toString();
@@ -133,12 +137,30 @@ public class LcrView extends JPanel {
         return country;
     }
 
+    /**
+     * Get the user-inputted name of a new address element to be added to the list.
+     *
+     * @return the user-inputted name for a new address element
+     */
     public String getAddedAddressElementName() {
         return addressElementNameField.getText();
     }
+
+    /**
+     * Get the user-chosen language of a new address element to be added to the list.
+     *
+     * @return the user-chosen language for a a new address element
+     */
     public String getAddedAddressElementLanguage() {
         return languageCombobox.getSelectedItem().toString();
     }
+
+    /**
+     * Get the user-chosen address element type for a new address element to be added to the list.
+     *
+     * @return the user-chosen address element type (e.g. "City", "State")
+     * @throws IllegalArgumentException if the user did not choose one of the valid options
+     */
     public String getAddedAddressElementType() throws IllegalArgumentException {
         String addressElementType = addressElementTypeCombobox.getSelectedItem().toString();
         if (addressElementType.equals(SELECT_ADDRESS_ELEMENT_TYPE_PROMPT)) {
@@ -149,14 +171,36 @@ public class LcrView extends JPanel {
 
     // Methods for adding listeners
 
+    /**
+     * Add a listener for choosing the country where the address is located.
+     *
+     * @param listener the ActionListener for choosing the country
+     */
     public void addCountryListener(ActionListener listener) {
         countriesCombobox.addActionListener(listener);
     }
 
+    /**
+     * Add a listener for adding a new address element.
+     *
+     * @param listener the ActionListener for adding a new address element to the list
+     */
     public void addAddressElementAddListener(ActionListener listener) {
         addAddressElementsButton.addActionListener(listener);
     }
 
+    /**
+     * Adds a new address element to the list, updating the GUI appropriately.
+     *
+     * @param addressElementNameBuilder the StringBuilder for the address element's name
+     * @param languageBuilder the StringBuilder for the address element's language
+     * @param addressTypeBuilder the StringBuilder for the address element type (e.g. "City")
+     * @param editModeListener the listener for toggling edit mode for editing this element
+     * @param newAddressElementNameListener the listener for changing the name of this element
+     * @param newLanguageListener the listener for changing the language of this element
+     * @param newAddressTypeListener the listener for changing the address element type
+     * @param removeAddressElementListener the listener for removing this address element
+     */
     public void addAddressElement(StringBuilder addressElementNameBuilder,
                                   StringBuilder languageBuilder,
                                   StringBuilder addressTypeBuilder,
@@ -180,20 +224,47 @@ public class LcrView extends JPanel {
         addressElementsListPanel.repaint();
     }
 
+    /**
+     * Toggle edit mode for an address element in the list.
+     *
+     * @param addressElementName the identifier for the address element
+     */
     public void toggleEditMode(StringBuilder addressElementName) {
         addressElementsList.get(addressElementName).toggleEditMode();
     }
 
+    /**
+     * Change the name of an address element in the list to the user-inputted new name.
+     *
+     * @param addressElementName the identifier for the address element
+     */
     public void editAddressElementName(StringBuilder addressElementName) {
         addressElementsList.get(addressElementName).editAddressElementName();
     }
+
+    /**
+     * Change the language of an address element in the list to the user-chosen new language.
+     *
+     * @param addressElementName the identifier for the address element
+     */
     public void editAddressElementLanguage(StringBuilder addressElementName) {
-        System.out.println("editing address element language");
         addressElementsList.get(addressElementName).editAddressElementLanguage();
     }
+
+    /**
+     * Change the address element type for an element in the list to the user-chosen new type.
+     *
+     * @param addressElementName the identifier for the address element
+     */
     public void editAddressElementType(StringBuilder addressElementName) {
         addressElementsList.get(addressElementName).editAddressElementType();
     }
+
+    /**
+     * Remove an address element from the list.
+     *
+     * @param addressElementName the identifier for the address element to be removed
+     */
     public void removeAddressElement(StringBuilder addressElementName) {
         AddressListElement addressListElement = addressElementsList.remove(addressElementName);
         addressElementsListPanel.remove(addressListElement);
@@ -201,7 +272,14 @@ public class LcrView extends JPanel {
         addressElementsListPanel.repaint();
     }
 
+    /**
+     * A JPanel representing an address element in the list of address elements.
+     */
     private static class AddressListElement extends JPanel {
+        // Dimensions for the panel, not including the checkbox
+        private static final int PANEL_WIDTH = 1000;
+        private static final int PANEL_HEIGHT = 20;
+
         private boolean editMode;
         private final StringBuilder addressElementName;
         private final StringBuilder addressElementLanguage;
@@ -222,14 +300,14 @@ public class LcrView extends JPanel {
         /**
          * Constructs an AddressListElement JPanel to add to the address element list in the GUI.
          *
-         * @param addressElementNameBuilder the StringBuilder for the address element name.
-         * @param addressElementLanguageBuilder the StringBuilder for the language of this address element.
-         * @param addressTypeBuilder the StringBuilder for the address element type (state, city, etc.) of this address element.
-         * @param editModeListener the listener for toggling edit mode.
-         * @param newAddressElementNameListener the listener for editing the name of this address element.
-         * @param newLanguageListener the listener for editing the address element's language.
-         * @param newAddressTypeListener the listener for editing the address element type of this address element.
-         * @param removeAddressElementListener the listener for removing this address element from the list.
+         * @param addressElementNameBuilder the StringBuilder for the address element name
+         * @param addressElementLanguageBuilder the StringBuilder for the language of this address element
+         * @param addressTypeBuilder the StringBuilder for the address element type (state, city, etc.) of this address element
+         * @param editModeListener the listener for toggling edit mode
+         * @param newAddressElementNameListener the listener for editing the name of this address element
+         * @param newLanguageListener the listener for editing the address element's language
+         * @param newAddressTypeListener the listener for editing the address element type of this address element
+         * @param removeAddressElementListener the listener for removing this address element from the list
          */
         AddressListElement(StringBuilder addressElementNameBuilder,
                            StringBuilder addressElementLanguageBuilder,
@@ -258,23 +336,13 @@ public class LcrView extends JPanel {
             this.editMode = false;
             this.setLayout(new FlowLayout(FlowLayout.LEFT));
             this.add(selectionCheckbox);
-            parametersPanel.setPreferredSize(new Dimension(1000, 20));
+            parametersPanel.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
             parametersPanel.setLayout(new GridLayout(1, 4));
             parametersPanel.add(languageLabel);
             parametersPanel.add(addressTypeLabel);
             parametersPanel.add(addressElementLabel);
             parametersPanel.add(fillerPanel);
             this.add(parametersPanel);
-        }
-
-        /**
-         * Change the name of the address element.
-         *
-         * @param newAddressElementName the new name of the address element.
-         */
-        void changeAddressElementName(String newAddressElementName) {
-            this.addressElementName.replace(0, this.addressElementName.length(), newAddressElementName);
-            this.addressElementLabel.setText(newAddressElementName);
         }
 
         /**
@@ -293,26 +361,16 @@ public class LcrView extends JPanel {
         void editAddressElementLanguage() {
             String newLanguage = languageCombobox.getSelectedItem().toString();
             addressElementLanguage.replace(0, addressElementLanguage.length(), newLanguage);
-            System.out.println("New language: " + newLanguage);
             this.languageLabel.setText(newLanguage);
         }
 
         /**
-         * Update the address element type (state, city, etc.) for this address element based on new user input.
+         * Update the address element type (e.g. "State", "City") for this address element based on new user input.
          */
         void editAddressElementType() {
             String newAddressElementType = addressTypeCombobox.getSelectedItem().toString();
             addressElementType.replace(0, addressElementType.length(), newAddressElementType);
             this.addressTypeLabel.setText(newAddressElementType);
-        }
-
-        /**
-         * Change the address element type (state, city, etc.) for this address element.
-         *
-         * @param newLanguage the new address element type.
-         */
-        void changeAddressType(String newLanguage) {
-            this.addressTypeLabel.setText(newLanguage);
         }
 
         /**
