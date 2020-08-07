@@ -1,15 +1,21 @@
 package userinterface;
 
+import structs.AltitudeType;
+import structs.MapDatum;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
 
 /**
  * A JPanel representing the view for the LCI subelement.
@@ -18,8 +24,16 @@ public class LciView extends JPanel {
 
     // Constants
     private static final Integer[] LCI_VERSION_LIST = {1};
-    private static final String[] ALTITUDE_TYPE_LIST = {"No Altitude Provided", "Meters", "Floors"};
-    private static final String[] MAP_DATUM_LIST = {"WGS84", "NAD83 (NAVD88)", "NAD83 (MLLW)"};
+    private static final String NO_KNOWN_ALTITUDE_LABEL = "No Altitude Provided";
+    private static final String ALTITUDE_IN_METERS_LABEL = "Meters";
+    private static final String ALTITUDE_IN_FLOORS_LABEL = "Floors";
+    private static final String[] ALTITUDE_TYPE_LIST = {NO_KNOWN_ALTITUDE_LABEL,
+        ALTITUDE_IN_METERS_LABEL, ALTITUDE_IN_FLOORS_LABEL};
+    private static final String WGS84_DATUM_LABEL = "WGS84";
+    private static final String NAD83_NAVD88_DATUM_LABEL = "NAD83 (NAVD88)";
+    private static final String NAD83_MLLW_DATUM_LABEL = "NAD83 (MLLW)";
+    private static final String[] MAP_DATUM_LIST = {WGS84_DATUM_LABEL,
+        NAD83_NAVD88_DATUM_LABEL, NAD83_MLLW_DATUM_LABEL};
 
     // Labels for titled borders
     private static final String LCI_RESERVED_FIELDS_LABEL = "IEEE 802.11y features";
@@ -42,7 +56,7 @@ public class LciView extends JPanel {
     private final JTextField altitudeUncertaintyField = new JTextField();
     private final JLabel altitudeTypeComboBoxLabel = new JLabel(" Altitude Units: ");
     private final JComboBox<String> altitudeTypeComboBox = new JComboBox<>(ALTITUDE_TYPE_LIST);
-    private final JLabel mapDatumComboBoxLabel = new JLabel(" Altitude Datum: ");
+    private final JLabel mapDatumComboBoxLabel = new JLabel(" Map Datum: ");
     private final JComboBox<String> mapDatumComboBox = new JComboBox<>(MAP_DATUM_LIST);
     private final JCheckBox regLocAgreementCheckbox = new JCheckBox("<html>The STA is operating within a national policy area "
         + "<br> or an international agreement area near a national border.</html>");
@@ -104,7 +118,6 @@ public class LciView extends JPanel {
         JPanel lciReservedFieldsPanel = new JPanel();
         setupLciReservedFieldsPanel(lciReservedFieldsPanel);
         this.add(lciReservedFieldsPanel);
-
     }
 
     private void setupLciReservedFieldsPanel(JPanel lciReservedFieldsPanel) {
@@ -122,6 +135,262 @@ public class LciView extends JPanel {
         dependentStaCheckboxPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         dependentStaCheckboxPanel.add(dependentStaCheckbox);
         lciReservedFieldsPanel.add(dependentStaCheckboxPanel);
+    }
+
+
+    // Getter methods for the parameters
+
+    /**
+     * Gets the LCI version.
+     *
+     * @return the LCI version.
+     */
+    public int getLciVersion() {
+        // parseInt will work here because the JComboBox is populated with an integer array.
+        return Integer.parseInt(String.valueOf(lciVersionComboBox.getSelectedItem()));
+    }
+
+    /**
+     * Gets the latitude.
+     *
+     * @return the latitude, in degrees
+     * @throws NumberFormatException if the user did not enter a decimal number
+     */
+    public double getLatitude() throws NumberFormatException {
+        return Double.parseDouble(latitudeField.getText());
+    }
+
+    /**
+     * Gets the latitude uncertainty.
+     *
+     * @return the latitude uncertainty, in degrees
+     * @throws NumberFormatException if the user did not enter a decimal number
+     */
+    public double getLatitudeUncertainty() throws NumberFormatException {
+        return Double.parseDouble(latitudeUncertaintyField.getText());
+    }
+
+    /**
+     * Gets the longitude.
+     *
+     * @return the longitude, in degrees
+     * @throws NumberFormatException if the user did not enter a decimal number
+     */
+    public double getLongitude() throws NumberFormatException {
+        return Double.parseDouble(longitudeField.getText());
+    }
+
+    /**
+     * Gets the longitude uncertainty.
+     *
+     * @return the longitude uncertainty, in degrees
+     * @throws NumberFormatException if the user did not enter a decimal number
+     */
+    public double getLongitudeUncertainty() throws NumberFormatException {
+        return Double.parseDouble(longitudeUncertaintyField.getText());
+    }
+
+    /**
+     * Gets the altitude.
+     *
+     * @return the altitude
+     * @throws NumberFormatException if the user did not enter a decimal number
+     */
+    public double getAltitude() throws NumberFormatException {
+        return Double.parseDouble(altitudeField.getText());
+    }
+
+    /**
+     * Gets the altitude uncertainty.
+     *
+     * @return the altitude uncertainty
+     * @throws NumberFormatException if the user did not enter a decimal number
+     */
+    public double getAltitudeUncertainty() throws NumberFormatException {
+        return Double.parseDouble(altitudeUncertaintyField.getText());
+    }
+
+    /**
+     * Gets the altitude type.
+     *
+     * @return the altitude type (Meters, Floors, or No Known Altitude)
+     */
+    public AltitudeType getAltitudeType() {
+        String altitudeTypeLabel = String.valueOf(altitudeTypeComboBox.getSelectedItem());
+        if (altitudeTypeLabel.equals(NO_KNOWN_ALTITUDE_LABEL)) {
+            return AltitudeType.NO_KNOWN_ALTITUDE;
+        } else if (altitudeTypeLabel.equals(ALTITUDE_IN_METERS_LABEL)) {
+            return AltitudeType.ALTITUDE_IN_METERS;
+        } else if (altitudeTypeLabel.equals(ALTITUDE_IN_FLOORS_LABEL)) {
+            return AltitudeType.ALTITUDE_IN_FLOORS;
+        } else {
+            return null; // JComboBox must have one of the three values selected.
+        }
+    }
+
+    /**
+     * Gets the map datum.
+     *
+     * @return the map datum
+     */
+    public MapDatum getMapDatum() {
+        String datumLabel = String.valueOf(mapDatumComboBox.getSelectedItem());
+        if (datumLabel.equals(WGS84_DATUM_LABEL)) {
+            return MapDatum.WGS84;
+        } else if (datumLabel.equals(NAD83_NAVD88_DATUM_LABEL)) {
+            return MapDatum.NAD83_NAVD88;
+        } else if (datumLabel.equals(NAD83_MLLW_DATUM_LABEL)) {
+            return MapDatum.NAD83_MLLW;
+        } else {
+            return null; // JComboBox must have one of the three values selected.
+        }
+    }
+
+    /**
+     * Gets the Registered Location (RegLoc) Agreement parameter.
+     *
+     * @return the boolean value of the parameter.
+     */
+    public boolean getRegLocAgreement() {
+        return regLocAgreementCheckbox.isSelected();
+    }
+
+    /**
+     * Gets the Registered Location Dependent STA Enablement (RegLoc DSE) parameter.
+     *
+     * @return the boolean value of the parameter.
+     */
+    public boolean getRegLocDse() {
+        return regLocDseCheckbox.isSelected();
+    }
+
+    /**
+     * Gets the Dependent STA parameter.
+     *
+     * @return the boolean value of the parameter.
+     */
+    public boolean getDependentSta() {
+        return dependentStaCheckbox.isSelected();
+    }
+
+
+    // Methods for adding listeners
+
+    /**
+     * Adds a listener for the Latitude parameter.
+     *
+     * @param listener the ActionListener for the parameter.
+     */
+    public void addLatitudeListener(ActionListener listener) {
+        latitudeField.addActionListener(listener);
+    }
+
+    /**
+     * Adds a listener for the Latitude Uncertainty parameter.
+     *
+     * @param listener the ActionListener for the parameter.
+     */
+    public void addLatitudeUncertaintyListener(ActionListener listener) {
+        latitudeUncertaintyField.addActionListener(listener);
+    }
+
+    /**
+     * Adds a listener for the Longitude parameter.
+     *
+     * @param listener the ActionListener for the parameter.
+     */
+    public void addLongitudeListener(ActionListener listener) {
+        longitudeField.addActionListener(listener);
+    }
+
+    /**
+     * Adds a listener for the Longitude Uncertainty parameter.
+     *
+     * @param listener the ActionListener for the parameter.
+     */
+    public void addLongitudeUncertaintyListener(ActionListener listener) {
+        longitudeUncertaintyField.addActionListener(listener);
+    }
+
+    /**
+     * Adds a listener for the Altitude parameter.
+     *
+     * @param listener the ActionListener for the parameter.
+     */
+    public void addAltitudeListener(ActionListener listener) {
+        altitudeField.addActionListener(listener);
+    }
+
+    /**
+     * Adds a listener for the Altitude Uncertainty parameter.
+     *
+     * @param listener the ActionListener for the parameter.
+     */
+    public void addAltitudeUncertaintyListener(ActionListener listener) {
+        altitudeUncertaintyField.addActionListener(listener);
+    }
+
+    /**
+     * Adds a listener for the Altitude Type parameter.
+     *
+     * @param listener the ActionListener for the parameter.
+     */
+    public void addAltitudeTypeListener(ActionListener listener) {
+        altitudeTypeComboBox.addActionListener(listener);
+    }
+
+    /**
+     * Adds a listener for the Map Datum parameter.
+     *
+     * @param listener the ActionListener for the parameter.
+     */
+    public void addMapDatumListener(ActionListener listener) {
+        mapDatumComboBox.addActionListener(listener);
+    }
+
+    /**
+     * Adds a listener for the Registered Location (RegLoc) Agreement parameter.
+     *
+     * @param listener the ActionListener for the parameter.
+     */
+    public void addRegLocAgreementListener(ActionListener listener) {
+        regLocAgreementCheckbox.addActionListener(listener);
+    }
+
+    /**
+     * Adds a listener for the Registered Location Dependent STA Enablement (RegLoc DSE) parameter.
+     *
+     * @param listener the ActionListener for the parameter.
+     */
+    public void addRegLocDseListener(ActionListener listener) {
+        regLocDseCheckbox.addActionListener(listener);
+    }
+
+    /**
+     * Adds a listener for the Dependent STA parameter.
+     *
+     * @param listener the ActionListener for the parameter.
+     */
+    public void addDependentStaListener(ActionListener listener) {
+        dependentStaCheckbox.addActionListener(listener);
+    }
+
+    /**
+     * Adds a listener for the LCI Version parameter.
+     *
+     * @param listener the ActionListener for the parameter.
+     */
+    public void addLciVersionListener(ActionListener listener) {
+        lciVersionComboBox.addActionListener(listener);
+    }
+
+    /**
+     * Displays an error in a pop-up window.
+     *
+     * @param message The error message to be displayed.
+     */
+    public void displayError(String message) {
+        JOptionPane.showMessageDialog(new JFrame(), message);
     }
 
 }
