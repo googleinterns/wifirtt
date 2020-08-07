@@ -250,19 +250,19 @@ class LciTest {
      * @param altitudeType the altitude type (meters, floors, or no known altitude)
      * @param mapDatum the map datum
      * @param regLocAgreement true if the STA is operating within a national policy area or an
-     *                        international agreement area near a national border.
-     * @param regLocDse true if the enabling STA is enabling the operation of STAs with DSE.
+     *                        international agreement area near a national border
+     * @param regLocDse true if the enabling STA is enabling the operation of STAs with DSE
      * @param dependentSta true if the STA is operating with the enablement of the enabling STA
-     *                     whose LCI is being reported.
+     *                     whose LCI is being reported
      * @param lciVersion the LCI version
-     * @return the LciState with the parameter values set.
+     * @return the LciState with the parameter values set
      */
     private static LciState buildLciState(double latitude, double latitudeUncertainty,
                                             double longitude, double longitudeUncertainty,
                                             double altitude, double altitudeUncertainty,
                                             AltitudeType altitudeType, MapDatum mapDatum,
                                             boolean regLocAgreement, boolean regLocDse,
-                                            boolean dependentSta, int lciVersion){
+                                            boolean dependentSta, int lciVersion) {
         LciState state = new LciState();
         state.setLatitude(latitude);
         state.setLatitudeUncertainty(latitudeUncertainty);
@@ -695,7 +695,7 @@ class LciTest {
     }
 
     /**
-     * Test the encoding with altitude in floors.
+     * Test the encoding with the altitude in floors.
      */
     @Test
     void testBufferWithAltitudeInFloors() {
@@ -719,7 +719,7 @@ class LciTest {
     }
 
     /**
-     * Test the encoding with NAD83 (NAVD88) datum.
+     * Test the encoding with the NAD83 (NAVD88) datum.
      */
     @Test
     void testBufferWithNad83Navd88() {
@@ -731,7 +731,7 @@ class LciTest {
     }
 
     /**
-     * Test the encoding with NAD83 (MLLW) datum.
+     * Test the encoding with the NAD83 (MLLW) datum.
      */
     @Test
     void testBufferWithNad83Mllw() {
@@ -743,7 +743,7 @@ class LciTest {
     }
 
     /**
-     * Test the encoding with the RegLoc Agreement paramter set to true.
+     * Test the encoding with the RegLoc Agreement parameter set to true.
      */
     @Test
     void testBufferWithRegLocAgreementTrue() {
@@ -755,7 +755,7 @@ class LciTest {
     }
 
     /**
-     * Test the encoding with the RegLoc DSE paramter set to true.
+     * Test the encoding with the RegLoc DSE parameter set to true.
      */
     @Test
     void testBufferWithRegLocDseTrue() {
@@ -767,7 +767,7 @@ class LciTest {
     }
 
     /**
-     * Test the encoding with the Dependent STA paramter set to true.
+     * Test the encoding with the Dependent STA parameter set to true.
      */
     @Test
     void testBufferWithDependentStaTrue() {

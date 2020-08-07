@@ -92,7 +92,6 @@ public class LciModel implements Subelement {
     private static final int DEPENDENT_STA_MASK = 0x00000020; // Bit 5
     private static final int VERSION_MASK = 0x000000c0; // Bits 6 - 7
 
-
     private LciState state;
     private LciController fc;
 
@@ -116,12 +115,12 @@ public class LciModel implements Subelement {
 
     /**
      * Set the LCI subelement state in the model.
+     *
      * @param state the LCI subelement state
      */
     public void setState(LciState state) {
         this.state = state;
     }
-
 
     /**
      * The callback into the LCI controller used when an asynchronous even occurs.
@@ -131,7 +130,6 @@ public class LciModel implements Subelement {
     public void setCallback(LciController fc) {
         this.fc = fc;
     }
-
 
     @Override
     public String toHexBuffer() {
@@ -151,18 +149,18 @@ public class LciModel implements Subelement {
         int miscellaneousFields = getMiscellaneousFields();
         fillLittleEndian(buffer, miscellaneousFields, MISCELLANEOUS_FIELDS_INDEX, MISCELLANEOUS_FIELDS_LENGTH);
 
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (byte b : buffer) {
-            result += String.format("%02x", b); // Convert the byte to a hex string of 2 characters.
+            result.append(String.format("%02x", b)); // Convert the byte to a hex string of 2 characters.
         }
-        return result;
+        return result.toString();
     }
 
     private long getLatitudeFields() {
         double latitudeUncertainty = state.getLatitudeUncertainty();
         // LatUnc = 8 - log_2(uncertainty) -> rounded down
         int latitudeUncertaintyEncoding = 0;
-        if (latitudeUncertainty > 0) { // User has provided an longitude uncertainty
+        if (latitudeUncertainty > 0) { // User has provided a latitude uncertainty
             latitudeUncertaintyEncoding = (int) (8 - Math.log(latitudeUncertainty) / Math.log(2));
             if (latitudeUncertaintyEncoding > MAX_LATITUDE_UNCERTAINTY_ENCODING) {
                 latitudeUncertaintyEncoding = MAX_LATITUDE_UNCERTAINTY_ENCODING;
@@ -187,7 +185,7 @@ public class LciModel implements Subelement {
         double longitudeUncertainty = state.getLongitudeUncertainty();
         // LongUnc = 8 - log_2(uncertainty) -> rounded down
         int longitudeUncertaintyEncoding = 0;
-        if (longitudeUncertainty > 0) { // User has provided an longitude uncertainty
+        if (longitudeUncertainty > 0) { // User has provided a longitude uncertainty
             longitudeUncertaintyEncoding = (int) (8 - Math.log(longitudeUncertainty) / Math.log(2));
             if (longitudeUncertaintyEncoding > MAX_LONGITUDE_UNCERTAINTY_ENCODING) {
                 longitudeUncertaintyEncoding = MAX_LONGITUDE_UNCERTAINTY_ENCODING;
