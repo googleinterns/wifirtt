@@ -4,8 +4,19 @@ import structs.CivicAddressElementKeys;
 import structs.CountryCodes;
 import structs.LanguageCodes;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -416,7 +427,7 @@ public class LcrView extends JPanel {
         /**
          * Get the new address element name that the user entered to replace the existing one.
          *
-         * @return the new edited address element name.
+         * @return the new edited address element name
          */
         String getEditedAddressElement() {
             return addressElementField.getText();
@@ -425,7 +436,7 @@ public class LcrView extends JPanel {
         /**
          * Get the new language that the user chose to replace the existing one.
          *
-         * @return the new language.
+         * @return the new language
          */
         String getEditedLanguage() {
             return languageCombobox.getSelectedItem().toString();
@@ -434,7 +445,7 @@ public class LcrView extends JPanel {
         /**
          * Get the new address element type that the user chose to replace the existing one.
          *
-         * @return the new address element type.
+         * @return the new address element type
          */
         String getEditedAddressType() {
             return addressTypeCombobox.getSelectedItem().toString();
@@ -444,7 +455,7 @@ public class LcrView extends JPanel {
     /**
      * Displays an error in a pop-up window.
      *
-     * @param message The error message to be displayed.
+     * @param message the error message to be displayed
      */
     public void displayError(String message) {
         JOptionPane.showMessageDialog(new JFrame(), message);

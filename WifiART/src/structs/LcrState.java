@@ -38,7 +38,7 @@ public class LcrState {
     /**
      * Set which country the access point is located in.
      *
-     * @param country the country where the access point is located
+     * @param country the name of the country where the access point is located
      */
     public void setCountry(String country) {
         this.country = country;
