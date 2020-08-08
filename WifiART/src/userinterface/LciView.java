@@ -137,13 +137,12 @@ public class LciView extends JPanel {
         lciReservedFieldsPanel.add(dependentStaCheckboxPanel);
     }
 
-
     // Getter methods for the parameters
 
     /**
      * Gets the LCI version.
      *
-     * @return the LCI version.
+     * @return the LCI version
      */
     public int getLciVersion() {
         // parseInt will work here because the JComboBox is populated with an integer array.
@@ -249,7 +248,7 @@ public class LciView extends JPanel {
     /**
      * Gets the Registered Location (RegLoc) Agreement parameter.
      *
-     * @return the boolean value of the parameter.
+     * @return the boolean value of the parameter
      */
     public boolean getRegLocAgreement() {
         return regLocAgreementCheckbox.isSelected();
@@ -258,7 +257,7 @@ public class LciView extends JPanel {
     /**
      * Gets the Registered Location Dependent STA Enablement (RegLoc DSE) parameter.
      *
-     * @return the boolean value of the parameter.
+     * @return the boolean value of the parameter
      */
     public boolean getRegLocDse() {
         return regLocDseCheckbox.isSelected();
@@ -267,7 +266,7 @@ public class LciView extends JPanel {
     /**
      * Gets the Dependent STA parameter.
      *
-     * @return the boolean value of the parameter.
+     * @return the boolean value of the parameter
      */
     public boolean getDependentSta() {
         return dependentStaCheckbox.isSelected();
@@ -279,7 +278,7 @@ public class LciView extends JPanel {
     /**
      * Adds a listener for the Latitude parameter.
      *
-     * @param listener the ActionListener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addLatitudeListener(ActionListener listener) {
         latitudeField.addActionListener(listener);
@@ -288,7 +287,7 @@ public class LciView extends JPanel {
     /**
      * Adds a listener for the Latitude Uncertainty parameter.
      *
-     * @param listener the ActionListener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addLatitudeUncertaintyListener(ActionListener listener) {
         latitudeUncertaintyField.addActionListener(listener);
@@ -297,7 +296,7 @@ public class LciView extends JPanel {
     /**
      * Adds a listener for the Longitude parameter.
      *
-     * @param listener the ActionListener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addLongitudeListener(ActionListener listener) {
         longitudeField.addActionListener(listener);
@@ -306,7 +305,7 @@ public class LciView extends JPanel {
     /**
      * Adds a listener for the Longitude Uncertainty parameter.
      *
-     * @param listener the ActionListener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addLongitudeUncertaintyListener(ActionListener listener) {
         longitudeUncertaintyField.addActionListener(listener);
@@ -315,7 +314,7 @@ public class LciView extends JPanel {
     /**
      * Adds a listener for the Altitude parameter.
      *
-     * @param listener the ActionListener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addAltitudeListener(ActionListener listener) {
         altitudeField.addActionListener(listener);
@@ -324,7 +323,7 @@ public class LciView extends JPanel {
     /**
      * Adds a listener for the Altitude Uncertainty parameter.
      *
-     * @param listener the ActionListener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addAltitudeUncertaintyListener(ActionListener listener) {
         altitudeUncertaintyField.addActionListener(listener);
@@ -333,7 +332,7 @@ public class LciView extends JPanel {
     /**
      * Adds a listener for the Altitude Type parameter.
      *
-     * @param listener the ActionListener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addAltitudeTypeListener(ActionListener listener) {
         altitudeTypeComboBox.addActionListener(listener);
@@ -342,7 +341,7 @@ public class LciView extends JPanel {
     /**
      * Adds a listener for the Map Datum parameter.
      *
-     * @param listener the ActionListener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addMapDatumListener(ActionListener listener) {
         mapDatumComboBox.addActionListener(listener);
@@ -351,7 +350,7 @@ public class LciView extends JPanel {
     /**
      * Adds a listener for the Registered Location (RegLoc) Agreement parameter.
      *
-     * @param listener the ActionListener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addRegLocAgreementListener(ActionListener listener) {
         regLocAgreementCheckbox.addActionListener(listener);
@@ -360,7 +359,7 @@ public class LciView extends JPanel {
     /**
      * Adds a listener for the Registered Location Dependent STA Enablement (RegLoc DSE) parameter.
      *
-     * @param listener the ActionListener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addRegLocDseListener(ActionListener listener) {
         regLocDseCheckbox.addActionListener(listener);
@@ -369,7 +368,7 @@ public class LciView extends JPanel {
     /**
      * Adds a listener for the Dependent STA parameter.
      *
-     * @param listener the ActionListener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addDependentStaListener(ActionListener listener) {
         dependentStaCheckbox.addActionListener(listener);
@@ -378,7 +377,7 @@ public class LciView extends JPanel {
     /**
      * Adds a listener for the LCI Version parameter.
      *
-     * @param listener the ActionListener for the parameter.
+     * @param listener the ActionListener for the parameter
      */
     public void addLciVersionListener(ActionListener listener) {
         lciVersionComboBox.addActionListener(listener);
@@ -387,7 +386,7 @@ public class LciView extends JPanel {
     /**
      * Displays an error in a pop-up window.
      *
-     * @param message The error message to be displayed.
+     * @param message the error message to be displayed
      */
     public void displayError(String message) {
         JOptionPane.showMessageDialog(new JFrame(), message);

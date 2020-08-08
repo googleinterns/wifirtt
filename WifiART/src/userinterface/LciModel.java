@@ -262,10 +262,10 @@ public class LciModel implements Subelement {
     /**
      * Insert an integer into a byte array in little-endian format.
      *
-     * @param arr The byte array being populated
-     * @param num The integer to insert into the array
-     * @param startIndex The starting index that the integer should appear in the array
-     * @param length The number of bytes being populated
+     * @param arr the byte array being populated
+     * @param num the integer to insert into the array
+     * @param startIndex the starting index that the integer should appear in the array
+     * @param length the number of bytes being populated
      */
     private void fillLittleEndian(byte[] arr, long num, int startIndex, int length) {
         for (int i = 0; i < length; i++) {
@@ -273,5 +273,4 @@ public class LciModel implements Subelement {
             num >>= 8; // Move the next byte into the least-significant position.
         }
     }
-
 }
