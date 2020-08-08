@@ -59,7 +59,7 @@ class BssidTest {
     private static final BssidState STATE_WITH_MAXIMUM_VALUES = buildBssidState(
         MAX_FOR_MAX_BSSID_INDICATOR,
         MAX_LENGTH_BSSID_LIST);
-    private static final String BUFFER_WITH_MAXIMUM_VALUES = "07fdff" + "ffffffffffff".repeat(MAX_SIZE_OF_BSSID_LIST);
+    private static final String BUFFER_WITH_MAXIMUM_VALUES = "07fdff" + getNCopiesString(MAX_SIZE_OF_BSSID_LIST, "ffffffffffff");
 
     private final BssidModel model = new BssidModel(new BssidState());
 
@@ -76,6 +76,14 @@ class BssidTest {
             state.addBssid(bssidString);
         }
         return state;
+    }
+
+    private static String getNCopiesString(int n, String string) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            result.append(string);
+        }
+        return result.toString();
     }
 
     private static String[] getNCopiesArray(int n, String string) {

@@ -52,15 +52,15 @@ public class MapTest {
     // A URL with 254 characters, which is the maximum length.
     private static final MapState STATE_WITH_MAX_LENGTH_URL = buildMapState(
         STATE_DEFAULT.getMapType(),
-        "http://" + "a".repeat(247)
+        "http://" + getNCopiesString(247, "a")
     );
     private static final String BUFFER_WITH_MAX_LENGTH_URL =
-        "05ff00687474703a2f2f" + "61".repeat(247);
+        "05ff00687474703a2f2f" + getNCopiesString(247, "61");
 
     // A URL with 255 characters, which is above the maximum length.
     private static final MapState STATE_WITH_TOO_BIG_URL = buildMapState(
         STATE_DEFAULT.getMapType(),
-        "http://"+ "a".repeat(248)
+        "http://" + getNCopiesString(248, "a")
     );
 
     // Setting the Map Type (map image file type) to ICO, which has the largest encoding value.
@@ -77,6 +77,14 @@ public class MapTest {
     );
 
     private final MapModel model = new MapModel(new MapState());
+
+    private static String getNCopiesString(int n, String string) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            result.append(string);
+        }
+        return result.toString();
+    }
 
     /**
      * Constructs a MapState with predetermined values.
