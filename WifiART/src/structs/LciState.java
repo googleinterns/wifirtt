@@ -203,7 +203,7 @@ public class LciState {
      */
     public void setLatitude(double latitude) {
         if (latitude < MIN_LATITUDE || latitude > MAX_LATITUDE) {
-            throw new NumberFormatException();
+            throw new NumberFormatException("Latitude");
         }
         this.latitude = latitude;
     }
