@@ -17,11 +17,15 @@ limitations under the License.
 package userinterface;
 
 public class LcrController {
+    private static final String ADDRESS_ELEMENT_TYPE_NOT_CHOSEN = "You must select an address element type.";
+    private static final String COUNTRY_NOT_CHOSEN = "You must select a valid country.";
+
     private final LcrView view;
     private final LcrModel model;
 
     /**
      * Creates the controller for the Location Civic subelement.
+     *
      * @param view the Location Civic subelement view
      * @param model the Location Civic subelement model
      */
@@ -30,6 +34,35 @@ public class LcrController {
         this.view = view;
         this.model.setCallback(this);
 
-        // TODO(dmevans) Add listeners here.
+        view.addCountryListener(actionEvent -> {
+            try {
+                String country = view.getCountry();
+                model.getState().setCountry(country);
+            } catch (IllegalArgumentException exception) {
+                view.displayError(COUNTRY_NOT_CHOSEN);
+            }
+        });
+        view.addAddressElementAddListener(actionEvent -> {
+            StringBuilder addedAddressElementName = new StringBuilder(view.getAddedAddressElementName());
+            StringBuilder addedAddressElementLanguage = new StringBuilder(view.getAddedAddressElementLanguage());
+            try {
+                StringBuilder addedAddressElementType = new StringBuilder(view.getAddedAddressElementType());
+                model.getState().addAddressElement(addedAddressElementName, addedAddressElementLanguage, addedAddressElementType);
+                view.addAddressElement(
+                    addedAddressElementName,
+                    addedAddressElementLanguage,
+                    addedAddressElementType,
+                    editModeEvent -> view.toggleEditMode(addedAddressElementName),
+                    newAddressElementNameEvent -> view.editAddressElementName(addedAddressElementName),
+                    newAddressElementLanguageEvent -> view.editAddressElementLanguage(addedAddressElementName),
+                    newAddressElementTypeEvent -> view.editAddressElementType(addedAddressElementName),
+                    removeEvent -> {
+                        view.removeAddressElement(addedAddressElementName);
+                        model.getState().removeAddressElement(addedAddressElementName);
+                    });
+            } catch (IllegalArgumentException exception) {
+                view.displayError(ADDRESS_ELEMENT_TYPE_NOT_CHOSEN);
+            }
+        });
     }
 }

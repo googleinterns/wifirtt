@@ -291,7 +291,8 @@ public class CountryCodes {
 
     /**
      * Constructs a list including every country's name.
-     * @return The list of every country's name.
+     *
+     * @return the list of every country's name
      */
     private static List<String> getCountriesNamesList() {
         List<String> countriesNamesList = new ArrayList<>(COUNTRIES_NAMES_AND_CODES.length);
@@ -303,7 +304,8 @@ public class CountryCodes {
 
     /**
      * Constructs a HashMap with country names as keys and country codes as values.
-     * @return The HashMap mapping country names to country codes.
+     *
+     * @return the HashMap mapping country names to country codes
      */
     private static HashMap<String, String> getCountryNamesToCodesMap() {
         HashMap<String, String> countryNamesToCodesMap = new HashMap<>();

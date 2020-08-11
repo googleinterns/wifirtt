@@ -17,13 +17,14 @@ limitations under the License.
 package structs;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * A wrapper class that provides data structures containing every address element description
  * and the associated Civic Address Type as specified in RFC 4776.
  */
-public class CivicAddressElements {
+public class CivicAddressElementKeys {
     private static final AddressElementKey[] CIVIC_ADDRESS_TYPE_LIST = {
         new AddressElementKey("Additional Code", 32),
         new AddressElementKey("Additional Loc. Info", 22),
@@ -41,6 +42,7 @@ public class CivicAddressElements {
         new AddressElementKey("District (India)", 2),
         new AddressElementKey("Floor", 27),
         new AddressElementKey("Gun (Japan)", 2),
+        new AddressElementKey("Group of Streets", 6),
         new AddressElementKey("House Number", 19),
         new AddressElementKey("House Number Suffix", 20),
         new AddressElementKey("Landmark or Vanity Address", 21),
@@ -77,9 +79,14 @@ public class CivicAddressElements {
      */
     public static final List<String> ADDRESS_ELEMENT_LIST = getAddressElementList();
 
-    // Private constructor to avoid instance creation.
-    private CivicAddressElements() {}
+    private static final HashMap<String, Byte> KEY_TO_CA_TYPE_MAP = getKeyToCaTypeMap();
 
+    // Private constructor to avoid instance creation.
+    private CivicAddressElementKeys() {}
+
+    /**
+     * A wrapper class holding the name and CA Type encoding of address element keys.
+     */
     private static class AddressElementKey {
         /**
          * The name of the address element key.
@@ -90,28 +97,53 @@ public class CivicAddressElements {
          * The civic address type number associated with this address element.
          * (IETF RFC-4776 labels this value "CAtype")
          */
-        public final int caType;
+        public final byte caType;
 
         /**
          * Constructs an AddressElementKey containing a name and civic address type number.
-         * @param name The name of the address element key.
-         * @param caType The civic address type number associated with this address element type.
+         *
+         * @param name the name of the address element key
+         * @param caType the civic address type number associated with this address element type
          */
         AddressElementKey(String name, int caType) {
             this.name = name;
-            this.caType = caType;
+            this.caType = (byte) caType;
         }
     }
 
     /**
-     * Returns the list of names of all possible civic address elements.
-     * @return The list of address element names.
+     * Constructs the list of names of all possible civic address elements.
+     *
+     * @return the list of address element types
      */
     private static List<String> getAddressElementList() {
         List<String> addressElementList = new ArrayList<>(CIVIC_ADDRESS_TYPE_LIST.length);
-        for (AddressElementKey addressElement : CIVIC_ADDRESS_TYPE_LIST) {
-            addressElementList.add(addressElement.name);
+        for (AddressElementKey addressElementKey : CIVIC_ADDRESS_TYPE_LIST) {
+            addressElementList.add(addressElementKey.name);
         }
         return addressElementList;
+    }
+
+    /**
+     * Constructs a HashMap mapping the address element keys to their CA Type encoding.
+     *
+     * @return the HashMap with address element keys mapped to Civic Address Type bytes
+     */
+    private static HashMap<String, Byte> getKeyToCaTypeMap() {
+        HashMap<String, Byte> map = new HashMap<>();
+        for (AddressElementKey addressElementKey : CIVIC_ADDRESS_TYPE_LIST) {
+            map.put(addressElementKey.name, addressElementKey.caType);
+        }
+        return map;
+    }
+
+    /**
+     * Get the Civic Address Type integer encoding associated with a given address element key.
+     *
+     * @param addressElementKey the String address element key (e.g. "City")
+     * @return the integer Civic Address Type encoding associated with the key
+     */
+    public static byte getCivicAddressType(String addressElementKey) {
+        return KEY_TO_CA_TYPE_MAP.get(addressElementKey);
     }
 }
