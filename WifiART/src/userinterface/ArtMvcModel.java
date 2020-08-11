@@ -17,9 +17,9 @@ limitations under the License.
 package userinterface;
 
 import structs.ArtSystemState;
+import structs.SubelementName;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class ArtMvcModel {
     private ArtSystemState state;
@@ -79,7 +79,6 @@ public class ArtMvcModel {
         lcrModel.setState(state.getLcrState());
         mapModel.setState(state.getMapState());
     }
-
 
     // Getters for the sub-models
 
@@ -194,23 +193,23 @@ public class ArtMvcModel {
     /**
      * Gets a list of the buffers for included LCI subelements.
      */
-    public List<String> getLciSubelementBuffersList() {
-        List<String> buffer = new ArrayList<>();
+    public HashMap<SubelementName, String> getLciSubelementBuffersList() {
+        HashMap<SubelementName, String> buffer = new HashMap<>();
         if (state.isLciIncluded()) {
             updateLciSubelementBuffer();
-            buffer.add(lciSubelementBuffer);
+            buffer.put(SubelementName.LCI, lciSubelementBuffer);
         }
         if (state.isZIncluded()) {
             updateZSubelementBuffer();
-            buffer.add(zSubelementBuffer);
+            buffer.put(SubelementName.Z, zSubelementBuffer);
         }
         if (state.isUsageIncluded()) {
             updateUsageSubelementBuffer();
-            buffer.add(usageSubelementBuffer);
+            buffer.put(SubelementName.USAGE, usageSubelementBuffer);
         }
         if (state.isBssidIncluded()) {
             updateBssidSubelementBuffer();
-            buffer.add(bssidSubelementBuffer);
+            buffer.put(SubelementName.BSSID, bssidSubelementBuffer);
         }
         return buffer;
     }
@@ -218,19 +217,18 @@ public class ArtMvcModel {
     /**
      * Gets a list of the buffers for included LCR subelements.
      */
-    public List<String> getLcrSubelementBuffersList() {
-        List<String> buffer = new ArrayList<>();
+    public HashMap<SubelementName, String> getLcrSubelementBuffersList() {
+        HashMap<SubelementName, String> buffer = new HashMap<>();
         if (state.isLcrIncluded()) {
             updateLcrSubelementBuffer();
-            buffer.add(lcrSubelementBuffer);
+            buffer.put(SubelementName.LCR, lcrSubelementBuffer);
         }
         if (state.isMapIncluded()) {
             updateMapSubelementBuffer();
-            buffer.add(mapSubelementBuffer);
+            buffer.put(SubelementName.MAP, mapSubelementBuffer);
         }
         return buffer;
     }
-
 
     /**
      * The callback into the ArtMvcController used when an asynchronous even occurs.
@@ -241,11 +239,4 @@ public class ArtMvcModel {
         this.controller = controller;
     }
 
-
-    /** Update the view by executing the call back on the controller. */
-    private void updateView() {
-        if (controller != null) {
-            controller.modelCallback();
-        }
-    }
 }

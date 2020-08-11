@@ -37,7 +37,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 /**
  * The master view class including GUI elements not specific to any subelement.
@@ -93,7 +92,6 @@ public class ArtMvcView extends JFrame {
 
     private final JTabbedPane tabbedPanel = new JTabbedPane();
 
-
     // Sub-View JPanels for each subelement
     private final LciView lciView = new LciView();
     private final ZView zView = new ZView();
@@ -102,11 +100,10 @@ public class ArtMvcView extends JFrame {
     private final LcrView lcrView = new LcrView();
     private final MapView mapView = new MapView();
 
-
     /** Constructor.
      *
      * @param state the system state
-     * */
+     */
     public ArtMvcView(ArtSystemState state) {
         // Top level JFrame
         this.setTitle("LCI/LCR Tools");
@@ -512,39 +509,11 @@ public class ArtMvcView extends JFrame {
     /**
      * Displays the buffer in the window.
      *
-     * @param lciSubelementBuffersList the included LCI subelement buffers
-     * @param lcrSubelementBuffersList the included LCR subelement buffers
-     * @param readable whether or not the output should be in a readable form
+     * @param buffer the String of text to be displayed in the window
      */
-    public void displayBuffer(List<String> lciSubelementBuffersList, List<String> lcrSubelementBuffersList, boolean readable) {
-        StringBuilder totalText = new StringBuilder();
-        String betweenSubelements = "";
-        String betweenBytes = "";
-        if (readable) {
-            // Readable buffer display has a line break between subelements.
-            betweenSubelements = "\n";
-            // Readable buffer display has a space between bytes.
-            betweenBytes = " ";
-        }
-
-        for (String subelementBuffer : lciSubelementBuffersList) {
-            for (int i = 0; i <= subelementBuffer.length() - 2; i += 2) {
-                totalText.append(subelementBuffer, i, i + 2).append(betweenBytes);
-            }
-            totalText.append(betweenSubelements);
-        }
-        if (!(lcrSubelementBuffersList.isEmpty())) {
-            totalText.append("\n");
-        }
-        for (String subelementBuffer : lcrSubelementBuffersList) {
-            for (int i = 0; i <= subelementBuffer.length() - 2; i += 2) {
-                totalText.append(subelementBuffer, i, i + 2).append(" ");
-            }
-            totalText.append(betweenSubelements);
-        }
-        bufferTextArea.setText(totalText.toString());
+    public void displayBuffer(String buffer) {
+        bufferTextArea.setText(buffer);
     }
-
 
     /**
      * Display an Error message.
@@ -553,26 +522,6 @@ public class ArtMvcView extends JFrame {
      */
     void displayErrorMessage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
-    }
-
-
-    /**
-     * Get the System State from the View.
-     *
-     * @param state the current system state
-     * @return the updated system state
-     */
-    ArtSystemState getViewState(ArtSystemState state) {
-        return state;
-    }
-
-    /**
-     * Update the View from the System State.
-     *
-     * @param state the current system state
-     */
-    public void setViewState(ArtSystemState state) {
-
     }
 }
 

@@ -18,9 +18,12 @@ package userinterface;
 
 import structs.SubelementName;
 
-import java.util.List;
+import java.util.HashMap;
 
 public class ArtMvcController {
+
+    private static final String LCI_HEADER = "010008";
+    private static final String LCR_HEADER = "01000b";
 
     private final ArtMvcView view;   // MVC View
     private final ArtMvcModel model; // MVC Model
@@ -37,8 +40,7 @@ public class ArtMvcController {
         this.model = fm;
         this.view = fv;
 
-        // Initialize GUI by copying state from model
-        this.view.setViewState(fm.getState());
+        // Initialize MVC structure
         this.model.setCallback(this);
 
         // Listeners for the checkboxes determining which subelements are included.
@@ -122,22 +124,118 @@ public class ArtMvcController {
 
     private void updateTotalBuffer() {
         try {
-            List<String> lciSubelementBuffersList = model.getLciSubelementBuffersList();
-            List<String> lcrSubelementBuffersList = model.getLcrSubelementBuffersList();
-            view.displayBuffer(lciSubelementBuffersList, lcrSubelementBuffersList, model.getState().isReadable());
-            writeBufferToFile(lciSubelementBuffersList, lcrSubelementBuffersList);
+            HashMap<SubelementName, String> lciSubelementBuffersList = model.getLciSubelementBuffersList();
+            HashMap<SubelementName, String> lcrSubelementBuffersList = model.getLcrSubelementBuffersList();
+            String readableBuffer = getReadableBufferDisplay(lciSubelementBuffersList, lcrSubelementBuffersList);
+            String notReadableBuffer = getNotReadableBufferDisplay(lciSubelementBuffersList, lcrSubelementBuffersList);
+            if (model.getState().isReadable()) {
+                view.displayBuffer(readableBuffer);
+            } else {
+                view.displayBuffer(notReadableBuffer);
+            }
+            writeBufferToFile(notReadableBuffer);
         } catch (RuntimeException exception) {
             view.displayErrorMessage(exception.getMessage());
         }
     }
 
-    private void writeBufferToFile(List<String> lciBuffer, List<String> lcrBuffer) {
-        // TODO(dmevans) write the buffer to the file
+    private String getReadableBufferDisplay(HashMap<SubelementName, String> lciSubelementBuffersList,
+                                            HashMap<SubelementName, String> lcrSubelementBuffersList) {
+        StringBuilder totalText = new StringBuilder();
+        if (lciSubelementBuffersList.size() > 0) {
+            totalText.append("LCI: ");
+            for (int i = 0; i < LCI_HEADER.length(); i += 2) {
+                totalText.append(LCI_HEADER, i, i + 2);
+                if (i < LCI_HEADER.length() - 2) {
+                    totalText.append(" ");
+                }
+            }
+            totalText.append("\n");
+            for (SubelementName subelementName : lciSubelementBuffersList.keySet()) {
+                switch (subelementName)  {
+                    case LCI:
+                        totalText.append("  LCI subelement: ");
+                        break;
+                    case Z:
+                        totalText.append("  Z subelement: ");
+                        break;
+                    case USAGE:
+                        totalText.append("  Usage Rules/Policy subelement: ");
+                        break;
+                    case BSSID:
+                        totalText.append("  BSSID List subelement: ");
+                        break;
+                }
+                String buffer = lciSubelementBuffersList.get(subelementName);
+                for (int i = 0; i < buffer.length(); i += 2) {
+                    totalText.append(buffer, i, i + 2);
+                    if (i < buffer.length() - 2) {
+                        totalText.append(" ");
+                    }
+                }
+                totalText.append("\n");
+            }
+        }
+        if (lcrSubelementBuffersList.size() > 0) {
+            totalText.append("\nLCR: ");
+            for (int i = 0; i < LCR_HEADER.length(); i += 2) {
+                totalText.append(LCR_HEADER, i, i + 2);
+                if (i < LCR_HEADER.length() - 2) {
+                    totalText.append(" ");
+                }
+            }
+            totalText.append("\n");
+            for (SubelementName subelementName : lcrSubelementBuffersList.keySet()) {
+                switch (subelementName)  {
+                    case LCR:
+                        totalText.append("  Location Civic subelement: ");
+                        break;
+                    case MAP:
+                        totalText.append("  Map Image subelement: ");
+                        break;
+                }
+                String buffer = lcrSubelementBuffersList.get(subelementName);
+                for (int i = 0; i < buffer.length(); i += 2) {
+                    totalText.append(buffer, i, i + 2);
+                    if (i < buffer.length() - 2) {
+                        totalText.append(" ");
+                    }
+                }
+                totalText.append("\n");
+            }
+        }
+        return totalText.toString();
     }
 
-    /** Events that occur asynchronously in the model call this method e.g. For an animation */
-    void modelCallback() {
-        view.setViewState(model.getState());
+    private String getNotReadableBufferDisplay(HashMap<SubelementName, String> lciSubelementBuffersList,
+                                               HashMap<SubelementName, String> lcrSubelementBuffersList) {
+        StringBuilder totalText = new StringBuilder();
+        if (lciSubelementBuffersList.size() > 0) {
+            totalText.append("# Responder Location Configuration Information (LCI)\n");
+            totalText.append("lci=").append(LCI_HEADER);
+            for (SubelementName subelementName : lciSubelementBuffersList.keySet()) {
+                String buffer = lciSubelementBuffersList.get(subelementName);
+                totalText.append(buffer);
+            }
+            totalText.append("\n");
+        }
+        if (lcrSubelementBuffersList.size() > 0) {
+            if (totalText.length() > 0) {
+                totalText.append("\n");
+            }
+            totalText.append("# Responder Location Civic Report (LCR)\n");
+            totalText.append("civic=").append(LCR_HEADER);
+            for (SubelementName subelementName : lcrSubelementBuffersList.keySet()) {
+                String buffer = lcrSubelementBuffersList.get(subelementName);
+                totalText.append(buffer);
+            }
+            totalText.append("\n");
+        }
+        return totalText.toString();
+    }
+
+    private void writeBufferToFile(String buffer) {
+        // TODO(dmevans) write the buffer to the file
     }
 
 }
