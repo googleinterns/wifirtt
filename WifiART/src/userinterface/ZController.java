@@ -37,27 +37,46 @@ public class ZController {
         this.view = view;
         this.model.setCallback(this);
 
-        view.addFloorListener(actionEvent -> {
-            try {
-                model.getState().setFloor(view.getFloor());
-            } catch (NumberFormatException exception) {
-                view.displayError(FLOOR_NOT_INTEGER);
-            }
-        });
-        view.addHeightAboveFloorListener(actionEvent -> {
-            try {
-                model.getState().setHeightAboveFloorMeters(view.getHeightAboveFloorMeters());
-            } catch (NumberFormatException exception) {
-                view.displayError(HEIGHT_NOT_A_NUMBER);
-            }
-        });
-        view.addHeightAboveFloorUncertaintyListener(actionEvent -> {
-            try {
-                model.getState().setHeightAboveFloorUncertaintyMeters(view.getHeightAboveFloorUncertaintyMeters());
-            } catch (NumberFormatException exception) {
-                view.displayError(HEIGHT_UNCERTAINTY_NOT_A_NUMBER);
-            }
-        });
+        view.addFloorListener(actionEvent -> updateFloor());
+        view.addHeightAboveFloorListener(actionEvent -> updateHeightAboveFloor());
+        view.addHeightAboveFloorUncertaintyListener(actionEvent -> updateHeightAboveFloorUncertainty());
+        view.addLocationMovementListener(actionEvent -> updateLocationMovement());
+    }
+
+    /**
+     * Update the state based on changes in the view that may not be saved.
+     */
+    public void updateState() {
+        updateFloor();
+        updateHeightAboveFloor();
+        updateHeightAboveFloorUncertainty();
+    }
+
+    private void updateFloor() {
+        try {
+            model.getState().setFloor(view.getFloor());
+        } catch (NumberFormatException exception) {
+            view.displayError(FLOOR_NOT_INTEGER);
+        }
+    }
+
+    private void updateHeightAboveFloor() {
+        try {
+            model.getState().setHeightAboveFloorMeters(view.getHeightAboveFloorMeters());
+        } catch (NumberFormatException exception) {
+            view.displayError(HEIGHT_NOT_A_NUMBER);
+        }
+    }
+
+    private void updateHeightAboveFloorUncertainty() {
+        try {
+            model.getState().setHeightAboveFloorUncertaintyMeters(view.getHeightAboveFloorUncertaintyMeters());
+        } catch (NumberFormatException exception) {
+            view.displayError(HEIGHT_UNCERTAINTY_NOT_A_NUMBER);
+        }
+    }
+
+    private void updateLocationMovement() {
         view.addLocationMovementListener(actionEvent ->
             model.getState().setExpectedToMove(view.getExpectedToMove()));
     }

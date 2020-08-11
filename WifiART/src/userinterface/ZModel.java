@@ -76,7 +76,7 @@ public class ZModel implements Subelement {
     private static final int HEIGHT_MAGNITUDE_MASK = 0x7fffff; // bits 0-23
 
     private ZState state;
-    private ZController fc;
+    private ZController controller;
 
     /**
      * Constructor.
@@ -105,20 +105,19 @@ public class ZModel implements Subelement {
         this.state = state;
     }
 
-
     /**
      * The callback into the Z controller used when an asynchronous even occurs.
      *
-     * @param fc the Z controller in the MVC pattern
+     * @param controller the Z subelement controller in the MVC pattern
      */
-    public void setCallback(ZController fc) {
-        this.fc = fc;
+    public void setCallback(ZController controller) {
+        this.controller = controller;
     }
-
-
 
     @Override
     public String toHexBuffer() {
+        controller.updateState(); // Callback to update the state based on the view.
+
         byte fieldsLength = FLOOR_INFO_LENGTH + HEIGHT_ABOVE_FLOOR_LENGTH + HEIGHT_ABOVE_FLOOR_UNCERTAINTY_LENGTH;
         byte[] buffer = new byte[SUBELEMENT_ID_LENGTH + LENGTH_FIELD_LENGTH + fieldsLength];
         buffer[SUBELEMENT_ID_INDEX] = SUBELEMENT_ID;
@@ -129,7 +128,6 @@ public class ZModel implements Subelement {
         fillLittleEndian(buffer, heightAboveFloor, HEIGHT_ABOVE_FLOOR_INDEX, HEIGHT_ABOVE_FLOOR_LENGTH);
         int heightAboveFloorUncertainty = getHeightAboveFloorUncertaintyField();
         fillLittleEndian(buffer, heightAboveFloorUncertainty, HEIGHT_ABOVE_FLOOR_UNCERTAINTY_INDEX, HEIGHT_ABOVE_FLOOR_UNCERTAINTY_LENGTH);
-
 
         StringBuilder result = new StringBuilder();
         for (byte b : buffer) {
@@ -213,10 +211,10 @@ public class ZModel implements Subelement {
     /**
      * Insert an integer into a byte array in little-endian format.
      *
-     * @param arr The byte array being populated
-     * @param num The integer to insert into the array
-     * @param startIndex The starting index that the integer should appear in the array
-     * @param length The number of bytes being populated
+     * @param arr the byte array being populated
+     * @param num the integer to insert into the array
+     * @param startIndex the starting index that the integer should appear in the array
+     * @param length the number of bytes being populated
      */
     private void fillLittleEndian(byte[] arr, int num, int startIndex, int length) {
         for (int i = 0; i < length; i++) {

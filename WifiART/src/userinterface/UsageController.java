@@ -28,31 +28,51 @@ public class UsageController {
     /**
      * Creates the controller for the Usage Rules/Policy subelement.
      *
-     * @param view the Usage Rules/Policy subelement view.
-     * @param model the Usage Rules/Policy subelement model.
+     * @param view the Usage Rules/Policy subelement view
+     * @param model the Usage Rules/Policy subelement model
      */
     public UsageController(UsageView view, UsageModel model) {
         this.model = model;
         this.view = view;
         this.model.setCallback(this);
 
-        view.addRetransmissionAllowedListener(actionEvent ->
-            model.getState().setRetransmissionAllowed(view.getRetransmissionAllowed()));
-        view.addRetentionExpiresListener(actionEvent ->
-            model.getState().setRetentionExpires(view.getRetentionExpires()));
-        view.addExpireTimeListener(actionEvent -> {
+        view.addRetransmissionAllowedListener(actionEvent -> updateRetransmissionAllowed());
+        view.addRetentionExpiresListener(actionEvent -> updateRetentionExpires());
+        view.addExpireTimeListener(actionEvent -> updateExpireTime());
+        view.addStaLocationPolicyListener(actionEvent -> updateStaLocationPolicy());
+    }
+
+    /**
+     * Update the state based on changes in the view that may not be saved.
+     */
+    public void updateState() {
+        if (model.getState().getRetentionExpires()) {
+            updateExpireTime(); // Expire Time field is only relevant if Retention Expires is true.
+        }
+    }
+
+    private void updateRetransmissionAllowed() {
+        model.getState().setRetransmissionAllowed(view.getRetransmissionAllowed());
+    }
+
+    private void updateRetentionExpires() {
+        model.getState().setRetentionExpires(view.getRetentionExpires());
+    }
+
+    private void updateExpireTime() {
+        try {
+            int expireTimeHours = view.getExpireTimeHours();
             try {
-                int expireTimeHours = view.getExpireTimeHours();
-                try {
-                    model.getState().setExpireTimeHours(expireTimeHours);
-                } catch (NumberFormatException exception) {
-                    view.displayError(EXPIRE_TIME_OUTSIDE_RANGE_ERROR);
-                }
+                model.getState().setExpireTimeHours(expireTimeHours);
             } catch (NumberFormatException exception) {
-                view.displayError(EXPIRE_TIME_NOT_INTEGER_ERROR);
+                view.displayError(EXPIRE_TIME_OUTSIDE_RANGE_ERROR);
             }
-        });
-        view.addStaLocationPolicyListener(actionEvent ->
-            model.getState().setStaLocationPolicy(view.getStaLocationPolicy()));
+        } catch (NumberFormatException exception) {
+            view.displayError(EXPIRE_TIME_NOT_INTEGER_ERROR);
+        }
+    }
+
+    private void updateStaLocationPolicy() {
+        model.getState().setStaLocationPolicy(view.getStaLocationPolicy());
     }
 }

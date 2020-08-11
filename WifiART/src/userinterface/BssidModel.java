@@ -42,7 +42,7 @@ public class BssidModel implements Subelement {
     private static final int BSSID_LIST_INDEX = 3;
 
     private BssidState state;
-    private BssidController fc;
+    private BssidController controller;
 
     /**
      * Constructor.
@@ -74,14 +74,16 @@ public class BssidModel implements Subelement {
     /**
      * The callback into the BSSID controller used when an asynchronous even occurs.
      *
-     * @param fc the BSSID controller in the MVC pattern
+     * @param controller the BSSID controller in the MVC pattern
      */
-    public void setCallback(BssidController fc) {
-        this.fc = fc;
+    public void setCallback(BssidController controller) {
+        this.controller = controller;
     }
 
     @Override
     public String toHexBuffer() {
+        controller.updateState(); // Callback to update the state based on the view.
+
         int maxBssidIndicator = state.getMaxBssidIndicator();
         Set<byte[]> bssidList = state.getBssidList();
         int fieldsLength = MAX_BSSID_INDICATOR_LENGTH + bssidList.size() * BSSID_LENGTH;

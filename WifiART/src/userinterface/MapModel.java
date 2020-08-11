@@ -74,7 +74,6 @@ public class MapModel implements Subelement {
         this.state = state;
     }
 
-
     /**
      * The callback into the Map Image subelement controller used when an asynchronous even occurs.
      *
@@ -86,6 +85,8 @@ public class MapModel implements Subelement {
 
     @Override
     public String toHexBuffer() throws NullPointerException, IllegalArgumentException {
+        controller.updateState(); // Callback to update the state based on the view.
+
         String mapType = state.getMapType();
         byte mapTypeEncoding;
         try {

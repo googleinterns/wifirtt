@@ -38,15 +38,27 @@ public class MapController {
         this.view = view;
         this.model.setCallback(this);
 
-        view.addMapTypeListener(actionEvent ->
-            model.getState().setMapType(view.getMapType()));
-        view.addMapUrlListener(actionEvent -> {
-            model.getState().setMapUrl(view.getMapUrl());
-            try {
-                view.displayMapPreviewImage(model.getState().getMapUrl());
-            } catch (IOException exception) {
-                view.displayError(READ_IMAGE_ERROR);
-            }
-        });
+        view.addMapTypeListener(actionEvent -> updateMapType());
+        view.addMapUrlListener(actionEvent -> updateMapUrl());
+    }
+
+    /**
+     * Update the state based on changes in the view that may not be saved.
+     */
+    public void updateState() {
+        updateMapUrl();
+    }
+
+    private void updateMapType() {
+        model.getState().setMapType(view.getMapType());
+    }
+
+    private void updateMapUrl() {
+        model.getState().setMapUrl(view.getMapUrl());
+        try {
+            view.displayMapPreviewImage(model.getState().getMapUrl());
+        } catch (IOException exception) {
+            view.displayError(READ_IMAGE_ERROR);
+        }
     }
 }

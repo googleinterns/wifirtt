@@ -92,9 +92,8 @@ public class LciModel implements Subelement {
     private static final int DEPENDENT_STA_MASK = 0x00000020; // Bit 5
     private static final int VERSION_MASK = 0x000000c0; // Bits 6 - 7
 
-
     private LciState state;
-    private LciController fc;
+    private LciController controller;
 
     /**
      * Constructor.
@@ -116,6 +115,7 @@ public class LciModel implements Subelement {
 
     /**
      * Set the LCI subelement state in the model.
+     *
      * @param state the LCI subelement state
      */
     public void setState(LciState state) {
@@ -124,17 +124,18 @@ public class LciModel implements Subelement {
 
 
     /**
-     * The callback into the LCI controller used when an asynchronous even occurs.
+     * The callback into the LCI controller used when an asynchronous event occurs.
      *
-     * @param fc the LCI controller in the MVC pattern
+     * @param controller the LCI controller in the MVC pattern
      */
-    public void setCallback(LciController fc) {
-        this.fc = fc;
+    public void setCallback(LciController controller) {
+        this.controller = controller;
     }
-
 
     @Override
     public String toHexBuffer() {
+        controller.updateState(); // Callback to update the state based on the view.
+
         byte fieldsLength = LATITUDE_FIELDS_LENGTH + LONGITUDE_FIELDS_LENGTH
             + ALTITUDE_FIELDS_LENGTH + MISCELLANEOUS_FIELDS_LENGTH;
         byte[] buffer = new byte[SUBELEMENT_ID_LENGTH + LENGTH_FIELD_LENGTH + fieldsLength];
@@ -151,11 +152,11 @@ public class LciModel implements Subelement {
         int miscellaneousFields = getMiscellaneousFields();
         fillLittleEndian(buffer, miscellaneousFields, MISCELLANEOUS_FIELDS_INDEX, MISCELLANEOUS_FIELDS_LENGTH);
 
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (byte b : buffer) {
-            result += String.format("%02x", b); // Convert the byte to a hex string of 2 characters.
+            result.append(String.format("%02x", b)); // Convert the byte to a hex string of 2 characters.
         }
-        return result;
+        return result.toString();
     }
 
     private long getLatitudeFields() {
@@ -264,10 +265,10 @@ public class LciModel implements Subelement {
     /**
      * Insert an integer into a byte array in little-endian format.
      *
-     * @param arr The byte array being populated
-     * @param num The integer to insert into the array
-     * @param startIndex The starting index that the integer should appear in the array
-     * @param length The number of bytes being populated
+     * @param arr the byte array being populated
+     * @param num the integer to insert into the array
+     * @param startIndex the starting index that the integer should appear in the array
+     * @param length the number of bytes being populated
      */
     private void fillLittleEndian(byte[] arr, long num, int startIndex, int length) {
         for (int i = 0; i < length; i++) {
@@ -275,5 +276,4 @@ public class LciModel implements Subelement {
             num >>= 8; // Move the next byte into the least-significant position.
         }
     }
-
 }
