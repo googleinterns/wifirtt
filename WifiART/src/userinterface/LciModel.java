@@ -93,7 +93,7 @@ public class LciModel implements Subelement {
     private static final int VERSION_MASK = 0x000000c0; // Bits 6 - 7
 
     private LciState state;
-    private LciController fc;
+    private LciController controller;
 
     /**
      * Constructor.
@@ -123,16 +123,18 @@ public class LciModel implements Subelement {
     }
 
     /**
-     * The callback into the LCI controller used when an asynchronous even occurs.
+     * The callback into the LCI controller used when an asynchronous event occurs.
      *
-     * @param fc the LCI controller in the MVC pattern
+     * @param controller the LCI controller in the MVC pattern
      */
-    public void setCallback(LciController fc) {
-        this.fc = fc;
+    public void setCallback(LciController controller) {
+        this.controller = controller;
     }
 
     @Override
     public String toHexBuffer() {
+        controller.updateState(); // Callback to update the state based on the view.
+
         byte fieldsLength = LATITUDE_FIELDS_LENGTH + LONGITUDE_FIELDS_LENGTH
             + ALTITUDE_FIELDS_LENGTH + MISCELLANEOUS_FIELDS_LENGTH;
         byte[] buffer = new byte[SUBELEMENT_ID_LENGTH + LENGTH_FIELD_LENGTH + fieldsLength];

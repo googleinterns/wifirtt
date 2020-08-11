@@ -86,4 +86,24 @@ public class BssidController {
             }
         });
     }
+
+    /**
+     * Update the state based on changes in the view that may not be saved.
+     */
+    public void updateState() {
+        updateMaxBssidIndicator();
+    }
+
+    private void updateMaxBssidIndicator() {
+        try {
+            int maxBssidIndicator = view.getMaxBssidIndicator();
+            try {
+                model.getState().setMaxBssidIndicator(maxBssidIndicator);
+            } catch (NumberFormatException exception) {
+                view.displayError(MAX_BSSID_INDICATOR_OUT_OF_RANGE);
+            }
+        } catch (NumberFormatException exception) {
+            view.displayError(MAX_BSSID_INDICATOR_NOT_INTEGER);
+        }
+    }
 }

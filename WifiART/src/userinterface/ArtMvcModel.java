@@ -41,7 +41,6 @@ public class ArtMvcModel {
     private String lcrSubelementBuffer;
     private String mapSubelementBuffer;
 
-
     /**
      * Constructor.
      *

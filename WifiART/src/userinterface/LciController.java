@@ -16,6 +16,8 @@ limitations under the License.
 
 package userinterface;
 
+import structs.LciState;
+
 public class LciController {
     // Error messages
     private static final String LATITUDE_OUT_OF_RANGE_ERROR = "Latitude must be between -90 and 90 degrees.";
@@ -41,77 +43,120 @@ public class LciController {
         this.view = view;
         this.model.setCallback(this);
 
-        view.addLatitudeListener(actionEvent -> {
-            try {
-                double latitude = view.getLatitude();
-                try {
-                    model.getState().setLatitude(latitude);
-                } catch (NumberFormatException exception) {
-                    view.displayError(LATITUDE_OUT_OF_RANGE_ERROR);
-                }
-            } catch (NumberFormatException exception) {
-                view.displayError(LATITUDE_NOT_NUMBER_ERROR);
-            }
-        });
-        view.addLatitudeUncertaintyListener(actionEvent -> {
-            try {
-                double latitudeUncertainty = view.getLatitudeUncertainty();
-                model.getState().setLatitudeUncertainty(latitudeUncertainty);
-            } catch (NumberFormatException exception) {
-                view.displayError(LATITUDE_UNCERTAINTY_NOT_NUMBER_ERROR);
-            }
-        });
-        view.addLongitudeListener(actionEvent -> {
-            try {
-                double longitude = view.getLongitude();
-                try {
-                    model.getState().setLongitude(longitude);
-                } catch (NumberFormatException exception) {
-                    view.displayError(LONGITUDE_OUT_OF_RANGE_ERROR);
-                }
-            } catch (NumberFormatException exception) {
-                view.displayError(LONGITUDE_NOT_NUMBER_ERROR);
-            }
-        });
-        view.addLongitudeUncertaintyListener(actionEvent -> {
-            try {
-                double longitudeUncertainty = view.getLongitudeUncertainty();
-                model.getState().setLongitudeUncertainty(longitudeUncertainty);
-            } catch (NumberFormatException exception) {
-                view.displayError(LONGITUDE_UNCERTAINTY_NOT_NUMBER_ERROR);
-            }
-        });
-        view.addAltitudeListener(actionEvent -> {
-            try {
-                double altitude = view.getAltitude();
-                try {
-                    model.getState().setAltitude(altitude);
-                } catch (NumberFormatException exception) {
-                    view.displayError(ALTITUDE_OUT_OF_RANGE_ERROR);
-                }
-            } catch (NumberFormatException exception) {
-                view.displayError(ALTITUDE_NOT_NUMBER_ERROR);
-            }
-        });
-        view.addAltitudeUncertaintyListener(actionEvent -> {
-            try {
-                double altitudeUncertainty = view.getAltitudeUncertainty();
-                model.getState().setAltitudeUncertainty(altitudeUncertainty);
-            } catch (NumberFormatException exception) {
-                view.displayError(ALTITUDE_UNCERTAINTY_NOT_NUMBER_ERROR);
-            }
-        });
-        view.addAltitudeTypeListener(actionEvent ->
-            model.getState().setAltitudeType(view.getAltitudeType()));
-        view.addMapDatumListener(actionEvent ->
-            model.getState().setMapDatum(view.getMapDatum()));
-        view.addRegLocAgreementListener(actionEvent ->
-            model.getState().setRegLocAgreement(view.getRegLocAgreement()));
-        view.addRegLocDseListener(actionEvent ->
-            model.getState().setRegLocDse(view.getRegLocDse()));
-        view.addDependentStaListener(actionEvent ->
-            model.getState().setDependentSta(view.getDependentSta()));
-        view.addLciVersionListener(actionEvent ->
-            model.getState().setLciVersion(view.getLciVersion()));
+        view.addLatitudeListener(actionEvent -> updateLatitude());
+        view.addLatitudeUncertaintyListener(actionEvent -> updateLatitudeUncertainty());
+        view.addLongitudeListener(actionEvent -> updateLongitude());
+        view.addLongitudeUncertaintyListener(actionEvent -> updateLongitudeUncertainty());
+        view.addAltitudeListener(actionEvent -> updateAltitude());
+        view.addAltitudeUncertaintyListener(actionEvent -> updateAltitudeUncertainty());
+        view.addAltitudeTypeListener(actionEvent -> updateAltitudeType());
+        view.addMapDatumListener(actionEvent -> updateMapDatum());
+        view.addRegLocAgreementListener(actionEvent -> updateRegLocAgreement());
+        view.addRegLocDseListener(actionEvent -> updateRegLocDse());
+        view.addDependentStaListener(actionEvent -> updateDependentSta());
+        view.addLciVersionListener(actionEvent -> updateLciVersion());
     }
+
+    /**
+     * Update the state based on changes in the view that may not be saved.
+     */
+    public void updateState() {
+        updateLatitude();
+        updateLatitudeUncertainty();
+        updateLongitude();
+        updateLongitudeUncertainty();
+        updateAltitude();
+        updateAltitudeUncertainty();
+    }
+
+    private void updateLatitude() {
+        try {
+            double latitude = view.getLatitude();
+            try {
+                model.getState().setLatitude(latitude);
+            } catch (NumberFormatException exception) {
+                view.displayError(LATITUDE_OUT_OF_RANGE_ERROR);
+            }
+        } catch (NumberFormatException exception) {
+            view.displayError(LATITUDE_NOT_NUMBER_ERROR);
+        }
+    }
+
+    private void updateLatitudeUncertainty() {
+        try {
+            double latitudeUncertainty = view.getLatitudeUncertainty();
+            model.getState().setLatitudeUncertainty(latitudeUncertainty);
+        } catch (NumberFormatException exception) {
+            view.displayError(LATITUDE_UNCERTAINTY_NOT_NUMBER_ERROR);
+        }
+    }
+
+    private void updateLongitude() {
+        try {
+            double longitude = view.getLongitude();
+            try {
+                model.getState().setLongitude(longitude);
+            } catch (NumberFormatException exception) {
+                view.displayError(LONGITUDE_OUT_OF_RANGE_ERROR);
+            }
+        } catch (NumberFormatException exception) {
+            view.displayError(LONGITUDE_NOT_NUMBER_ERROR);
+        }
+    }
+
+    private void updateLongitudeUncertainty() {
+        try {
+            double longitudeUncertainty = view.getLongitudeUncertainty();
+            model.getState().setLongitudeUncertainty(longitudeUncertainty);
+        } catch (NumberFormatException exception) {
+            view.displayError(LONGITUDE_UNCERTAINTY_NOT_NUMBER_ERROR);
+        }
+    }
+
+    private void updateAltitude() {
+        try {
+            double altitude = view.getAltitude();
+            try {
+                model.getState().setAltitude(altitude);
+            } catch (NumberFormatException exception) {
+                view.displayError(ALTITUDE_OUT_OF_RANGE_ERROR);
+            }
+        } catch (NumberFormatException exception) {
+            view.displayError(ALTITUDE_NOT_NUMBER_ERROR);
+        }
+    }
+
+    private void updateAltitudeUncertainty() {
+        try {
+            double altitudeUncertainty = view.getAltitudeUncertainty();
+            model.getState().setAltitudeUncertainty(altitudeUncertainty);
+        } catch (NumberFormatException exception) {
+            view.displayError(ALTITUDE_UNCERTAINTY_NOT_NUMBER_ERROR);
+        }
+    }
+
+    private void updateAltitudeType() {
+        model.getState().setAltitudeType(view.getAltitudeType());
+    }
+
+    private void updateMapDatum() {
+        model.getState().setMapDatum(view.getMapDatum());
+    }
+
+    private void updateRegLocAgreement() {
+        model.getState().setRegLocAgreement(view.getRegLocAgreement());
+    }
+
+    private void updateRegLocDse() {
+        model.getState().setRegLocDse(view.getRegLocDse());
+    }
+
+    private void updateDependentSta() {
+        model.getState().setDependentSta(view.getDependentSta());
+    }
+
+    private void updateLciVersion() {
+        model.getState().setLciVersion(view.getLciVersion());
+    }
+
 }

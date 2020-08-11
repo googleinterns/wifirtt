@@ -41,9 +41,8 @@ public class UsageModel implements Subelement {
     private static final int RETENTION_EXPIRES_MASK = 0x02;      // bit 1
     private static final int STA_LOCATION_POLICY_MASK = 0x04;    // bit 3
 
-
     private UsageState state;
-    private UsageController fc;
+    private UsageController controller;
 
     /**
      * Constructor.
@@ -57,7 +56,7 @@ public class UsageModel implements Subelement {
     /**
      * Get the current Usage subelement state from the model.
      *
-     * @return the Usage subelement state
+     * @return the Usage Rules/Policy subelement state
      */
     public UsageState getState() {
         return this.state;
@@ -72,19 +71,19 @@ public class UsageModel implements Subelement {
         this.state = state;
     }
 
-
     /**
      * The callback into the Usage controller used when an asynchronous even occurs.
      *
-     * @param fc the Usage controller in the MVC pattern
+     * @param controller the Usage controller in the MVC pattern
      */
-    public void setCallback(UsageController fc) {
-        this.fc = fc;
+    public void setCallback(UsageController controller) {
+        this.controller = controller;
     }
-
 
     @Override
     public String toHexBuffer() {
+        controller.updateState(); // Callback to update the state based on the view.
+
         byte fieldsLength = USAGE_RULES_POLICY_PARAMETERS_LENGTH;
         if (state.getRetentionExpires()) {
             fieldsLength += RETENTION_EXPIRES_RELATIVE_LENGTH;
@@ -98,18 +97,18 @@ public class UsageModel implements Subelement {
             fillLittleEndian(buffer, expireTimeHours, RETENTION_EXPIRES_RELATIVE_INDEX, RETENTION_EXPIRES_RELATIVE_LENGTH);
         }
 
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (byte b : buffer) {
-            result += String.format("%02x", b); // Convert the byte to a hex string of 2 characters.
+            result.append(String.format("%02x", b)); // Convert the byte to a hex string of 2 characters.
         }
-        return result;
+        return result.toString();
     }
 
     /**
      * Constructs the octet encoding the "Usage Rules/Policy Parameters" field, containing the
      *  RetransmissionAllowed, RetentionExpires, and StaLocationPolicy parameters.
      *
-     * @return The octet encoding for the Usage Rules/Policy Parameters field.
+     * @return the octet encoding for the Usage Rules/Policy Parameters field
      */
     private byte getUsageRulesPolicyParametersByte() {
         byte result = 0;
@@ -128,10 +127,10 @@ public class UsageModel implements Subelement {
     /**
      * Insert an integer into a byte array in little-endian format.
      *
-     * @param arr The byte array being populated
-     * @param num The integer to insert into the array
-     * @param startIndex The starting index that the integer should appear in the array
-     * @param length The number of bytes being populated
+     * @param arr the byte array being populated
+     * @param num the integer to insert into the array
+     * @param startIndex the starting index that the integer should appear in the array
+     * @param length the number of bytes being populated
      */
     private void fillLittleEndian(byte[] arr, int num, int startIndex, int length) {
         for (int i = 0; i < length; i++) {
