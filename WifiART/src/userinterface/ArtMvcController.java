@@ -126,9 +126,9 @@ public class ArtMvcController {
         try {
             HashMap<SubelementName, String> lciSubelementBuffersList = model.getLciSubelementBuffersList();
             HashMap<SubelementName, String> lcrSubelementBuffersList = model.getLcrSubelementBuffersList();
-            String readableBuffer = getReadableBufferDisplay(lciSubelementBuffersList, lcrSubelementBuffersList);
             String notReadableBuffer = getNotReadableBufferDisplay(lciSubelementBuffersList, lcrSubelementBuffersList);
             if (model.getState().isReadable()) {
+                String readableBuffer = getReadableBufferDisplay(lciSubelementBuffersList, lcrSubelementBuffersList);
                 view.displayBuffer(readableBuffer);
             } else {
                 view.displayBuffer(notReadableBuffer);
