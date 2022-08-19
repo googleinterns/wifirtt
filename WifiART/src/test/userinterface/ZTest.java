@@ -16,6 +16,7 @@ limitations under the License.
 
 package userinterface;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import structs.ExpectedToMove;
 import structs.ZState;
@@ -109,7 +110,7 @@ public class ZTest {
     );
     private static final String BUFFER_WITH_VARIABLE_LOCATION = "0406010000000000";
 
-    private final ZModel model = new ZModel(new ZState());
+    private static final ZModel model = new ZModel(new ZState());
 
     /**
      * Constructs a ZState with pre-determined parameter values.
@@ -121,15 +122,23 @@ public class ZTest {
      * @return the ZState with the paramter values set.
      */
     private static ZState buildZState(int floor,
-                                          double heightAboveFloorMeters,
-                                          double heightAboveFloorUncertaintyMeters,
-                                          ExpectedToMove expectedToMove) {
+        double heightAboveFloorMeters,
+        double heightAboveFloorUncertaintyMeters,
+        ExpectedToMove expectedToMove) {
         ZState state = new ZState();
         state.setFloor(floor);
         state.setHeightAboveFloorMeters(heightAboveFloorMeters);
         state.setHeightAboveFloorUncertaintyMeters(heightAboveFloorUncertaintyMeters);
         state.setExpectedToMove(expectedToMove);
         return state;
+    }
+
+    @BeforeAll
+    static void setController() {
+        model.setCallback(new ZController(new ZView(), model) {
+            @Override
+            public void updateState() {}
+        });
     }
 
     // Tests for setting the values.

@@ -16,6 +16,7 @@ limitations under the License.
 
 package userinterface;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import structs.BssidState;
 
@@ -61,7 +62,7 @@ class BssidTest {
         MAX_LENGTH_BSSID_LIST);
     private static final String BUFFER_WITH_MAXIMUM_VALUES = "07fdff" + getNCopiesString(MAX_SIZE_OF_BSSID_LIST, "ffffffffffff");
 
-    private final BssidModel model = new BssidModel(new BssidState());
+    private static final BssidModel model = new BssidModel(new BssidState());
 
     /**
      * Constructs a BssidState with pre-determined parameter values.
@@ -90,6 +91,14 @@ class BssidTest {
         String[] result = new String[n];
         Arrays.fill(result, string);
         return result;
+    }
+
+    @BeforeAll
+    static void setController() {
+        model.setCallback(new BssidController(new BssidView(), model) {
+            @Override
+            public void updateState() {}
+        });
     }
 
     /**

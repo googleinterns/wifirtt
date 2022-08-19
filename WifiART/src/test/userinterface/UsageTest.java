@@ -16,6 +16,7 @@ limitations under the License.
 
 package userinterface;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import structs.UsageState;
 
@@ -32,7 +33,6 @@ class UsageTest {
     // Expire Time values
     private static final int MAX_EXPIRE_TIME_HOURS = 65535;
     private static final int MIN_EXPIRE_TIME_HOURS = 0;
-
 
     // States and expected buffers for testing
 
@@ -85,7 +85,7 @@ class UsageTest {
     private static final String BUFFER_WITH_STA_LOCATION_POLICY_TRUE = "060104";
 
 
-    private final UsageModel model = new UsageModel(new UsageState());
+    private static final UsageModel model = new UsageModel(new UsageState());
 
     /**
      * Constructs a UsageState with pre-determined parameter values.
@@ -96,7 +96,7 @@ class UsageTest {
      * @param staLocationPolicy True if additional STA location information exists
      */
     private static UsageState buildUsageState(boolean retransmissionAllowed, boolean retentionExpires,
-                                       Integer expireTimeHours, boolean staLocationPolicy) {
+        Integer expireTimeHours, boolean staLocationPolicy) {
         UsageState state = new UsageState();
         state.setRetransmissionAllowed(retransmissionAllowed);
         state.setRetentionExpires(retentionExpires);
@@ -105,6 +105,14 @@ class UsageTest {
         }
         state.setStaLocationPolicy(staLocationPolicy);
         return state;
+    }
+
+    @BeforeAll
+    static void setController() {
+        model.setCallback(new UsageController(new UsageView(), model) {
+            @Override
+            public void updateState() {}
+        });
     }
 
     /**

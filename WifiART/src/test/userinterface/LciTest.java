@@ -16,6 +16,7 @@ limitations under the License.
 
 package userinterface;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import structs.AltitudeType;
 import structs.LciState;
@@ -236,7 +237,7 @@ class LciTest {
     private static final String BUFFER_WITH_DEPENDENT_STA_TRUE = "001000000000000000000000000000000061";
 
 
-    private final LciModel model = new LciModel(new LciState());
+    private static LciModel model = new LciModel(new LciState());
 
     /**
      * Constructs an LciState with pre-determined parameter values.
@@ -258,11 +259,11 @@ class LciTest {
      * @return the LciState with the parameter values set
      */
     private static LciState buildLciState(double latitude, double latitudeUncertainty,
-                                            double longitude, double longitudeUncertainty,
-                                            double altitude, double altitudeUncertainty,
-                                            AltitudeType altitudeType, MapDatum mapDatum,
-                                            boolean regLocAgreement, boolean regLocDse,
-                                            boolean dependentSta, int lciVersion) {
+        double longitude, double longitudeUncertainty,
+        double altitude, double altitudeUncertainty,
+        AltitudeType altitudeType, MapDatum mapDatum,
+        boolean regLocAgreement, boolean regLocDse,
+        boolean dependentSta, int lciVersion) {
         LciState state = new LciState();
         state.setLatitude(latitude);
         state.setLatitudeUncertainty(latitudeUncertainty);
@@ -277,6 +278,15 @@ class LciTest {
         state.setDependentSta(dependentSta);
         state.setLciVersion(lciVersion);
         return state;
+    }
+
+    @BeforeAll
+    static void setController() {
+        model.setCallback(
+            new LciController(new LciView(), model) {
+                @Override
+                public void updateState() {}
+            });
     }
 
     /**

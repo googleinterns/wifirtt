@@ -16,6 +16,7 @@ limitations under the License.
 
 package userinterface;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import structs.ImageTypes;
 import structs.MapState;
@@ -76,7 +77,7 @@ public class MapTest {
         STATE_DEFAULT.getMapUrl()
     );
 
-    private final MapModel model = new MapModel(new MapState());
+    private static final MapModel model = new MapModel(new MapState());
 
     private static String getNCopiesString(int n, String string) {
         StringBuilder result = new StringBuilder();
@@ -98,6 +99,14 @@ public class MapTest {
         state.setMapType(mapType);
         state.setMapUrl(mapUrl);
         return state;
+    }
+
+    @BeforeAll
+    static void setController() {
+        model.setCallback(new MapController(new MapView(), model) {
+            @Override
+            public void updateState() {}
+        });
     }
 
     /**
