@@ -1,11 +1,32 @@
 # Instructions for importing the project into IntelliJ
 
-The following instructions assume that you already have IntelliJ installed, with Java 8 or later.
+1. Install IntelliJ: https://www.jetbrains.com/idea/download/
+2. Clone the project into IntelliJ:
+    * Open IntelliJ, and from the welcome screen, click __Get from VCS__ (this should be to the right of __New Project__ and __Open__) to bring up the __Get from Version Control__ window
+        * If you already have an IntelliJ project open, you can access this window by navigating to __Git > Clone__ (if you are already working on another Git project) or __VCS > Get from Version Control__
+    * Enter the project URL (https://github.com/googleinterns/wifirtt.git).
+    * Click __Clone__ to clone the repository.
+3. In the __File > Project Structure__ window:
+    * Under the __Project__ tab, ensure that the Java JDK is selected. In the __Modules__ tab, also ensure that the SDK is selected under __Dependencies__.
+    * In the __Modules__ tab, under __Sources__, expand the directory structure shown and mark the `WifiART/src/test` directory as __Tests__.
+    * In the __Libraries__ tab, add these libraries from Maven:
+        * `org.jetbrains.annotations`
+        * `org.junit.jupiter`
+    * Make sure to click __Apply__ to apply the changes.
+4. In the __File > Settings__ window:
+    * Navigate to the Java Compiler tab: __Build, Execution, Deployment > Compiler > Java Compiler__
+    * Ensure that the __Project bytecode version__ matches the Java JDK chosen. E.g. choose __`11`__ if you are using Java 11 as the SDK.
+    * Click __Apply__ to apply the changes.
+5. Run Tests: 
+    * In the project directory panel on the left, right-click on the `test` directory (it should have a green folder icon), and select __Run 'All Tests'__.
+    * Verify that all tests pass.
+6. Run Code: 
+    * Run the `main` method in `ArtMvc.java`
+    * Use the example below to validate the installation.
+    * Check that the generated buffer matches the output shown.
 
-1. Clone the repo: `git clone https://github.com/googleinterns/wifirtt`.
-2. Open IntelliJ, and at the welcome screen, select __Import Project__.
-3. In the pop-up window, choose the folder `wifirtt/WifiART` and click __Open__.
-4. In the wizard, select __Create project from existing sources__, and proceed through the wizard. The sources directory (__src__) should be automatically detected, and the SDK should be automatically selected as well.
-5. Once you have finished going through the wizard, the code will not run because JUnit dependencies still are not included. Go to one of the lines with an error, such as a `@Test` annotation, and click on the red lightbulb that appears. Choose an option such as __Add 'JUnit5.3' to classpath__ to add JUnit.
-6. At this point, everything will appear fine, but IntelliJ will typically set JUnit's scope to __Test__, so the project will not compile. Go to __File__ >> __Project Structure__ >> __Modules__, and make sure that the __Scope__ to the right of "JUnit5.3" is set to __Compile__.
-7. After completing the above steps, you should be able to right-click on the ArtMvc class in the project structure pane on the left, and select __Run 'ArtMvc.main()'__ to run the program.
+__INPUT:__
+![LCI input screenshot](./LCI_input.png?raw=true)
+
+__OUTPUT:__
+![LCI output screenshot](./LCI_output.png?raw=true)
